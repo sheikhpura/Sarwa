@@ -1048,6 +1048,8 @@
           <i class="fas fa-moon"></i> <span id="darkModeText">डार्क मोड</span>
         </div>
         <button class="language-switch" onclick="toggleLanguage()"><i class="fas fa-language"></i> <span id="langText">English</span></button>
+        <!-- ===== नया जोड़ा गया india.gif लोगो ===== -->
+        <img src="india.gif" alt="India" class="india-logo" oncontextmenu="return false;" style="height: 40px; width: auto; border-radius: 4px; object-fit: contain; -webkit-user-select: none; user-select: none; pointer-events: none; margin-left: 8px;">
       </div>
     </div>
 
@@ -2060,7 +2062,7 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
   // ===== नई सुरक्षा JavaScript =====
   function enableImageProtection() {
     // इमेज पर राइट क्लिक बंद करें
-    document.querySelectorAll('.prd-logo, .map-container img').forEach(img => {
+    document.querySelectorAll('.prd-logo, .map-container img, .india-logo').forEach(img => {
       img.addEventListener('contextmenu', (e) => e.preventDefault());
       img.addEventListener('dragstart', (e) => e.preventDefault());
     });
@@ -2077,7 +2079,7 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
 
     // मोबाइल पर लॉन्ग-प्रेस मेनू रोकें
     let touchTimer;
-    document.querySelectorAll('.prd-logo, .map-container img').forEach(img => {
+    document.querySelectorAll('.prd-logo, .map-container img, .india-logo').forEach(img => {
       img.addEventListener('touchstart', function(e) {
         touchTimer = setTimeout(() => {
           e.preventDefault();
