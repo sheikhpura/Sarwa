@@ -854,6 +854,27 @@
       cursor: pointer;
     }
 
+    /* मानचित्र अनुभाग - नया जोड़ा गया */
+    .map-section {
+      background: white;
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: var(--card-shadow);
+    }
+    .dark-mode .map-section {
+      background: #1e293b;
+    }
+    .map-container {
+      text-align: center;
+    }
+    .map-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border: 2px solid var(--saffron);
+    }
+
     .modal {
       display: none;
       position: fixed;
@@ -1241,7 +1262,17 @@
     </div>
   </div>
 
-  <!-- टिप्पणी अनुभाग -->
+  <!-- ========== नया जोड़ा गया मानचित्र अनुभाग ========== -->
+  <div class="map-section">
+    <div class="table-header">
+      <h2><i class="fas fa-map-marked-alt" style="color:#FF9933;"></i> ग्राम पंचायत सर्वा का मानचित्र</h2>
+    </div>
+    <div class="map-container">
+      <img src="FINAL SARWA MAP.png" alt="सर्वा ग्राम पंचायत मानचित्र" loading="lazy">
+    </div>
+  </div>
+
+  <!-- ========== टिप्पणी / सुझाव अनुभाग (अब सबसे नीचे) ========== -->
   <div class="comment-section">
     <div class="feature-title"><i class="fas fa-comments"></i> टिप्पणी / सुझाव</div>
     <div class="comment-list" id="commentList"></div>
