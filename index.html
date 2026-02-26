@@ -95,7 +95,7 @@
       .feature-card, .chart-card, .finance-summary, .table-section { break-inside: avoid; }
     }
 
-    /* बाकी स्टाइल (पिछले कोड से कॉपी, नए एलिमेंट के लिए अतिरिक्त) */
+    /* बाकी स्टाइल (पिछले कोड से कॉपी) */
     .tricolor-strip {
       display: flex;
       height: 6px;
@@ -385,6 +385,7 @@
       padding: 8px 0;
       border-bottom: 1px dashed var(--saffron);
       font-size: 0.85rem;
+      word-break: break-word;
     }
 
     .control-ribbon {
@@ -705,6 +706,7 @@
     td {
       padding: 8px 8px;
       border-bottom: 1px solid var(--border);
+      word-break: break-word;
     }
     /* बोल्ड किए गए कॉलम */
     #tablePersonnel tbody tr td:nth-child(2) { font-weight: 600; } /* कर्मी नाम */
@@ -1473,12 +1475,12 @@
     pageData.forEach((s, i) => {
       let cls = s.status === 'पूर्ण' ? 'complete' : 'progress';
       let ico = s.status === 'पूर्ण' ? 'fa-check' : 'fa-clock';
-      let shortDesc = s.desc.length > 50 ? s.desc.substring(0,50)+'...' : s.desc;
+      // पूरा नाम दिखाएँ, बिना कटौती के
       tbody.innerHTML += `<tr onclick="showProjectModal('${s.fund.replace(/'/g, "\\'")}', '${s.year}', '${s.desc.replace(/'/g, "\\'")}', ${s.amount}, '${s.status}')">
         <td>${start + i + 1}</td>
         <td>${s.fund}</td>
         <td>${s.year}</td>
-        <td title="${s.desc}">${shortDesc}</td>
+        <td title="${s.desc}">${s.desc}</td>
         <td class="rupee-cell">${formatMoney(s.amount)}</td>
         <td><span class="status-super ${cls}"><i class="fas ${ico}"></i> ${s.status}</span></td>
       </tr>`;
@@ -1627,7 +1629,8 @@
     const top3 = [...schemes].sort((a,b)=>b.amount-a.amount).slice(0,3);
     let topHtml = '';
     top3.forEach(s => {
-      topHtml += `<div class="top-project-item"><span title="${s.desc}">${s.desc.substring(0,25)}...</span> <strong>${formatMoney(s.amount)}</strong></div>`;
+      // पूरा नाम दिखाएँ
+      topHtml += `<div class="top-project-item" title="${s.desc}"><span>${s.desc}</span> <strong>${formatMoney(s.amount)}</strong></div>`;
     });
     document.getElementById('topProjects').innerHTML = topHtml;
 
