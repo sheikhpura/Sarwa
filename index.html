@@ -165,6 +165,34 @@
       width: auto;
       border-radius: 8px;
       object-fit: contain;
+      /* ===== नई सुरक्षा CSS ===== */
+      -webkit-touch-callout: none !important;
+      -webkit-user-select: none !important;
+      -khtml-user-select: none !important;
+      -moz-user-select: none !important;
+      -ms-user-select: none !important;
+      user-select: none !important;
+      pointer-events: none !important;
+      -webkit-user-drag: none !important;
+      user-drag: none !important;
+    }
+
+    /* मानचित्र छवि पर भी सुरक्षा लागू करें */
+    .map-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border: 2px solid var(--saffron);
+      -webkit-touch-callout: none !important;
+      -webkit-user-select: none !important;
+      -khtml-user-select: none !important;
+      -moz-user-select: none !important;
+      -ms-user-select: none !important;
+      user-select: none !important;
+      pointer-events: none !important;
+      -webkit-user-drag: none !important;
+      user-drag: none !important;
     }
 
     .govt-text {
@@ -875,13 +903,6 @@
     .map-container {
       text-align: center;
     }
-    .map-container img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      border: 2px solid var(--saffron);
-    }
 
     .modal {
       display: none;
@@ -1004,7 +1025,7 @@
     <div class="emblem-row">
       <div class="emblem-group">
         <!-- ===== नया जोड़ा गया PRD लोगो ===== -->
-        <img src="PRD.jpg" alt="PRD Logo" class="prd-logo">
+        <img src="PRD.jpg" alt="PRD Logo" class="prd-logo" oncontextmenu="return false;">
         <div class="ashoka-emblem"><i class="fas fa-lion"></i></div>
         <div class="govt-text">
           <h1 id="mainHeading">15वीं वित्त + षष्टम राज्य वित्त</h1>
@@ -1278,7 +1299,7 @@
       <h2><i class="fas fa-map-marked-alt" style="color:#FF9933;"></i> ग्राम पंचायत सर्वा का मानचित्र</h2>
     </div>
     <div class="map-container">
-      <img src="FINAL SARWA MAP.jpg" alt="सर्वा ग्राम पंचायत मानचित्र" loading="lazy">
+      <img src="FINAL SARWA MAP.jpg" alt="सर्वा ग्राम पंचायत मानचित्र" loading="lazy" oncontextmenu="return false;">
     </div>
   </div>
 
@@ -2036,6 +2057,41 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
     list.innerHTML = comments.map(c => `<div class="comment-item"><span class="comment-name">${c.name}</span> (${c.date})<br>${c.text}</div>`).join('') || 'कोई टिप्पणी नहीं';
   }
 
+  // ===== नई सुरक्षा JavaScript =====
+  function enableImageProtection() {
+    // इमेज पर राइट क्लिक बंद करें
+    document.querySelectorAll('.prd-logo, .map-container img').forEach(img => {
+      img.addEventListener('contextmenu', (e) => e.preventDefault());
+      img.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+
+    // कीबोर्ड शॉर्टकट बंद करें (F12, Ctrl+Shift+I, Ctrl+U)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F12' || 
+          (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+          (e.ctrlKey && e.key === 'u')) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // मोबाइल पर लॉन्ग-प्रेस मेनू रोकें
+    let touchTimer;
+    document.querySelectorAll('.prd-logo, .map-container img').forEach(img => {
+      img.addEventListener('touchstart', function(e) {
+        touchTimer = setTimeout(() => {
+          e.preventDefault();
+        }, 500);
+      });
+      img.addEventListener('touchend', function() {
+        clearTimeout(touchTimer);
+      });
+      img.addEventListener('touchmove', function() {
+        clearTimeout(touchTimer);
+      });
+    });
+  }
+
   // कीबोर्ड शॉर्टकट
   document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key === 'f') {
@@ -2092,6 +2148,9 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
     updateColumnVisibility('15');
     updateColumnVisibility('state');
   }, 100);
+
+  // इमेज प्रोटेक्शन एक्टिवेट करें
+  enableImageProtection();
 
   window.sortTable = sortTable;
   window.exportCSV = exportCSV;
