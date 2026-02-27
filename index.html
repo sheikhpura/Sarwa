@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>ग्राम पंचायत सर्वा – उन्नत डैशबोर्ड</title>
+  <title>ग्राम पंचायत सर्वा – अंतिम डैशबोर्ड</title>
   <!-- फॉन्ट और आइकन -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -165,7 +165,7 @@
       -webkit-user-drag: none;
       user-drag: none;
       -webkit-touch-callout: none;
-      pointer-events: auto; /* बहाल */
+      pointer-events: auto;
     }
     .prd-logo {
       height: 5rem;
@@ -173,18 +173,19 @@
       border-radius: 8px;
       object-fit: contain;
     }
+    /* india.gif का आकार PRD.jpg के बराबर किया गया */
     .india-logo {
-      height: 60px;
+      height: 5rem;
       width: auto;
       border-radius: 4px;
       object-fit: contain;
       margin-left: 8px;
     }
     @media (max-width: 700px) {
-      .india-logo { height: 50px; }
+      .india-logo { height: 4rem; }
     }
     @media (max-width: 500px) {
-      .india-logo { height: 45px; }
+      .india-logo { height: 3.5rem; }
     }
 
     .govt-text {
@@ -527,26 +528,7 @@
       transform: rotate(15deg);
     }
 
-    /* कॉलम टॉगल – अब सभी टेबल के लिए */
-    .col-toggle {
-      position: relative;
-    }
-    .col-toggle-content {
-      display: none;
-      position: absolute;
-      right: 0;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 10px;
-      z-index: 100;
-      min-width: 180px;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
-      font-size: 0.85rem;
-    }
-    .dark-mode .col-toggle-content { background: #1e293b; }
-    .col-toggle-content.show { display: block; }
-    .col-toggle-content label { display: block; padding: 4px 0; }
+    /* कॉलम टॉगल पूरी तरह हटा दिए गए हैं – यह सेक्शन खाली है */
 
     .insight-panel {
       display: grid;
@@ -625,6 +607,25 @@
     td {
       padding: 8px 8px; border-bottom: 1px solid var(--border); word-break: break-word;
     }
+
+    /* कर्मियों के नाम बोल्ड */
+    #tablePersonnel tbody tr td:nth-child(2) {
+      font-weight: 600;
+    }
+    /* प्रतिनिधियों के नाम बोल्ड */
+    #tableRep tbody tr td:nth-child(2) {
+      font-weight: 600;
+    }
+    /* ग्राम कचहरी सदस्यों के नाम बोल्ड */
+    #tablePanchayat tbody tr td:nth-child(2) {
+      font-weight: 600;
+    }
+    /* योजनाओं के नाम बोल्ड */
+    #table15 tbody tr td:nth-child(4),
+    #tableState tbody tr td:nth-child(4) {
+      font-weight: 600;
+    }
+
     tbody tr:hover td { background: var(--hover-bg); transition: 0.15s; }
 
     .status-super {
@@ -772,6 +773,7 @@
           <div class="theme-btn dark-blue" onclick="setTheme('dark-blue')" title="नीला डार्क"></div>
         </div>
         <button class="language-switch" onclick="toggleLanguage()"><i class="fas fa-language"></i> <span id="langText">English</span></button>
+        <!-- india.gif का आकार PRD.jpg के बराबर (5rem) कर दिया गया है -->
         <img src="india.gif" alt="India Flag" class="india-logo" oncontextmenu="return false;" draggable="false">
       </div>
     </div>
@@ -811,7 +813,7 @@
     </div>
   </div>
 
-  <!-- कंट्रोल रिबन – उन्नत फ़िल्टर के साथ -->
+  <!-- कंट्रोल रिबन – उन्नत फ़िल्टर के साथ (कॉलम टॉगल हटा दिए गए हैं) -->
   <div class="control-ribbon">
     <div class="search-module">
       <i class="fas fa-search"></i>
@@ -850,29 +852,9 @@
       <button class="pill" onclick="applyAmountFilter()">लागू करें</button>
     </div>
 
+    <!-- extra-tools में अब केवल फुल स्क्रीन बटन है (कॉलम टॉगल हटा दिए गए) -->
     <div class="extra-tools">
       <button class="extra-btn" onclick="toggleFullScreen()" title="फुल स्क्रीन"><i class="fas fa-expand"></i></button>
-      <!-- कॉलम टॉगल हर टेबल के लिए अलग से -->
-      <div class="col-toggle" id="colToggle15">
-        <button class="extra-btn" onclick="toggleColDropdown('15')" title="कॉलम चुनें (15वीं)"><i class="fas fa-columns"></i></button>
-        <div class="col-toggle-content" id="colDropdown15"></div>
-      </div>
-      <div class="col-toggle" id="colToggleState">
-        <button class="extra-btn" onclick="toggleColDropdown('state')" title="कॉलम चुनें (राज्य)"><i class="fas fa-columns"></i></button>
-        <div class="col-toggle-content" id="colDropdownState"></div>
-      </div>
-      <div class="col-toggle" id="colTogglePersonnel">
-        <button class="extra-btn" onclick="toggleColDropdown('personnel')" title="कॉलम (कर्मी)"><i class="fas fa-columns"></i></button>
-        <div class="col-toggle-content" id="colDropdownPersonnel"></div>
-      </div>
-      <div class="col-toggle" id="colToggleRep">
-        <button class="extra-btn" onclick="toggleColDropdown('rep')" title="कॉलम (प्रतिनिधि)"><i class="fas fa-columns"></i></button>
-        <div class="col-toggle-content" id="colDropdownRep"></div>
-      </div>
-      <div class="col-toggle" id="colTogglePanchayat">
-        <button class="extra-btn" onclick="toggleColDropdown('panchayat')" title="कॉलम (कचहरी)"><i class="fas fa-columns"></i></button>
-        <div class="col-toggle-content" id="colDropdownPanchayat"></div>
-      </div>
     </div>
   </div>
 
@@ -1416,62 +1398,6 @@
     saveSettings();
   }
 
-  // ========== कॉलम विजिबिलिटी ==========
-  function initColumnToggles() {
-    const tables = [
-      { id: '15', columns: ['क्र.', 'मद', 'वित्त वर्ष', 'योजना का नाम', 'राशि', 'स्थिति'] },
-      { id: 'state', columns: ['क्र.', 'मद', 'वित्त वर्ष', 'योजना का नाम', 'राशि', 'स्थिति'] },
-      { id: 'personnel', columns: ['क्र.', 'नाम', 'पदनाम', 'मोबाईल नं.', 'कार्य अवधि', 'उपस्थित'] },
-      { id: 'rep', columns: ['क्र.', 'नाम', 'पदनाम', 'मोबाईल नं.'] },
-      { id: 'panchayat', columns: ['क्र.', 'नाम', 'पदनाम', 'मोबाईल नं.'] }
-    ];
-    tables.forEach(t => {
-      const dropdown = document.getElementById(`colDropdown${t.id.charAt(0).toUpperCase() + t.id.slice(1)}`);
-      if (!dropdown) return;
-      let html = '';
-      t.columns.forEach((col, idx) => {
-        html += `<label><input type="checkbox" data-col="${idx}" checked> ${col}</label>`;
-      });
-      dropdown.innerHTML = html;
-      dropdown.querySelectorAll('input').forEach(cb => {
-        cb.addEventListener('change', () => updateColumnVisibility(t.id));
-      });
-    });
-  }
-
-  function toggleColDropdown(tableId) {
-    const map = { '15': '15', 'state': 'State', 'personnel': 'Personnel', 'rep': 'Rep', 'panchayat': 'Panchayat' };
-    const dropdown = document.getElementById(`colDropdown${map[tableId]}`);
-    dropdown.classList.toggle('show');
-  }
-
-  function updateColumnVisibility(tableId) {
-    const table = document.getElementById(
-      tableId === '15' ? 'table15' :
-      tableId === 'state' ? 'tableState' :
-      tableId === 'personnel' ? 'tablePersonnel' :
-      tableId === 'rep' ? 'tableRep' : 'tablePanchayat'
-    );
-    const dropdown = document.getElementById(
-      tableId === '15' ? 'colDropdown15' :
-      tableId === 'state' ? 'colDropdownState' :
-      tableId === 'personnel' ? 'colDropdownPersonnel' :
-      tableId === 'rep' ? 'colDropdownRep' : 'colDropdownPanchayat'
-    );
-    if (!table || !dropdown) return;
-    const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
-    const headers = table.querySelectorAll('thead th');
-    checkboxes.forEach((cb, index) => {
-      const colIndex = parseInt(cb.dataset.col);
-      const visible = cb.checked;
-      table.querySelectorAll('tr').forEach(row => {
-        if (row.cells[colIndex]) row.cells[colIndex].style.display = visible ? '' : 'none';
-      });
-      if (headers[colIndex]) headers[colIndex].style.display = visible ? '' : 'none';
-    });
-    saveSettings();
-  }
-
   // ========== फ़िल्टरिंग ==========
   function getFilteredSchemes() {
     const search = document.getElementById('searchInput').value.toLowerCase();
@@ -1547,13 +1473,12 @@
         <td>${start + i + 1}</td>
         <td>${s.fund}</td>
         <td>${s.year}</td>
-        <td title="${s.desc}">${s.desc}</td>   <!-- यहाँ पूरा नाम दिख रहा है -->
+        <td title="${s.desc}">${s.desc}</td>   <!-- योजना का पूरा नाम -->
         <td class="rupee-cell">${formatMoney(s.amount)}</td>
         <td><span class="status-super ${cls}"><i class="fas ${ico}"></i> ${s.status}</span></td>
       </tr>`;
     });
     renderPagination(data.length, page, tableType, rowsPerPage);
-    setTimeout(() => updateColumnVisibility(tableType), 50);
   }
 
   function renderPagination(totalRows, currentPage, tableType, rowsPerPage) {
@@ -2049,7 +1974,6 @@ ${schemes.map((s,i)=>`<tr><td>${i+1}</td><td>${s.fund}</td><td>${s.year}</td><td
 
   // ========== इनिशियलाइज़ ==========
   window.onload = function() {
-    initColumnToggles();
     loadSettings();
     setLastUpdated();
     updateMetrics();
@@ -2076,9 +2000,6 @@ ${schemes.map((s,i)=>`<tr><td>${i+1}</td><td>${s.fund}</td><td>${s.year}</td><td
       if (!e.target.closest('.multi-year-dropdown')) {
         document.getElementById('yearDropdown').classList.remove('show');
       }
-      if (!e.target.closest('.col-toggle')) {
-        document.querySelectorAll('.col-toggle-content').forEach(d => d.classList.remove('show'));
-      }
     });
 
     // स्लाइडर सिंक
@@ -2100,7 +2021,6 @@ ${schemes.map((s,i)=>`<tr><td>${i+1}</td><td>${s.fund}</td><td>${s.year}</td><td
   window.toggleLanguage = toggleLanguage;
   window.setTheme = setTheme;
   window.toggleFullScreen = toggleFullScreen;
-  window.toggleColDropdown = toggleColDropdown;
   window.startVoiceSearch = startVoiceSearch;
   window.resetFilters = resetFilters;
   window.applyAmountFilter = applyAmountFilter;
