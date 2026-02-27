@@ -145,6 +145,7 @@
       display: flex;
       align-items: center;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
     .ashoka-emblem {
@@ -161,11 +162,11 @@
 
     /* नया लोगो स्टाइल - आकार बड़ा किया गया */
     .prd-logo {
-      height: 5rem;  /* पहले 3.5rem था, अब 5rem */
+      height: 5rem;
       width: auto;
       border-radius: 8px;
       object-fit: contain;
-      /* ===== नई सुरक्षा CSS ===== */
+      /* सुरक्षा CSS */
       -webkit-touch-callout: none !important;
       -webkit-user-select: none !important;
       -khtml-user-select: none !important;
@@ -219,6 +220,8 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .live-clock {
@@ -230,6 +233,7 @@
       font-size: 0.95rem;
       border: 1px solid rgba(255,255,255,0.3);
       animation: clockPulse 2s infinite;
+      white-space: nowrap;
     }
     @keyframes clockPulse {
       0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.3); }
@@ -248,6 +252,7 @@
       transition: 0.2s;
       border: 1px solid white;
       font-size: 0.9rem;
+      white-space: nowrap;
     }
     .commission-tag:hover {
       background: #e58e2b;
@@ -264,6 +269,7 @@
       cursor: pointer;
       transition: 0.2s;
       font-size: 0.9rem;
+      white-space: nowrap;
     }
     .language-switch:hover {
       background: var(--green);
@@ -287,6 +293,29 @@
     .theme-btn.dark { background: #0f172a; }
     .theme-btn.green { background: #1b5e20; }
     .theme-btn.blue { background: #0d47a1; }
+
+    /* India logo - आकार बढ़ाया गया और मोबाइल के लिए अनुकूलित */
+    .india-logo {
+      height: 60px !important;
+      width: auto;
+      border-radius: 4px;
+      object-fit: contain;
+      -webkit-user-select: none;
+      user-select: none;
+      pointer-events: none;
+      margin-left: 8px;
+      transition: height 0.2s;
+    }
+    @media (max-width: 700px) {
+      .india-logo {
+        height: 50px !important;
+      }
+    }
+    @media (max-width: 500px) {
+      .india-logo {
+        height: 45px !important;
+      }
+    }
 
     .stats-grid {
       display: grid;
@@ -517,6 +546,7 @@
       padding: 4px 12px;
       border-radius: 40px;
       font-size: 0.8rem;
+      flex-wrap: wrap;
     }
     .amount-filter input {
       width: 80px;
@@ -745,10 +775,10 @@
       word-break: break-word;
     }
     /* बोल्ड किए गए कॉलम */
-    #tablePersonnel tbody tr td:nth-child(2) { font-weight: 600; } /* कर्मी नाम */
-    #tableRep tbody tr td:nth-child(2) { font-weight: 600; } /* प्रतिनिधि नाम */
-    #tablePanchayat tbody tr td:nth-child(2) { font-weight: 600; } /* पंच नाम */
-    #table15 tbody tr td:nth-child(4), #tableState tbody tr td:nth-child(4) { font-weight: 600; } /* योजना का नाम */
+    #tablePersonnel tbody tr td:nth-child(2) { font-weight: 600; }
+    #tableRep tbody tr td:nth-child(2) { font-weight: 600; }
+    #tablePanchayat tbody tr td:nth-child(2) { font-weight: 600; }
+    #table15 tbody tr td:nth-child(4), #tableState tbody tr td:nth-child(4) { font-weight: 600; }
     tbody tr:hover td {
       background: var(--hover-bg);
       transition: 0.15s;
@@ -823,6 +853,7 @@
     .footer-actions {
       display: flex;
       gap: 8px;
+      flex-wrap: wrap;
     }
     .btn-icon {
       background: var(--navy);
@@ -1004,6 +1035,7 @@
     }
     @media (max-width: 700px) {
       .stats-grid { grid-template-columns: 1fr 1fr; }
+      .header-actions { justify-content: center; }
     }
     @media (max-width: 500px) {
       .stats-grid { grid-template-columns: 1fr; }
@@ -1024,7 +1056,7 @@
   <div class="official-masthead">
     <div class="emblem-row">
       <div class="emblem-group">
-        <!-- ===== नया जोड़ा गया PRD लोगो ===== -->
+        <!-- PRD लोगो -->
         <img src="PRD.jpg" alt="PRD Logo" class="prd-logo" oncontextmenu="return false;">
         <div class="ashoka-emblem"><i class="fas fa-lion"></i></div>
         <div class="govt-text">
@@ -1048,8 +1080,8 @@
           <i class="fas fa-moon"></i> <span id="darkModeText">डार्क मोड</span>
         </div>
         <button class="language-switch" onclick="toggleLanguage()"><i class="fas fa-language"></i> <span id="langText">English</span></button>
-        <!-- ===== नया जोड़ा गया india.gif लोगो ===== -->
-        <img src="india.gif" alt="India" class="india-logo" oncontextmenu="return false;" style="height: 40px; width: auto; border-radius: 4px; object-fit: contain; -webkit-user-select: none; user-select: none; pointer-events: none; margin-left: 8px;">
+        <!-- India logo - आकार बढ़ाया गया और मोबाइल पर दिखने योग्य बनाया गया -->
+        <img src="india.gif" alt="India" class="india-logo" oncontextmenu="return false;" style="height: 60px; width: auto; border-radius: 4px; object-fit: contain; -webkit-user-select: none; user-select: none; pointer-events: none; margin-left: 8px;">
       </div>
     </div>
 
@@ -1295,7 +1327,7 @@
     </div>
   </div>
 
-  <!-- ========== नया जोड़ा गया मानचित्र अनुभाग ========== -->
+  <!-- मानचित्र अनुभाग -->
   <div class="map-section">
     <div class="table-header">
       <h2><i class="fas fa-map-marked-alt" style="color:#FF9933;"></i> ग्राम पंचायत सर्वा का मानचित्र</h2>
@@ -1305,7 +1337,7 @@
     </div>
   </div>
 
-  <!-- ========== टिप्पणी / सुझाव अनुभाग (अब सबसे नीचे) ========== -->
+  <!-- टिप्पणी / सुझाव अनुभाग -->
   <div class="comment-section">
     <div class="feature-title"><i class="fas fa-comments"></i> टिप्पणी / सुझाव</div>
     <div class="comment-list" id="commentList"></div>
@@ -1357,7 +1389,7 @@
 </div>
 
 <script>
-  // ---------- समस्त डेटा (वही रखा गया है) ----------
+  // ---------- समस्त डेटा (बिल्कुल पहले जैसा) ----------
   const schemes = [
     // 15वीं वित्त (24)
     { fund: "15वीं वित्त आयोग", year: "2021–22", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा के वार्ड सं0-07 में बौधी पोखर के चारो तरफ मिट्टी भराई एवं खरंजीकरण कार्य।", amount: 1096700, status: "पूर्ण" },
@@ -1455,7 +1487,7 @@
     { name: "श्री विनोद पासवान", designation: "ग्राम कचहरी पंच - 12", mobile: "7763094648" }
   ];
 
-  // ---------- ग्लोबल वेरिएबल ----------
+  // ---------- ग्लोबल वेरिएबल (बिल्कुल पहले जैसा) ----------
   let currentSort = { table: null, col: 0, asc: true };
   let chartInstance, pieChartInstance;
 
@@ -1469,6 +1501,7 @@
   let currentLanguage = 'hi';
   let minAmount = 0, maxAmount = 10000000;
 
+  // ---------- सभी फंक्शन (बिल्कुल पहले जैसे) ----------
   function showToast(message, duration = 3000) {
     const toast = document.getElementById('toast');
     toast.textContent = message;
@@ -1539,7 +1572,6 @@
     pageData.forEach((s, i) => {
       let cls = s.status === 'पूर्ण' ? 'complete' : 'progress';
       let ico = s.status === 'पूर्ण' ? 'fa-check' : 'fa-clock';
-      // पूरा नाम दिखाएँ, बिना कटौती के
       tbody.innerHTML += `<tr onclick="showProjectModal('${s.fund.replace(/'/g, "\\'")}', '${s.year}', '${s.desc.replace(/'/g, "\\'")}', ${s.amount}, '${s.status}')">
         <td>${start + i + 1}</td>
         <td>${s.fund}</td>
@@ -1693,7 +1725,6 @@
     const top3 = [...schemes].sort((a,b)=>b.amount-a.amount).slice(0,3);
     let topHtml = '';
     top3.forEach(s => {
-      // पूरा नाम दिखाएँ
       topHtml += `<div class="top-project-item" title="${s.desc}"><span>${s.desc}</span> <strong>${formatMoney(s.amount)}</strong></div>`;
     });
     document.getElementById('topProjects').innerHTML = topHtml;
@@ -2018,7 +2049,6 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
     if (theme === 'dark') document.body.classList.add('dark-mode');
     else if (theme === 'green') document.body.classList.add('theme-green');
     else if (theme === 'blue') document.body.classList.add('theme-blue');
-    // default: no extra class
     renderCharts();
   }
 
@@ -2059,15 +2089,24 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
     list.innerHTML = comments.map(c => `<div class="comment-item"><span class="comment-name">${c.name}</span> (${c.date})<br>${c.text}</div>`).join('') || 'कोई टिप्पणी नहीं';
   }
 
-  // ===== नई सुरक्षा JavaScript =====
+  function showProjectModal(fund, year, desc, amount, status) {
+    document.getElementById('modalFund').innerText = fund;
+    document.getElementById('modalYear').innerText = year;
+    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('modalAmount').innerText = formatMoney(amount);
+    document.getElementById('modalStatus').innerText = status;
+    document.getElementById('projectModal').classList.add('show');
+  }
+
+  function closeModal() {
+    document.getElementById('projectModal').classList.remove('show');
+  }
+
   function enableImageProtection() {
-    // इमेज पर राइट क्लिक बंद करें
     document.querySelectorAll('.prd-logo, .map-container img, .india-logo').forEach(img => {
       img.addEventListener('contextmenu', (e) => e.preventDefault());
       img.addEventListener('dragstart', (e) => e.preventDefault());
     });
-
-    // कीबोर्ड शॉर्टकट बंद करें (F12, Ctrl+Shift+I, Ctrl+U)
     document.addEventListener('keydown', function(e) {
       if (e.key === 'F12' || 
           (e.ctrlKey && e.shiftKey && e.key === 'I') || 
@@ -2076,8 +2115,6 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
         return false;
       }
     });
-
-    // मोबाइल पर लॉन्ग-प्रेस मेनू रोकें
     let touchTimer;
     document.querySelectorAll('.prd-logo, .map-container img, .india-logo').forEach(img => {
       img.addEventListener('touchstart', function(e) {
@@ -2094,7 +2131,6 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
     });
   }
 
-  // कीबोर्ड शॉर्टकट
   document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key === 'f') {
       e.preventDefault();
@@ -2107,7 +2143,6 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
     }
   });
 
-  // PWA सर्विस वर्कर
   if ('serviceWorker' in navigator) {
     const swCode = `
       self.addEventListener('install', (e) => e.waitUntil(self.skipWaiting()));
@@ -2119,7 +2154,6 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
     navigator.serviceWorker.register(swUrl).then(() => console.log('SW registered')).catch(console.error);
   }
 
-  // इनिशियलाइज़
   document.getElementById('searchInput').addEventListener('input', () => { currentPage15 = 1; currentPageState = 1; filterData(); });
   document.getElementById('yearFilter').addEventListener('change', () => { currentPage15 = 1; currentPageState = 1; filterData(); });
   document.querySelectorAll('.pill').forEach(p => {
@@ -2151,7 +2185,6 @@ ${panchayatMembers.map((m,i)=>`<tr><td>${i+1}</td><td>${m.name}</td><td>${m.desi
     updateColumnVisibility('state');
   }, 100);
 
-  // इमेज प्रोटेक्शन एक्टिवेट करें
   enableImageProtection();
 
   window.sortTable = sortTable;
