@@ -907,17 +907,7 @@
     </div>
     <div class="table-scroll">
       <table id="tableGrievance">
-        <thead><tr>
-          <th>क्र.</th>
-          <th>दिनांक</th>
-          <th>आवेदन संख्या</th>
-          <th>आवेदक का नाम</th>
-          <th>मोबाइल नं.</th>
-          <th>ब्लॉक</th>
-          <th>कार्यालय</th>
-          <th>विषय</th>
-          <th>स्थिति</th>
-        </tr></thead>
+        <thead><tr id="grievanceTableHeader"></tr></thead>
         <tbody id="tableGrievanceBody"></tbody>
       </table>
     </div>
@@ -949,14 +939,7 @@
     </div>
     <div class="table-scroll">
       <table id="table15">
-        <thead><tr>
-          <th>क्र.</th>
-          <th>मद</th>
-          <th>वित्त वर्ष</th>
-          <th>योजना का नाम</th>
-          <th>राशि</th>
-          <th>स्थिति</th>
-        </tr></thead>
+        <thead><tr id="table15Header"></tr></thead>
         <tbody id="table15Body"></tbody>
         <tfoot><tr><td colspan="5" class="grand-total-label">कुल</td><td class="rupee-cell grand-total-amt" id="footer15Total">₹0</td></tr></tfoot>
       </table>
@@ -989,14 +972,7 @@
     </div>
     <div class="table-scroll">
       <table id="tableState">
-        <thead><tr>
-          <th>क्र.</th>
-          <th>मद</th>
-          <th>वित्त वर्ष</th>
-          <th>योजना का नाम</th>
-          <th>राशि</th>
-          <th>स्थिति</th>
-        </tr></thead>
+        <thead><tr id="tableStateHeader"></tr></thead>
         <tbody id="tableStateBody"></tbody>
         <tfoot><tr><td colspan="5" class="grand-total-label">कुल</td><td class="rupee-cell grand-total-amt" id="footerStateTotal">₹0</td></tr></tfoot>
       </table>
@@ -1022,14 +998,7 @@
     </div>
     <div class="table-scroll">
       <table id="tablePersonnel">
-        <thead><tr>
-          <th>क्र.</th>
-          <th>नाम</th>
-          <th>पदनाम</th>
-          <th>मोबाईल नं.</th>
-          <th>कार्य अवधि</th>
-          <th>उपस्थित</th>
-        </tr></thead>
+        <thead><tr id="personnelTableHeader"></tr></thead>
         <tbody id="tablePersonnelBody"></tbody>
       </table>
     </div>
@@ -1053,12 +1022,7 @@
     </div>
     <div class="table-scroll">
       <table id="tableRep">
-        <thead><tr>
-          <th>क्र.</th>
-          <th>नाम</th>
-          <th>पदनाम</th>
-          <th>मोबाईल नं.</th>
-        </tr></thead>
+        <thead><tr id="repTableHeader"></tr></thead>
         <tbody id="tableRepBody"></tbody>
       </table>
     </div>
@@ -1082,12 +1046,7 @@
     </div>
     <div class="table-scroll">
       <table id="tablePanchayat">
-        <thead><tr>
-          <th>क्र.</th>
-          <th>नाम</th>
-          <th>पदनाम</th>
-          <th>मोबाईल नं.</th>
-        </tr></thead>
+        <thead><tr id="panchayatTableHeader"></tr></thead>
         <tbody id="tablePanchayatBody"></tbody>
       </table>
     </div>
@@ -1391,7 +1350,7 @@
   let currentLanguage = 'hi';
   let currentRating = 0; // for star rating
 
-  // Translation dictionary
+  // Translation dictionary (updated with all needed keys)
   const translations = {
     hi: {
       mainHeading: '15वीं वित्त + षष्टम राज्य वित्त',
@@ -1417,7 +1376,7 @@
       grievanceTitle: 'ग्राम पंचायत सर्वा से प्राप्त आवेदन की विवरणी',
       rowsLabel: 'पंक्तियाँ:',
       totalGrievancesLabel: 'कुल आवेदन',
-      disposedGrievancesLabel: 'निर्वर्तित (Disposed)',
+      disposedGrievancesLabel: 'निष्पादित (Disposed)',
       pendingGrievancesLabel: 'लंबित (Pending)',
       modalTitle: 'योजना का विवरण',
       modalFundLabel: 'मद:',
@@ -1428,7 +1387,37 @@
       commentPlaceholderName: 'आपका नाम',
       commentPlaceholderText: 'आपकी टिप्पणी...',
       commentSubmit: 'भेजें',
-      notificationText: '📢 आगामी समृद्धि यात्रा माननीय मुख्यमंत्री जी का दिनांक 14 मार्च 2026 को ',
+      notificationText: '📢 आगामी समृद्धि यात्रा माननीय मुख्यमंत्री जी का दिनांक 14 मार्च 2026 को',
+      // Table headers
+      thSn: 'क्र.',
+      thFund: 'मद',
+      thYear: 'वित्त वर्ष',
+      thDesc: 'योजना का नाम',
+      thAmount: 'राशि',
+      thStatus: 'स्थिति',
+      thDate: 'दिनांक',
+      thAppNo: 'आवेदन संख्या',
+      thApplicant: 'आवेदक का नाम',
+      thMobile: 'मोबाइल नं.',
+      thBlock: 'ब्लॉक',
+      thOffice: 'कार्यालय',
+      thSubject: 'विषय',
+      thName: 'नाम',
+      thDesignation: 'पदनाम',
+      thProcedure: 'कार्य अवधि',
+      thAttendance: 'उपस्थित',
+      // Status mapping
+      statusComplete: 'पूर्ण',
+      statusProgress: 'कार्य प्रगति पर',
+      statusDisposed: 'निष्पादित',
+      statusPending: 'लंबित',
+      // Footer
+      grandTotalLabel: 'कुल',
+      // Other
+      commentDeleted: 'टिप्पणी हटा दी गई',
+      commentAdded: 'टिप्पणी जोड़ दी गई',
+      languageSwitched: 'भाषा बदल दी गई',
+      noComments: 'कोई टिप्पणी नहीं',
     },
     en: {
       mainHeading: '15th Finance + 6th State Finance',
@@ -1465,7 +1454,37 @@
       commentPlaceholderName: 'Your name',
       commentPlaceholderText: 'Your comment...',
       commentSubmit: 'Submit',
-      notificationText: '📢 Upcoming Gram Sabha on 15 Apr 2026 | Health Camp on 20 Apr',
+      notificationText: '📢 Upcoming Samriddhi Yatra of CM on 14 Mar 2026',
+      // Table headers
+      thSn: 'S.No.',
+      thFund: 'Fund',
+      thYear: 'Year',
+      thDesc: 'Scheme Name',
+      thAmount: 'Amount',
+      thStatus: 'Status',
+      thDate: 'Date',
+      thAppNo: 'App No.',
+      thApplicant: 'Applicant Name',
+      thMobile: 'Mobile',
+      thBlock: 'Block',
+      thOffice: 'Office',
+      thSubject: 'Subject',
+      thName: 'Name',
+      thDesignation: 'Designation',
+      thProcedure: 'Work Days',
+      thAttendance: 'Attendance',
+      // Status mapping
+      statusComplete: 'Completed',
+      statusProgress: 'In Progress',
+      statusDisposed: 'Disposed',
+      statusPending: 'Pending',
+      // Footer
+      grandTotalLabel: 'Total',
+      // Other
+      commentDeleted: 'Comment deleted',
+      commentAdded: 'Comment added',
+      languageSwitched: 'Language switched',
+      noComments: 'No comments',
     }
   };
 
@@ -1481,11 +1500,8 @@
   }
 
   function formatMoney(n) {
-    let [int, frac] = n.toFixed(2).split('.');
-    let last = int.slice(-3);
-    let rest = int.slice(0, -3);
-    if (rest) last = ',' + last;
-    return '₹' + rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + last + '.' + frac;
+    // Indian currency format with 2 decimals
+    return '₹' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function updateClock() {
@@ -1526,10 +1542,13 @@
       filtered15 = filtered;
       currentPage15 = 1;
       renderTable('table15Body', filtered15, currentPage15, '15', rowsPerPage15);
+      // Update footer total
+      document.getElementById('footer15Total').innerText = formatMoney(filtered15.reduce((a,s)=>a+s.amount,0));
     } else {
       filteredState = filtered;
       currentPageState = 1;
       renderTable('tableStateBody', filteredState, currentPageState, 'state', rowsPerPageState);
+      document.getElementById('footerStateTotal').innerText = formatMoney(filteredState.reduce((a,s)=>a+s.amount,0));
     }
   }
 
@@ -1552,15 +1571,15 @@
     if (type === 'grievance') {
       data = filteredGrievances;
       filename = 'grievances.csv';
-      headers = ['क्र.','दिनांक','आवेदन संख्या','आवेदक का नाम','मोबाइल नं.','ब्लॉक','कार्यालय','विषय','स्थिति'];
+      headers = [t('thSn'), t('thDate'), t('thAppNo'), t('thApplicant'), t('thMobile'), t('thBlock'), t('thOffice'), t('thSubject'), t('thStatus')];
     } else if (type === '15') {
       data = filtered15;
       filename = '15th_finance.csv';
-      headers = ['क्र.','मद','वित्त वर्ष','योजना का नाम','राशि','स्थिति'];
+      headers = [t('thSn'), t('thFund'), t('thYear'), t('thDesc'), t('thAmount'), t('thStatus')];
     } else if (type === 'state') {
       data = filteredState;
       filename = 'state_finance.csv';
-      headers = ['क्र.','मद','वित्त वर्ष','योजना का नाम','राशि','स्थिति'];
+      headers = [t('thSn'), t('thFund'), t('thYear'), t('thDesc'), t('thAmount'), t('thStatus')];
     } else return;
 
     let csv = headers.join(',') + '\n';
@@ -1593,13 +1612,20 @@
     pageData.forEach((s, i) => {
       let cls = s.status === 'पूर्ण' ? 'complete' : 'progress';
       let ico = s.status === 'पूर्ण' ? 'fa-check' : 'fa-clock';
-      tbody.innerHTML += `<tr onclick="showProjectModal('${s.fund.replace(/'/g, "\\'")}', '${s.year}', '${s.desc.replace(/'/g, "\\'")}', ${s.amount}, '${s.status}')">
+      // Translate status if needed
+      let statusText = s.status;
+      if (currentLanguage === 'en') {
+        statusText = s.status === 'पूर्ण' ? t('statusComplete') : t('statusProgress');
+      }
+      // Escape description for onclick (replace single quote with &apos;)
+      let descEscaped = s.desc.replace(/'/g, "&apos;").replace(/"/g, "&quot;");
+      tbody.innerHTML += `<tr onclick="showProjectModal('${s.fund.replace(/'/g, "&apos;")}', '${s.year}', '${descEscaped}', ${s.amount}, '${s.status}')">
         <td>${start + i + 1}</td>
         <td>${s.fund}</td>
         <td>${s.year}</td>
         <td title="${s.desc}">${s.desc.substring(0,50)}${s.desc.length>50?'…':''}</td>
         <td class="rupee-cell">${formatMoney(s.amount)}</td>
-        <td><span class="status-super ${cls}"><i class="fas ${ico}"></i> ${s.status}</span></td>
+        <td><span class="status-super ${cls}"><i class="fas ${ico}"></i> ${statusText}</span></td>
       </tr>`;
     });
     renderPagination(data.length, page, tableType, rowsPerPage);
@@ -1614,6 +1640,11 @@
     pageData.forEach((g, i) => {
       let cls = g.status === 'Disposed' ? 'disposed' : 'pending';
       let ico = g.status === 'Disposed' ? 'fa-check' : 'fa-clock';
+      // Translate status if needed
+      let statusText = g.status;
+      if (currentLanguage === 'hi') {
+        statusText = g.status === 'Disposed' ? t('statusDisposed') : t('statusPending');
+      }
       tbody.innerHTML += `<tr onclick="showGrievanceModal(${start + i})">
         <td>${start + i + 1}</td>
         <td>${g.date}</td>
@@ -1623,7 +1654,7 @@
         <td>${g.block}</td>
         <td>${g.office}</td>
         <td title="${g.subject}">${g.subject.substring(0,40)}${g.subject.length>40?'…':''}</td>
-        <td><span class="status-super ${cls}"><i class="fas ${ico}"></i> ${g.status}</span></td>
+        <td><span class="status-super ${cls}"><i class="fas ${ico}"></i> ${statusText}</span></td>
       </tr>`;
     });
     document.getElementById('badgeGrievance').innerText = filteredGrievances.length + (currentLanguage === 'hi' ? ' आवेदन' : ' applications');
@@ -1732,8 +1763,59 @@
   }
 
   function renderAllTables() {
-    // Reset filters to full data if needed (but keep filtered versions)
-    // For personnel/rep/panchayat we don't filter
+    // Set table headers dynamically based on language
+    document.getElementById('grievanceTableHeader').innerHTML = `
+      <th>${t('thSn')}</th>
+      <th>${t('thDate')}</th>
+      <th>${t('thAppNo')}</th>
+      <th>${t('thApplicant')}</th>
+      <th>${t('thMobile')}</th>
+      <th>${t('thBlock')}</th>
+      <th>${t('thOffice')}</th>
+      <th>${t('thSubject')}</th>
+      <th>${t('thStatus')}</th>
+    `;
+    document.getElementById('table15Header').innerHTML = `
+      <th>${t('thSn')}</th>
+      <th>${t('thFund')}</th>
+      <th>${t('thYear')}</th>
+      <th>${t('thDesc')}</th>
+      <th>${t('thAmount')}</th>
+      <th>${t('thStatus')}</th>
+    `;
+    document.getElementById('tableStateHeader').innerHTML = `
+      <th>${t('thSn')}</th>
+      <th>${t('thFund')}</th>
+      <th>${t('thYear')}</th>
+      <th>${t('thDesc')}</th>
+      <th>${t('thAmount')}</th>
+      <th>${t('thStatus')}</th>
+    `;
+    document.getElementById('personnelTableHeader').innerHTML = `
+      <th>${t('thSn')}</th>
+      <th>${t('thName')}</th>
+      <th>${t('thDesignation')}</th>
+      <th>${t('thMobile')}</th>
+      <th>${t('thProcedure')}</th>
+      <th>${t('thAttendance')}</th>
+    `;
+    document.getElementById('repTableHeader').innerHTML = `
+      <th>${t('thSn')}</th>
+      <th>${t('thName')}</th>
+      <th>${t('thDesignation')}</th>
+      <th>${t('thMobile')}</th>
+    `;
+    document.getElementById('panchayatTableHeader').innerHTML = `
+      <th>${t('thSn')}</th>
+      <th>${t('thName')}</th>
+      <th>${t('thDesignation')}</th>
+      <th>${t('thMobile')}</th>
+    `;
+
+    // Update grand total label in footers
+    document.querySelectorAll('.grand-total-label').forEach(el => el.innerText = t('grandTotalLabel'));
+
+    // Render tables
     renderTable('table15Body', filtered15, currentPage15, '15', rowsPerPage15);
     renderTable('tableStateBody', filteredState, currentPageState, 'state', rowsPerPageState);
     document.getElementById('footer15Total').innerText = formatMoney(filtered15.reduce((a,s)=>a+s.amount,0));
@@ -1821,7 +1903,7 @@
         html += `<div class="dept-pending-item"><span>${office}</span> <strong>${count}</strong></div>`;
       });
     } else {
-      html = `<div class="dept-pending-item">कोई लंबित नहीं</div>`;
+      html = `<div class="dept-pending-item">${currentLanguage === 'hi' ? 'कोई लंबित नहीं' : 'No pending'}</div>`;
     }
     document.getElementById('deptPendingList').innerHTML = html;
   }
@@ -1871,9 +1953,16 @@
   function showProjectModal(fund, year, desc, amount, status) {
     document.getElementById('modalFund').innerText = fund;
     document.getElementById('modalYear').innerText = year;
-    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('modalDesc').innerHTML = desc; // use innerHTML to render escaped quotes properly
     document.getElementById('modalAmount').innerText = formatMoney(amount);
-    document.getElementById('modalStatus').innerText = status;
+    // Translate status if needed
+    let statusText = status;
+    if (currentLanguage === 'en') {
+      statusText = status === 'पूर्ण' ? t('statusComplete') : t('statusProgress');
+    } else {
+      statusText = status; // keep as is in Hindi
+    }
+    document.getElementById('modalStatus').innerText = statusText;
     document.getElementById('projectModal').classList.add('show');
   }
 
@@ -1891,7 +1980,11 @@
     document.getElementById('modalGrievanceBlock').innerText = g.block;
     document.getElementById('modalGrievanceOffice').innerText = g.office;
     document.getElementById('modalGrievanceSubject').innerText = g.subject;
-    document.getElementById('modalGrievanceStatus').innerText = g.status;
+    let statusText = g.status;
+    if (currentLanguage === 'hi') {
+      statusText = g.status === 'Disposed' ? t('statusDisposed') : t('statusPending');
+    }
+    document.getElementById('modalGrievanceStatus').innerText = statusText;
     document.getElementById('grievanceModal').classList.add('show');
   }
 
@@ -1942,7 +2035,7 @@
 
     updateMetrics();
     renderCharts();
-    renderAllTables();
+    renderAllTables(); // this will update headers and statuses
     showToast(t('languageSwitched'));
   }
 
