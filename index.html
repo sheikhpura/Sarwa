@@ -767,7 +767,7 @@
     <div class="green"></div>
   </div>
 
-  <!-- नोटिफिकेशन बैनर (नया) -->
+  <!-- नोटिफिकेशन बैनर -->
   <div class="notification-banner">
     <i class="fas fa-bullhorn"></i>
     <span id="notificationText">📢 आगामी समृद्धि यात्रा माननीय मुख्यमंत्री जी का दिनांक 14 मार्च 2026 को</span>
@@ -892,39 +892,107 @@
     </div>
   </div>
 
-  <!-- आवेदन तालिका (सर्च + एक्सपोर्ट) -->
+  <!-- ========== तालिका क्रम 1: ग्राम पंचायत सर्वा के कर्मीगण ========== -->
   <div class="table-section">
     <div class="table-header">
-      <h2><i class="fas fa-file-alt" style="color:#FF9933;"></i> <span id="grievanceTitle">ग्राम पंचायत सर्वा से प्राप्त आवेदन की विवरणी</span></h2>
-      <div class="badge" id="badgeGrievance">0 आवेदन</div>
-    </div>
-    <div class="search-export">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchGrievance" placeholder="खोजें (नाम, विषय, स्थिति...)" onkeyup="filterGrievanceTable()">
-      </div>
-      <button class="export-btn" onclick="exportTableToCSV('grievance')"><i class="fas fa-download"></i> CSV</button>
+      <h2><i class="fas fa-users" style="color:#FF9933;"></i> <span class="personnelTitle">ग्राम पंचायत सर्वा के कर्मीगण</span></h2>
+      <div class="badge" id="badgePersonnel">0 कर्मी</div>
     </div>
     <div class="table-scroll">
-      <table id="tableGrievance">
-        <thead><tr id="grievanceTableHeader"></tr></thead>
-        <tbody id="tableGrievanceBody"></tbody>
+      <table id="tablePersonnel">
+        <thead><tr id="personnelTableHeader"></tr></thead>
+        <tbody id="tablePersonnelBody"></tbody>
       </table>
     </div>
     <div class="pagination-wrapper">
       <div class="rows-selector">
         <span class="rowsLabel">पंक्तियाँ:</span>
-        <select id="rowsPerPageGrievance" onchange="changeRowsPerPage('grievance')">
+        <select id="rowsPerPagePersonnel" onchange="changeRowsPerPage('personnel')">
           <option value="5">5</option>
           <option value="10" selected>10</option>
           <option value="20">20</option>
         </select>
       </div>
-      <div class="pagination" id="paginationGrievance"></div>
+      <div class="pagination" id="paginationPersonnel"></div>
     </div>
   </div>
 
-  <!-- 15वीं वित्त टेबल (सर्च + एक्सपोर्ट) -->
+  <!-- ========== तालिका क्रम 2: ग्राम पंचायत सर्वा के जनप्रतिनिधि ========== -->
+  <div class="table-section">
+    <div class="table-header">
+      <h2><i class="fas fa-user-tie" style="color:#138808;"></i> <span class="repTitle">ग्राम पंचायत सर्वा के जनप्रतिनिधि</span></h2>
+      <div class="badge" id="badgeRep">0 प्रतिनिधि</div>
+    </div>
+    <div class="table-scroll">
+      <table id="tableRep">
+        <thead><tr id="repTableHeader"></tr></thead>
+        <tbody id="tableRepBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination-wrapper">
+      <div class="rows-selector">
+        <span class="rowsLabel">पंक्तियाँ:</span>
+        <select id="rowsPerPageRep" onchange="changeRowsPerPage('rep')">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+      <div class="pagination" id="paginationRep"></div>
+    </div>
+  </div>
+
+  <!-- ========== तालिका क्रम 3: ग्राम कचहरी सचिव एवं पंच ========== -->
+  <div class="table-section">
+    <div class="table-header">
+      <h2><i class="fas fa-gavel" style="color:#000080;"></i> <span class="panchayatTitle">ग्राम कचहरी सचिव एवं पंच</span></h2>
+      <div class="badge" id="badgePanchayat">0 सदस्य</div>
+    </div>
+    <div class="table-scroll">
+      <table id="tablePanchayat">
+        <thead><tr id="panchayatTableHeader"></tr></thead>
+        <tbody id="tablePanchayatBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination-wrapper">
+      <div class="rows-selector">
+        <span class="rowsLabel">पंक्तियाँ:</span>
+        <select id="rowsPerPagePanchayat" onchange="changeRowsPerPage('panchayat')">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+      <div class="pagination" id="paginationPanchayat"></div>
+    </div>
+  </div>
+
+  <!-- ========== तालिका क्रम 4: प्रखण्ड स्तरीय पदाधिकारी/पर्यवेक्षक ========== -->
+  <div class="table-section">
+    <div class="table-header">
+      <h2><i class="fas fa-user-tie" style="color:#FF9933;"></i> <span id="officerTitle">प्रखण्ड स्तरीय पदाधिकारी/पर्यवेक्षक</span></h2>
+      <div class="badge" id="badgeOfficer">0 पदाधिकारी</div>
+    </div>
+    <div class="table-scroll">
+      <table id="tableOfficer">
+        <thead><tr id="officerTableHeader"></tr></thead>
+        <tbody id="tableOfficerBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination-wrapper">
+      <div class="rows-selector">
+        <span class="rowsLabel">पंक्तियाँ:</span>
+        <select id="rowsPerPageOfficer" onchange="changeRowsPerPage('officer')">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+      <div class="pagination" id="paginationOfficer"></div>
+    </div>
+  </div>
+
+  <!-- ========== तालिका क्रम 5: 15वीं वित्त आयोग ========== -->
   <div class="table-section">
     <div class="table-header">
       <h2><i class="fas fa-landmark" style="color:#FF9933;"></i> <span id="table15Title">15वीं वित्त आयोग</span></h2>
@@ -957,7 +1025,7 @@
     </div>
   </div>
 
-  <!-- षष्टम राज्य वित्त टेबल (सर्च + एक्सपोर्ट) -->
+  <!-- ========== तालिका क्रम 6: षष्टम राज्य वित्त ========== -->
   <div class="table-section">
     <div class="table-header">
       <h2><i class="fas fa-building" style="color:#138808;"></i> <span id="tableStateTitle">षष्टम राज्य वित्त</span></h2>
@@ -990,76 +1058,35 @@
     </div>
   </div>
 
-  <!-- कर्मी, प्रतिनिधि, पंच टेबल (यथावत) -->
+  <!-- ========== तालिका क्रम 7: ग्राम पंचायत सर्वा से प्राप्त आवेदन की विवरणी ========== -->
   <div class="table-section">
     <div class="table-header">
-      <h2><i class="fas fa-users" style="color:#FF9933;"></i> <span class="personnelTitle">ग्राम पंचायत सर्वा के कर्मीगण</span></h2>
-      <div class="badge" id="badgePersonnel">0 कर्मी</div>
+      <h2><i class="fas fa-file-alt" style="color:#FF9933;"></i> <span id="grievanceTitle">ग्राम पंचायत सर्वा से प्राप्त आवेदन की विवरणी</span></h2>
+      <div class="badge" id="badgeGrievance">0 आवेदन</div>
+    </div>
+    <div class="search-export">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchGrievance" placeholder="खोजें (नाम, विषय, स्थिति...)" onkeyup="filterGrievanceTable()">
+      </div>
+      <button class="export-btn" onclick="exportTableToCSV('grievance')"><i class="fas fa-download"></i> CSV</button>
     </div>
     <div class="table-scroll">
-      <table id="tablePersonnel">
-        <thead><tr id="personnelTableHeader"></tr></thead>
-        <tbody id="tablePersonnelBody"></tbody>
+      <table id="tableGrievance">
+        <thead><tr id="grievanceTableHeader"></tr></thead>
+        <tbody id="tableGrievanceBody"></tbody>
       </table>
     </div>
     <div class="pagination-wrapper">
       <div class="rows-selector">
         <span class="rowsLabel">पंक्तियाँ:</span>
-        <select id="rowsPerPagePersonnel" onchange="changeRowsPerPage('personnel')">
+        <select id="rowsPerPageGrievance" onchange="changeRowsPerPage('grievance')">
           <option value="5">5</option>
           <option value="10" selected>10</option>
           <option value="20">20</option>
         </select>
       </div>
-      <div class="pagination" id="paginationPersonnel"></div>
-    </div>
-  </div>
-
-  <div class="table-section">
-    <div class="table-header">
-      <h2><i class="fas fa-user-tie" style="color:#138808;"></i> <span class="repTitle">ग्राम पंचायत सर्वा के जनप्रतिनिधि</span></h2>
-      <div class="badge" id="badgeRep">0 प्रतिनिधि</div>
-    </div>
-    <div class="table-scroll">
-      <table id="tableRep">
-        <thead><tr id="repTableHeader"></tr></thead>
-        <tbody id="tableRepBody"></tbody>
-      </table>
-    </div>
-    <div class="pagination-wrapper">
-      <div class="rows-selector">
-        <span class="rowsLabel">पंक्तियाँ:</span>
-        <select id="rowsPerPageRep" onchange="changeRowsPerPage('rep')">
-          <option value="5">5</option>
-          <option value="10" selected>10</option>
-          <option value="20">20</option>
-        </select>
-      </div>
-      <div class="pagination" id="paginationRep"></div>
-    </div>
-  </div>
-
-  <div class="table-section">
-    <div class="table-header">
-      <h2><i class="fas fa-gavel" style="color:#000080;"></i> <span class="panchayatTitle">ग्राम कचहरी सचिव एवं पंच</span></h2>
-      <div class="badge" id="badgePanchayat">0 सदस्य</div>
-    </div>
-    <div class="table-scroll">
-      <table id="tablePanchayat">
-        <thead><tr id="panchayatTableHeader"></tr></thead>
-        <tbody id="tablePanchayatBody"></tbody>
-      </table>
-    </div>
-    <div class="pagination-wrapper">
-      <div class="rows-selector">
-        <span class="rowsLabel">पंक्तियाँ:</span>
-        <select id="rowsPerPagePanchayat" onchange="changeRowsPerPage('panchayat')">
-          <option value="5">5</option>
-          <option value="10" selected>10</option>
-          <option value="20">20</option>
-        </select>
-      </div>
-      <div class="pagination" id="paginationPanchayat"></div>
+      <div class="pagination" id="paginationGrievance"></div>
     </div>
   </div>
 
@@ -1092,7 +1119,7 @@
     </div>
   </div>
 
-  <!-- मानचित्र अनुभाग - अब छवि पूरी चौड़ाई में -->
+  <!-- मानचित्र अनुभाग - छवि पूरी चौड़ाई में -->
   <div class="map-section">
     <div class="table-header">
       <h2><i class="fas fa-map-marked-alt" style="color:#FF9933;"></i> ग्राम पंचायत सर्वा का मानचित्र</h2>
@@ -1271,6 +1298,35 @@
     { name: "श्री विनोद पासवान", designation: "ग्राम कचहरी पंच - 12", mobile: "7763094648" }
   ];
 
+  // नया डेटा: प्रखण्ड स्तरीय पदाधिकारी (PDF से)
+  const blockOfficers = [
+    { name: "श्री अमित कुमार", designation: "प्रखण्ड विकास पदाधिकारी", mobile: "9990336939" },
+    { name: "श्री गोरव कुमार", designation: "अंचलाधिकारी", mobile: "9031671239" },
+    { name: "डॉ० दर्शना कुमारी", designation: "बाल विकास परियोजना पदाधिकारी", mobile: "9572375462" },
+    { name: "श्री राजीव रौशन", designation: "प्रखंड पंचायत राज पदाधिकारी", mobile: "8340723154" },
+    { name: "श्री मणिभूषण", designation: "प्रखंड सांख्यिकी पदाधिकारी", mobile: "7903471271" },
+    { name: "श्री बिनोद कुमार", designation: "प्रखंड कृषि पदाधिकारी", mobile: "7488305768" },
+    { name: "रेणु रिंह", designation: "प्रखंड शिक्षा पदाधिकारी", mobile: "9801750391" },
+    { name: "श्री अरुण कुमार", designation: "प्रखंड श्रम प्रवर्तन पदाधिकारी", mobile: "7870519124" },
+    { name: "श्री अभिजीत पटेल", designation: "प्रखंड सहकारिता प्रसार पदाधिकारी", mobile: "7903057025" },
+    { name: "श्री प्रदीप कुमार", designation: "प्रखंड आपुर्ति पदाधिकारी", mobile: "6287891849" },
+    { name: "श्री बादल कुमार", designation: "प्रखंड कल्याण पदाधिकारी", mobile: "9650624816" },
+    { name: "श्री दीपक कुमार", designation: "कार्यक्रम पदाधिकारी (मनरेगा)", mobile: "9771021717" },
+    { name: "श्री वरुण कुमार", designation: "प्रखंड परियोजना प्रबंधक (जीविका)", mobile: "8757470081" },
+    { name: "श्री निरंजन प्रकाश सत्यार्थी", designation: "प्रखंड समन्वयक", mobile: "9113313874" },
+    { name: "मो० तौकीर इमाम", designation: "आवास पर्यवेक्षक", mobile: "9931973910" },
+    { name: "डॉ० रंजीत रंजन रिंह", designation: "भ्रमणशील पशु चिकित्सा पदाधिकारी, बरबीया", mobile: "9122582049" },
+    { name: "डॉ० फैजल अरसद", designation: "प्रभारी चिकित्सा पदाधिकारी रेफरल अस्पताल, बरबीया", mobile: "9102597050" },
+    { name: "श्री रवि रंजन", designation: "कनीय अभियंता विधुत विभाग, बरबीया", mobile: "7763814495" },
+    { name: "श्री राहुल कुमार", designation: "सहायक अभियंता विधुत विभाग, बरबीया", mobile: "7763814494" },
+    { name: "श्री नवेद अख्तर (ग्रामीण)", designation: "लोक स्वास्थ्य अभियंत्रण विभाग, कनीय अभियंता बरबीया", mobile: "9102308711" },
+    { name: "श्री राहूल कुमार (शहरी)", designation: "लोक स्वास्थ्य अभियंत्रण विभाग, कनीय अभियंता बरबीया", mobile: "7292922485" },
+    { name: "डॉ० रमण कुमार", designation: "कार्यपालक पदा०, नगर परिषद्, बरबीया", mobile: "9868797517" },
+    { name: "श्री राजीव आनन्द", designation: "नगर प्रबंधक, नगर परिषद्, बरबीया", mobile: "7488101765" },
+    { name: "श्री राजवर्द्धन", designation: "सहायक लोक स्वच्छता एवं अपशिष्ट प्रबंधन पदा०, नगर परिषद् बरबीया", mobile: "8292312292" },
+    { name: "अंजली कुमारी ठाकुल", designation: "कनीय अभियंता नगर, परिषद् बरबीया", mobile: "8317834663" }
+  ];
+
   const grievances = [
     // Page 1 (rows 1-17)
     { slno:1, date:"03-10-2026", app_no:"720956981881", applicant:"SHOBHA DEVI", mobile:"6206973041", block:"Barbigha", office:"Block Development Officer Shekhpura", subject:"प्रमाण पत्र निर्गत करने के संबंध में", status:"Disposed" },
@@ -1338,13 +1394,14 @@
   let chartInstance, pieChartInstance;
 
   // Pagination variables
-  let currentPage15 = 1, currentPageState = 1, currentPagePersonnel = 1, currentPageRep = 1, currentPagePanchayat = 1, currentPageGrievance = 1;
-  let rowsPerPage15 = 10, rowsPerPageState = 10, rowsPerPagePersonnel = 10, rowsPerPageRep = 10, rowsPerPagePanchayat = 10, rowsPerPageGrievance = 10;
+  let currentPage15 = 1, currentPageState = 1, currentPagePersonnel = 1, currentPageRep = 1, currentPagePanchayat = 1, currentPageGrievance = 1, currentPageOfficer = 1;
+  let rowsPerPage15 = 10, rowsPerPageState = 10, rowsPerPagePersonnel = 10, rowsPerPageRep = 10, rowsPerPagePanchayat = 10, rowsPerPageGrievance = 10, rowsPerPageOfficer = 10;
 
   // Filtered data
   let filtered15 = schemes.filter(s => s.fund === '15वीं वित्त आयोग');
   let filteredState = schemes.filter(s => s.fund === 'षष्टम राज्य वित्त आयोग');
   let filteredGrievances = grievances.slice();
+  let filteredOfficers = blockOfficers.slice(); // कोई फ़िल्टर नहीं, पूरी सूची
 
   // Language
   let currentLanguage = 'hi';
@@ -1373,6 +1430,7 @@
       personnelTitle: 'ग्राम पंचायत सर्वा के कर्मीगण',
       repTitle: 'ग्राम पंचायत सर्वा के जनप्रतिनिधि',
       panchayatTitle: 'ग्राम कचहरी सचिव एवं पंच',
+      officerTitle: 'प्रखण्ड स्तरीय पदाधिकारी/पर्यवेक्षक',
       grievanceTitle: 'ग्राम पंचायत सर्वा से प्राप्त आवेदन की विवरणी',
       rowsLabel: 'पंक्तियाँ:',
       totalGrievancesLabel: 'कुल आवेदन',
@@ -1440,6 +1498,7 @@
       personnelTitle: 'Personnel of Gram Panchayat Sarva',
       repTitle: 'People\'s Representatives',
       panchayatTitle: 'Gram Kachahari Members',
+      officerTitle: 'Block Level Officers/Supervisors',
       grievanceTitle: 'Application Details received by Gram Panchayat Sarva',
       rowsLabel: 'Rows:',
       totalGrievancesLabel: 'Total Applications',
@@ -1661,6 +1720,24 @@
     renderPagination(filteredGrievances.length, currentPageGrievance, 'grievance', rowsPerPageGrievance);
   }
 
+  function renderOfficerTable() {
+    const tbody = document.getElementById('tableOfficerBody');
+    const start = (currentPageOfficer - 1) * rowsPerPageOfficer;
+    const end = start + rowsPerPageOfficer;
+    const pageData = filteredOfficers.slice(start, end);
+    tbody.innerHTML = '';
+    pageData.forEach((o, i) => {
+      tbody.innerHTML += `<tr>
+        <td>${start + i + 1}</td>
+        <td>${o.name}</td>
+        <td>${o.designation}</td>
+        <td>${o.mobile}</td>
+      </tr>`;
+    });
+    document.getElementById('badgeOfficer').innerText = filteredOfficers.length + (currentLanguage === 'hi' ? ' पदाधिकारी' : ' officers');
+    renderPagination(filteredOfficers.length, currentPageOfficer, 'officer', rowsPerPageOfficer);
+  }
+
   function renderPagination(totalRows, currentPage, tableType, rowsPerPage) {
     const totalPages = Math.ceil(totalRows / rowsPerPage);
     const paginationDiv = document.getElementById(
@@ -1669,7 +1746,8 @@
       tableType === 'personnel' ? 'paginationPersonnel' :
       tableType === 'rep' ? 'paginationRep' :
       tableType === 'panchayat' ? 'paginationPanchayat' :
-      'paginationGrievance'
+      tableType === 'grievance' ? 'paginationGrievance' :
+      'paginationOfficer'
     );
     if (!paginationDiv) return;
     if (totalPages <= 1) { paginationDiv.innerHTML = ''; return; }
@@ -1692,6 +1770,7 @@
     else if (tableType === 'rep') currentPageRep = newPage;
     else if (tableType === 'panchayat') currentPagePanchayat = newPage;
     else if (tableType === 'grievance') currentPageGrievance = newPage;
+    else if (tableType === 'officer') currentPageOfficer = newPage;
     renderAllTables();
   }
 
@@ -1702,6 +1781,7 @@
     else if (tableType === 'rep') { rowsPerPageRep = parseInt(document.getElementById('rowsPerPageRep').value); currentPageRep = 1; }
     else if (tableType === 'panchayat') { rowsPerPagePanchayat = parseInt(document.getElementById('rowsPerPagePanchayat').value); currentPagePanchayat = 1; }
     else if (tableType === 'grievance') { rowsPerPageGrievance = parseInt(document.getElementById('rowsPerPageGrievance').value); currentPageGrievance = 1; }
+    else if (tableType === 'officer') { rowsPerPageOfficer = parseInt(document.getElementById('rowsPerPageOfficer').value); currentPageOfficer = 1; }
     renderAllTables();
     saveSettings();
   }
@@ -1811,6 +1891,12 @@
       <th>${t('thDesignation')}</th>
       <th>${t('thMobile')}</th>
     `;
+    document.getElementById('officerTableHeader').innerHTML = `
+      <th>${t('thSn')}</th>
+      <th>${t('thName')}</th>
+      <th>${t('thDesignation')}</th>
+      <th>${t('thMobile')}</th>
+    `;
 
     // Update grand total label in footers
     document.querySelectorAll('.grand-total-label').forEach(el => el.innerText = t('grandTotalLabel'));
@@ -1826,6 +1912,7 @@
     renderPersonnelTable(personnel);
     renderRepTable(representatives);
     renderPanchayatTable(panchayatMembers);
+    renderOfficerTable(); // नई तालिका
     renderGrievanceTable();
 
     updateMetrics();
@@ -2017,6 +2104,7 @@
     document.querySelector('.personnelTitle').innerText = t('personnelTitle');
     document.querySelector('.repTitle').innerText = t('repTitle');
     document.querySelector('.panchayatTitle').innerText = t('panchayatTitle');
+    document.getElementById('officerTitle').innerText = t('officerTitle');
     document.getElementById('grievanceTitle').innerText = t('grievanceTitle');
     document.querySelectorAll('.rowsLabel').forEach(el => el.innerText = t('rowsLabel'));
     document.getElementById('totalGrievancesLabel').innerText = t('totalGrievancesLabel');
@@ -2110,7 +2198,7 @@
   // ========== सेटिंग्स ==========
   function saveSettings() {
     const settings = {
-      rowsPerPage15, rowsPerPageState, rowsPerPagePersonnel, rowsPerPageRep, rowsPerPagePanchayat, rowsPerPageGrievance,
+      rowsPerPage15, rowsPerPageState, rowsPerPagePersonnel, rowsPerPageRep, rowsPerPagePanchayat, rowsPerPageGrievance, rowsPerPageOfficer,
       theme: document.body.className,
       language: currentLanguage,
     };
@@ -2127,12 +2215,14 @@
       rowsPerPageRep = s.rowsPerPageRep || 10;
       rowsPerPagePanchayat = s.rowsPerPagePanchayat || 10;
       rowsPerPageGrievance = s.rowsPerPageGrievance || 10;
+      rowsPerPageOfficer = s.rowsPerPageOfficer || 10;
       document.getElementById('rowsPerPage15').value = rowsPerPage15;
       document.getElementById('rowsPerPageState').value = rowsPerPageState;
       document.getElementById('rowsPerPagePersonnel').value = rowsPerPagePersonnel;
       document.getElementById('rowsPerPageRep').value = rowsPerPageRep;
       document.getElementById('rowsPerPagePanchayat').value = rowsPerPagePanchayat;
       document.getElementById('rowsPerPageGrievance').value = rowsPerPageGrievance;
+      document.getElementById('rowsPerPageOfficer').value = rowsPerPageOfficer;
       if (s.theme) document.body.className = s.theme;
       if (s.language && s.language !== currentLanguage) toggleLanguage();
     }
