@@ -280,6 +280,7 @@
       animation: fadeInUp 0.6s ease-out forwards;
       opacity: 0;
       animation-fill-mode: forwards;
+      cursor: pointer; /* यहाँ जोड़ा गया */
     }
     .stat-card:nth-child(1) { animation-delay: 0.1s; }
     .stat-card:nth-child(2) { animation-delay: 0.2s; }
@@ -683,6 +684,14 @@
     }
     .dark-mode .modal-content { background: #1e293b; }
 
+    /* नए मोडल के लिए विशेष स्टाइल (चौड़ा) */
+    #schemeListModal .modal-content {
+      max-width: 95% !important;
+      width: auto !important;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
     .toast-notification {
       position: fixed; bottom: 30px; right: 30px; background: var(--navy); color: white;
       padding: 10px 24px; border-radius: 50px; font-weight: 500; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
@@ -802,17 +811,17 @@
       </div>
     </div>
 
-    <!-- स्टैट्स कार्ड (योजनाओं के लिए) -->
+    <!-- स्टैट्स कार्ड (योजनाओं के लिए) - यहाँ onclick जोड़ा गया है -->
     <div class="stats-grid" id="metricCards">
-      <div class="stat-card" onclick="showSchemeList('all')" style="cursor: pointer;">
+      <div class="stat-card" onclick="showSchemeList('all')">
         <span class="stat-icon"><i class="fas fa-tasks"></i></span>
         <div class="stat-content"><h2 id="totalSchemes">0</h2><p id="totalSchemesLabel">कुल योजनाएँ</p></div>
       </div>
-      <div class="stat-card" onclick="showSchemeList('completed')" style="cursor: pointer;">
+      <div class="stat-card" onclick="showSchemeList('completed')">
         <span class="stat-icon"><i class="fas fa-check-circle"></i></span>
         <div class="stat-content"><h2 id="completedSchemes">0</h2><p id="completedSchemesLabel">पूर्ण कार्य</p></div>
       </div>
-      <div class="stat-card" onclick="showSchemeList('progress')" style="cursor: pointer;">
+      <div class="stat-card" onclick="showSchemeList('progress')">
         <span class="stat-icon"><i class="fas fa-spinner"></i></span>
         <div class="stat-content"><h2 id="progressSchemes">0</h2><p id="progressSchemesLabel">प्रगति पर</p></div>
       </div>
@@ -1170,7 +1179,7 @@
   <!-- टोस्ट -->
   <div id="toast" class="toast-notification"></div>
 
-  <!-- मोडल (योजना विवरण) -->
+  <!-- मोडल (एकल योजना विवरण) -->
   <div id="projectModal" class="modal">
     <div class="modal-content">
       <span class="modal-close" onclick="closeModal()" style="cursor:pointer;float:right;font-size:28px;" aria-label="बंद करें">&times;</span>
@@ -1183,7 +1192,7 @@
     </div>
   </div>
 
-  <!-- मोडल (आवेदन विवरण) -->
+  <!-- मोडल (एकल आवेदन विवरण) -->
   <div id="grievanceModal" class="modal">
     <div class="modal-content">
       <span class="modal-close" onclick="closeGrievanceModal()" style="cursor:pointer;float:right;font-size:28px;" aria-label="बंद करें">&times;</span>
@@ -2058,7 +2067,7 @@
     });
   }
 
-  // ========== मोडल ==========
+  // ========== मोडल (एकल विवरण) ==========
   function showProjectModal(fund, year, desc, amount, status) {
     document.getElementById('modalFund').innerText = fund;
     document.getElementById('modalYear').innerText = year;
