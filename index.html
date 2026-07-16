@@ -804,10 +804,22 @@
 
     <!-- स्टैट्स कार्ड (योजनाओं के लिए) -->
     <div class="stats-grid" id="metricCards">
-      <div class="stat-card"><span class="stat-icon"><i class="fas fa-tasks"></i></span><div class="stat-content"><h2 id="totalSchemes">0</h2><p id="totalSchemesLabel">कुल योजनाएँ</p></div></div>
-      <div class="stat-card"><span class="stat-icon"><i class="fas fa-check-circle"></i></span><div class="stat-content"><h2 id="completedSchemes">0</h2><p id="completedSchemesLabel">पूर्ण कार्य</p></div></div>
-      <div class="stat-card"><span class="stat-icon"><i class="fas fa-spinner"></i></span><div class="stat-content"><h2 id="progressSchemes">0</h2><p id="progressSchemesLabel">प्रगति पर</p></div></div>
-      <div class="stat-card"><span class="stat-icon"><i class="fas fa-coins"></i></span><div class="stat-content"><h2 id="totalAmount">₹0</h2><p id="totalAmountLabel">कुल परिव्यय</p></div></div>
+      <div class="stat-card" onclick="showSchemeList('all')" style="cursor: pointer;">
+        <span class="stat-icon"><i class="fas fa-tasks"></i></span>
+        <div class="stat-content"><h2 id="totalSchemes">0</h2><p id="totalSchemesLabel">कुल योजनाएँ</p></div>
+      </div>
+      <div class="stat-card" onclick="showSchemeList('completed')" style="cursor: pointer;">
+        <span class="stat-icon"><i class="fas fa-check-circle"></i></span>
+        <div class="stat-content"><h2 id="completedSchemes">0</h2><p id="completedSchemesLabel">पूर्ण कार्य</p></div>
+      </div>
+      <div class="stat-card" onclick="showSchemeList('progress')" style="cursor: pointer;">
+        <span class="stat-icon"><i class="fas fa-spinner"></i></span>
+        <div class="stat-content"><h2 id="progressSchemes">0</h2><p id="progressSchemesLabel">प्रगति पर</p></div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon"><i class="fas fa-coins"></i></span>
+        <div class="stat-content"><h2 id="totalAmount">₹0</h2><p id="totalAmountLabel">कुल परिव्यय</p></div>
+      </div>
     </div>
   </div>
 
@@ -1186,6 +1198,16 @@
       <p><strong>स्थिति:</strong> <span id="modalGrievanceStatus"></span></p>
     </div>
   </div>
+
+  <!-- ===== नया मोडल: योजनाओं की सूची (कुल/पूर्ण/प्रगति) ===== -->
+  <div id="schemeListModal" class="modal">
+    <div class="modal-content" style="max-width: 95%; max-height: 85vh; overflow-y: auto; width: auto;">
+      <span class="modal-close" onclick="closeSchemeListModal()" style="cursor:pointer;float:right;font-size:28px;">&times;</span>
+      <h3 id="schemeListTitle" style="margin-bottom: 15px;">योजनाओं की सूची</h3>
+      <div id="schemeListBody"></div>
+    </div>
+  </div>
+
 </div>
 
 <!-- फ्लोटिंग बटन -->
@@ -2183,6 +2205,7 @@
     if (e.key === 'Escape') {
       closeModal();
       closeGrievanceModal();
+      closeSchemeListModal(); // नए मोडल को भी बंद करें
     }
     if (e.ctrlKey && e.key === 'f') {
       e.preventDefault();
@@ -2228,6 +2251,60 @@
     }
   }
 
+  // ========== नए मोडल के लिए फंक्शन (स्टैट कार्ड क्लिक) ==========
+  function closeSchemeListModal() {
+    document.getElementById('schemeListModal').classList.remove('show');
+  }
+
+  function showSchemeList(category) {
+    let data = [];
+    let title = '';
+    if (category === 'all') {
+      data = schemes;
+      title = 'कुल योजनाएँ (' + data.length + ')';
+    } else if (category === 'completed') {
+      data = schemes.filter(s => s.status === 'पूर्ण');
+      title = 'पूर्ण कार्य (' + data.length + ')';
+    } else if (category === 'progress') {
+      data = schemes.filter(s => s.status === 'कार्य प्रगति पर');
+      title = 'प्रगति पर कार्य (' + data.length + ')';
+    }
+
+    document.getElementById('schemeListTitle').innerText = title;
+    let html = `
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 600px;">
+          <thead>
+            <tr style="background: var(--table-header-bg); color: white;">
+              <th style="padding: 8px;">#</th>
+              <th style="padding: 8px;">मद</th>
+              <th style="padding: 8px;">वित्त वर्ष</th>
+              <th style="padding: 8px;">योजना का नाम</th>
+              <th style="padding: 8px;">राशि</th>
+              <th style="padding: 8px;">स्थिति</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+    data.forEach((s, i) => {
+      let statusText = s.status === 'पूर्ण' ? 'पूर्ण' : 'प्रगति पर';
+      let cls = s.status === 'पूर्ण' ? 'complete' : 'progress';
+      html += `
+        <tr style="border-bottom: 1px solid var(--border);">
+          <td style="padding: 6px 8px;">${i+1}</td>
+          <td style="padding: 6px 8px;">${s.fund}</td>
+          <td style="padding: 6px 8px;">${s.year}</td>
+          <td style="padding: 6px 8px;">${s.desc}</td>
+          <td style="padding: 6px 8px;">${formatMoney(s.amount)}</td>
+          <td style="padding: 6px 8px;"><span class="status-super ${cls}"><i class="fas ${s.status === 'पूर्ण' ? 'fa-check' : 'fa-clock'}"></i> ${statusText}</span></td>
+        </tr>
+      `;
+    });
+    html += `</tbody></table></div>`;
+    document.getElementById('schemeListBody').innerHTML = html;
+    document.getElementById('schemeListModal').classList.add('show');
+  }
+
   // ========== इनिशियलाइज़ ==========
   window.onload = function() {
     loadSettings();
@@ -2262,6 +2339,9 @@
   window.exportTableToCSV = exportTableToCSV;
   window.setRating = setRating;
   window.showShortcuts = showShortcuts;
+  // नए मोडल के लिए
+  window.closeSchemeListModal = closeSchemeListModal;
+  window.showSchemeList = showSchemeList;
 </script>
 </body>
 </html>
