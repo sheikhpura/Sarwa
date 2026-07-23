@@ -4,65 +4,98 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
   <title>Home</title>
-  <!-- फॉन्ट और आइकन -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- चार्ट.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
-    /* ===== मूल स्टाइल ===== */
+    /* ===== मूल स्टाइल (थीम अपडेटेड) ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --saffron: #FF9933; --green: #138808; --navy: #000080; --blue: #1e3a8a;
-      --light-bg: #f0f4f8; --text-dark: #0f172a; --border: #d1d5db;
-      --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-      --header-bg: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-      --table-header-bg: #1e3a8a;
-    }
-    body.theme-green { --saffron: #2e7d32; --green: #1b5e20; --navy: #0a3f0a; --header-bg: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); }
-    body.theme-blue { --saffron: #1976d2; --green: #0d47a1; --navy: #0a1a4a; --header-bg: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%); }
-    body.dark-mode {
-      --saffron: #b95f00; --green: #0e630e; --navy: #0a0a23; --blue: #0f2b5e;
-      --light-bg: #1a1a2e; --text-dark: #f1f5f9; --border: #334155;
-      --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
-      --header-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --saffron: #f59e0b;      /* Golden Amber */
+      --green: #16a34a;        /* Emerald Green */
+      --navy: #0f172a;         /* Slate 900 */
+      --blue: #1d4ed8;         /* Blue 700 */
+      --light-bg: #f8fafc;     /* Slate 50 */
+      --text-dark: #0f172a;    /* Slate 900 */
+      --border: #e2e8f0;       /* Slate 200 */
+      --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --header-bg: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
       --table-header-bg: #0f172a;
     }
+    
+    body.theme-green { 
+      --saffron: #f59e0b; --green: #059669; --navy: #064e3b; 
+      --header-bg: linear-gradient(135deg, #064e3b 0%, #059669 100%); 
+      --table-header-bg: #064e3b; 
+    }
+    
+    body.theme-blue { 
+      --saffron: #f59e0b; --green: #0284c7; --navy: #0f172a; 
+      --header-bg: linear-gradient(135deg, #0f172a 0%, #0284c7 100%); 
+      --table-header-bg: #0f172a; 
+    }
+
+    body.dark-mode {
+      --saffron: #d97706; --green: #059669; --navy: #020617; --blue: #1e3a8a;
+      --light-bg: #0f172a; --text-dark: #f1f5f9; --border: #1e293b;
+      --card-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+      --header-bg: linear-gradient(135deg, #020617 0%, #1e293b 100%);
+      --table-header-bg: #020617;
+    }
+    
+    body.dark-green {
+      --saffron: #d97706; --green: #047857; --navy: #022c22;
+      --header-bg: linear-gradient(135deg, #022c22 0%, #047857 100%);
+      --table-header-bg: #022c22;
+    }
+    
+    body.dark-blue {
+      --saffron: #d97706; --green: #0369a1; --navy: #020617;
+      --header-bg: linear-gradient(135deg, #020617 0%, #0369a1 100%);
+      --table-header-bg: #020617;
+    }
+
     body { font-family: 'Inter', sans-serif; background: var(--light-bg); padding: 24px 20px; color: var(--text-dark); line-height: 1.5; transition: 0.3s; animation: fadeIn 1s ease-in-out; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @media print { .fab, .back-to-top, .comment-section, .theme-selector, .search-export, .notification-banner, .weather-widget, .gallery-thumbnails, .shortcut-hint { display: none !important; } }
 
-    /* तिरंगा पट्टी */
+    .no-print { transition: none !important; }
+    @media print {
+      .fab, .back-to-top, .shortcut-hint, .theme-selector, .language-switch, .search-export, .export-btn, .comment-section,
+      .no-print, .rating-stars, .comment-input, .notification-banner, .weather-widget, .gallery-thumbnails, .live-clock, 
+      .modal, #toast { display: none !important; }
+      .table-section { break-inside: avoid; page-break-inside: avoid; }
+      body { background: white !important; padding: 0 !important; }
+      .official-masthead { background: #0f172a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .stat-card { background: #f8fafc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
     .tricolor-strip { display: flex; height: 6px; border-radius: 6px 6px 0 0; overflow: hidden; }
     .tricolor-strip .saffron { flex: 1; background: #FF9933; }
     .tricolor-strip .white { flex: 1; background: #FFFFFF; }
     .tricolor-strip .green { flex: 1; background: #138808; }
 
-    /* बैनर */
     .notification-banner { background: var(--saffron); color: #000; padding: 10px 20px; border-radius: 40px; margin: 15px 0 5px; font-weight: 600; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
-    /* मास्टहेड */
     .official-masthead { background: var(--header-bg); border-radius: 32px; padding: 24px 28px; color: white; box-shadow: var(--card-shadow); position: relative; overflow: hidden; }
     .emblem-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
     .emblem-group { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
     .ashoka-emblem { font-size: 3.5rem; color: white; }
     .prd-logo, .india-logo { height: 5rem; width: auto; border-radius: 8px; object-fit: contain; -webkit-user-drag: none; }
-    .govt-text { border-left: 2px solid white; padding-left: 18px; }
+    .govt-text { border-left: 2px solid rgba(255,255,255,0.3); padding-left: 18px; }
     .govt-text h1 { font-weight: 800; font-size: 1.8rem; }
     .govt-text .sub { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 4px; font-size: 0.9rem; }
     .header-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .live-clock { background: rgba(255,255,255,0.15); border-radius: 40px; padding: 8px 16px; font-weight: 500; white-space: nowrap; }
-    .theme-selector { display: flex; gap: 6px; background: rgba(255,255,255,0.15); border-radius: 40px; padding: 4px 10px; }
+    .live-clock { background: rgba(255,255,255,0.1); border-radius: 40px; padding: 8px 16px; font-weight: 500; white-space: nowrap; }
+    .theme-selector { display: flex; gap: 6px; background: rgba(255,255,255,0.1); border-radius: 40px; padding: 4px 10px; }
     .theme-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; cursor: pointer; }
     .language-switch { background: white; color: var(--navy); border: none; padding: 8px 16px; border-radius: 40px; font-weight: 700; cursor: pointer; }
 
-    /* स्टैट्स ग्रिड */
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 24px; }
     .stat-card {
       background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); border-radius: 24px; padding: 18px 15px;
-      display: flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.3);
+      display: flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.2);
       transition: all 0.3s ease; animation: fadeInUp 0.6s ease-out forwards; opacity: 0;
       cursor: pointer;
     }
@@ -72,35 +105,36 @@
     .stat-content h2 { font-size: 1.6rem; font-weight: 800; }
     .stat-content p { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* फीचर कार्ड */
     .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 20px; }
-    .feature-card { background: white; border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); transition: 0.3s; }
-    .dark-mode .feature-card { background: #1e293b; }
+    .feature-card { background: var(--light-bg); border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); transition: 0.3s; border: 1px solid var(--border); }
     .feature-title { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--navy); border-bottom: 2px solid var(--saffron); padding-bottom: 8px; }
-    .dark-mode .feature-title { color: var(--saffron); }
-    .budget-gauge { width: 100%; height: 14px; background: var(--border); border-radius: 30px; overflow: hidden; margin: 8px 0; }
+    .dark-mode .feature-card, .dark-green .feature-card, .dark-blue .feature-card { background: #1e293b; border-color: #334155; }
+    .dark-mode .feature-title, .dark-green .feature-title, .dark-blue .feature-title { color: var(--saffron); }
+
+    .budget-gauge-container { position:relative; margin-top:8px; }
+    .budget-gauge { width: 100%; height: 14px; background: var(--border); border-radius: 30px; overflow: hidden; }
     .gauge-fill { height: 100%; background: linear-gradient(90deg, var(--saffron), var(--green)); border-radius: 30px; transition: width 0.5s ease; }
+    .gauge-text { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:0.7rem; font-weight:700; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.5); }
+
     .top-project-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--saffron); font-size: 0.85rem; }
 
-    /* इनसाइट */
     .insight-panel { display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; margin-bottom: 20px; }
-    .chart-card, .finance-summary { background: white; border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); }
+    .chart-card, .finance-summary { background: var(--light-bg); border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); border: 1px solid var(--border); }
     .dark-mode .chart-card, .dark-mode .finance-summary { background: #1e293b; }
     .donut-progress { display: flex; flex-direction: column; align-items: center; }
-    .donut { width: 80px; height: 80px; border-radius: 50%; background: conic-gradient(var(--green) 0deg, var(--green) calc(3.6deg * var(--percent)), var(--light-bg) calc(3.6deg * var(--percent))); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.3rem; position: relative; }
-    .donut::before { content: ''; width: 60px; height: 60px; background: white; border-radius: 50%; position: absolute; }
+    .donut { width: 80px; height: 80px; border-radius: 50%; background: conic-gradient(var(--green) 0deg, var(--green) calc(3.6deg * var(--percent)), var(--border) calc(3.6deg * var(--percent))); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.3rem; position: relative; }
+    .donut::before { content: ''; width: 60px; height: 60px; background: var(--light-bg); border-radius: 50%; position: absolute; }
     .dark-mode .donut::before { background: #1e293b; }
     .donut span { position: relative; z-index: 2; }
     .legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
-    .legend-item { display: flex; align-items: center; gap: 8px; background: var(--light-bg); padding: 6px 10px; border-radius: 20px; font-size: 0.8rem; }
-    .quick-stats { background: var(--light-bg); border-radius: 20px; padding: 10px; margin: 12px 0; font-size: 0.8rem; }
+    .legend-item { display: flex; align-items: center; gap: 8px; background: var(--border); padding: 6px 10px; border-radius: 20px; font-size: 0.8rem; }
+    .quick-stats { background: var(--border); border-radius: 20px; padding: 10px; margin: 12px 0; font-size: 0.8rem; }
     .stat-row { display: flex; justify-content: space-between; padding: 4px 0; }
     .progress-micro-bar { background: var(--border); height: 8px; border-radius: 30px; overflow: hidden; }
     .progress-fill { background: var(--green); height: 8px; border-radius: 30px; transition: width 0.5s ease; }
     .chart-container { height: 130px; margin-top: 8px; }
 
-    /* टेबल */
-    .table-section { background: white; border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
+    .table-section { background: var(--light-bg); border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); margin-bottom: 20px; border: 1px solid var(--border); }
     .dark-mode .table-section { background: #1e293b; }
     .table-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .table-header h2 { font-weight: 700; font-size: 1.3rem; color: var(--navy); }
@@ -110,22 +144,26 @@
     .search-box { flex: 1; min-width: 200px; display: flex; background: var(--light-bg); border-radius: 40px; padding: 5px 10px; align-items: center; border: 1px solid var(--border); }
     .search-box input { border: none; background: transparent; padding: 8px 0; width: 100%; outline: none; color: var(--text-dark); }
     .export-btn { background: var(--navy); color: white; border: none; border-radius: 40px; padding: 8px 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .filter-select { padding:5px 12px; border-radius:20px; border:1px solid var(--border); background:var(--light-bg); font-family:inherit; color:var(--text-dark); outline:none; cursor:pointer; }
+
     .table-scroll { overflow-x: auto; border-radius: 16px; }
     table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 700px; }
     th { background: var(--table-header-bg); color: white; padding: 10px 8px; }
     td { padding: 8px 8px; border-bottom: 1px solid var(--border); }
+    tbody tr:hover { background: rgba(245, 158, 11, 0.1); cursor: pointer; }
+    .dark-mode tbody tr:hover { background: rgba(245, 158, 11, 0.2); }
+
     .status-super { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 40px; font-weight: 600; font-size: 0.7rem; }
     .status-super.disposed { background: #dcfce7; color: #166534; }
-    .status-super.pending { background: #fff3cd; color: #856404; }
+    .status-super.pending { background: #fef3c7; color: #92400e; }
     .status-super.complete { background: #dcfce7; color: #166534; }
-    .status-super.progress { background: #fff3cd; color: #856404; }
+    .status-super.progress { background: #fef3c7; color: #92400e; }
     .pagination-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 15px 0 0; flex-wrap: wrap; gap: 12px; font-size: 0.85rem; }
-    .page-btn { background: var(--light-bg); border: none; padding: 5px 12px; border-radius: 30px; font-weight: 600; cursor: pointer; }
-    .page-btn.active { background: var(--navy); color: white; }
+    .page-btn { background: var(--light-bg); border: 1px solid var(--border); padding: 5px 12px; border-radius: 30px; font-weight: 600; cursor: pointer; }
+    .page-btn.active { background: var(--navy); color: white; border-color: var(--navy); }
 
-    /* नए सेक्शन */
     .extra-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0; }
-    .extra-card { background: white; border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); }
+    .extra-card { background: var(--light-bg); border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); border: 1px solid var(--border); }
     .dark-mode .extra-card { background: #1e293b; }
     .weather-widget { display: flex; align-items: center; gap: 15px; font-size: 1.2rem; }
     .weather-icon { font-size: 3rem; color: var(--saffron); }
@@ -134,30 +172,31 @@
     .event-list li { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--border); }
     .event-date { font-weight: 700; color: var(--green); min-width: 60px; }
     .gallery-thumbnails { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-    .gallery-thumb { width: 80px; height: 80px; background: var(--light-bg); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--navy); border: 2px solid var(--saffron); }
+    .gallery-thumb { width: 80px; height: 80px; background: var(--border); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--navy); border: 2px solid var(--saffron); }
 
-    /* मानचित्र */
-    .map-section { background: white; border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
+    .map-section { background: var(--light-bg); border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); margin-bottom: 20px; border: 1px solid var(--border); }
     .dark-mode .map-section { background: #1e293b; }
-    .map-container img { max-width: 100%; width: 100%; height: auto; border-radius: 16px; border: 2px solid var(--saffron); }
+    .map-container img { max-width: 100%; width: 100%; height: auto; border-radius: 16px; border: 2px solid var(--saffron); cursor: pointer; transition: 0.3s; }
+    .map-container img:hover { opacity: 0.9; transform: scale(1.01); }
 
-    /* कमेंट */
-    .comment-section { background: white; border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
+    .comment-section { background: var(--light-bg); border-radius: 28px; padding: 18px; box-shadow: var(--card-shadow); margin-bottom: 20px; border: 1px solid var(--border); }
     .dark-mode .comment-section { background: #1e293b; }
     .rating-stars { color: gold; font-size: 1.2rem; margin: 5px 0; cursor: pointer; }
     .comment-input { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
     .comment-input input, .comment-input textarea { flex: 1; padding: 8px; border: 1px solid var(--border); border-radius: 20px; background: var(--light-bg); min-width: 150px; }
     .comment-input button { background: var(--green); color: white; border: none; padding: 8px 20px; border-radius: 40px; cursor: pointer; }
 
-    /* मोडल */
-    .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
+    .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.8); align-items: center; justify-content: center; }
     .modal.show { display: flex; }
-    .modal-content { background: white; padding: 24px; border-radius: 32px; max-width: 450px; width: 90%; box-shadow: 0 25px 40px rgba(0,0,0,0.4); border: 3px solid var(--saffron); }
+    .modal-content { background: var(--light-bg); padding: 24px; border-radius: 32px; max-width: 450px; width: 90%; box-shadow: 0 25px 40px rgba(0,0,0,0.4); border: 3px solid var(--saffron); }
     .dark-mode .modal-content { background: #1e293b; }
     #schemeListModal .modal-content { max-width: 95% !important; width: auto !important; max-height: 85vh; overflow-y: auto; }
+    #mapModal .modal-content { max-width: 90% !important; width: auto !important; max-height: 90vh; padding: 10px; }
+    #mapModal .modal-content img { width: 100%; height: auto; border-radius: 16px; }
 
-    .toast-notification { position: fixed; bottom: 30px; right: 30px; background: var(--navy); color: white; padding: 10px 24px; border-radius: 50px; z-index: 9999; opacity: 0; transition: 0.3s; }
+    .toast-notification { position: fixed; top: 20px; right: 20px; bottom: auto; background: var(--navy); color: white; padding: 10px 24px; border-radius: 50px; z-index: 9999; opacity: 0; transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     .toast-notification.show { opacity: 1; }
+
     .fab { position: fixed; bottom: 30px; left: 30px; background: var(--navy); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 999; }
     .back-to-top { position: fixed; bottom: 30px; right: 30px; background: var(--green); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 999; }
     .shortcut-hint { position: fixed; bottom: 100px; left: 20px; background: var(--navy); color: white; padding: 8px 16px; border-radius: 40px; font-size: 0.8rem; z-index: 998; opacity: 0.7; cursor: pointer; }
@@ -170,13 +209,10 @@
 <body>
 <div class="flagship-dashboard" id="app">
 
-  <!-- तिरंगा पट्टी -->
   <div class="tricolor-strip"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
 
-  <!-- नोटिफिकेशन बैनर -->
-  <div class="notification-banner"><i class="fas fa-bullhorn"></i> <span id="notificationText">📢 आगामी समृद्धि यात्रा माननीय मुख्यमंत्री जी का दिनांक 14 मार्च 2026 को</span></div>
+  <div class="notification-banner no-print"><i class="fas fa-bullhorn"></i> <span id="notificationText"></span></div>
 
-  <!-- हेडर -->
   <div class="official-masthead">
     <div class="emblem-row">
       <div class="emblem-group">
@@ -187,7 +223,7 @@
           <div class="sub"><span><i class="fas fa-map-marker-alt"></i> ग्राम पंचायत सर्वा | बरबीघा | शेखपुरा</span><span><i class="fas fa-calendar-alt"></i> 2025-26</span></div>
         </div>
       </div>
-      <div class="header-actions">
+      <div class="header-actions no-print">
         <span class="live-clock" id="liveClock"><i class="far fa-clock"></i> </span>
         <div class="theme-selector">
           <div class="theme-btn light-default" onclick="setTheme('light-default')"></div>
@@ -202,7 +238,6 @@
       </div>
     </div>
 
-    <!-- स्टैट्स कार्ड (data-category का उपयोग किया गया है) -->
     <div class="stats-grid" id="metricCards">
       <div class="stat-card" data-category="all">
         <span class="stat-icon"><i class="fas fa-tasks"></i></span>
@@ -223,11 +258,13 @@
     </div>
   </div>
 
-  <!-- फीचर ग्रिड -->
   <div class="feature-grid">
     <div class="feature-card">
       <div class="feature-title"><i class="fas fa-chart-line" style="color:#FF9933;"></i> <span class="budgetTitle">बजट उपयोग</span></div>
-      <div class="budget-gauge"><div class="gauge-fill" id="budgetGaugeFill" style="width:0%"></div></div>
+      <div class="budget-gauge-container">
+        <div class="budget-gauge"><div class="gauge-fill" id="budgetGaugeFill" style="width:0%"></div></div>
+        <div class="gauge-text" id="remainingPercentLabel">0% शेष</div>
+      </div>
       <div style="display: flex; justify-content: space-between; font-size:0.85rem;"><span class="usedLabel">उपयोग: <span id="budgetUsed">₹0</span></span><span class="totalLabel">कुल: <span id="budgetTotal">₹0</span></span></div>
       <div style="margin-top: 15px;"><div class="feature-title" style="margin-bottom: 5px;"><i class="fas fa-chart-pie" style="color:#138808;"></i> <span id="pieTitle">फंड वार वितरण</span></div><div class="chart-container"><canvas id="pieChart"></canvas></div></div>
     </div>
@@ -241,7 +278,6 @@
     </div>
   </div>
 
-  <!-- इनसाइट पैनल -->
   <div class="insight-panel">
     <div class="chart-card"><div class="feature-title"><i class="fas fa-chart-bar"></i> <span id="barTitle">वित्त वर्षानुसार कार्य</span></div><div class="chart-container"><canvas id="yearChart"></canvas></div></div>
     <div class="finance-summary">
@@ -253,7 +289,11 @@
     </div>
   </div>
 
-  <!-- आवेदन स्टैट्स -->
+  <div class="table-section">
+    <div class="feature-title" style="border-bottom: none; padding-bottom: 0; margin-bottom: 10px;"><i class="fas fa-chart-area" style="color:#FF9933;"></i> <span>फंड तुलना (15वीं वित्त vs राज्य वित्त)</span></div>
+    <div class="chart-container" style="height: 200px; margin-top:0;"><canvas id="fundComparisonChart"></canvas></div>
+  </div>
+
   <div class="stats-grid" id="grievanceStats" style="margin-top: 30px;">
     <div class="stat-card"><span class="stat-icon"><i class="fas fa-file-alt"></i></span><div class="stat-content"><h2 id="totalGrievances">0</h2><p id="totalGrievancesLabel">कुल आवेदन</p></div></div>
     <div class="stat-card"><span class="stat-icon"><i class="fas fa-check-circle"></i></span><div class="stat-content"><h2 id="disposedGrievances">0</h2><p id="disposedGrievancesLabel">निष्पादित (Disposed)</p></div></div>
@@ -261,104 +301,129 @@
     <div class="stat-card"><span class="stat-icon"><i class="fas fa-building"></i></span><div class="stat-content"><h2 style="font-size: 1.2rem;">विभागवार लंबित</h2><div class="dept-pending-list" id="deptPendingList"></div></div></div>
   </div>
 
-  <!-- टेबल 1: कर्मी -->
   <div class="table-section">
     <div class="table-header"><h2><i class="fas fa-users" style="color:#FF9933;"></i> <span class="personnelTitle">ग्राम पंचायत सर्वा के कर्मीगण</span></h2><div class="badge" id="badgePersonnel">0 कर्मी</div></div>
     <div class="table-scroll"><table id="tablePersonnel"><thead><tr id="personnelTableHeader"></tr></thead><tbody id="tablePersonnelBody"></tbody></table></div>
     <div class="pagination-wrapper"><div class="rows-selector"><span class="rowsLabel">पंक्तियाँ:</span><select id="rowsPerPagePersonnel" onchange="changeRowsPerPage('personnel')"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div><div class="pagination" id="paginationPersonnel"></div></div>
   </div>
 
-  <!-- टेबल 2: प्रतिनिधि -->
   <div class="table-section">
     <div class="table-header"><h2><i class="fas fa-user-tie" style="color:#138808;"></i> <span class="repTitle">ग्राम पंचायत सर्वा के जनप्रतिनिधि</span></h2><div class="badge" id="badgeRep">0 प्रतिनिधि</div></div>
     <div class="table-scroll"><table id="tableRep"><thead><tr id="repTableHeader"></tr></thead><tbody id="tableRepBody"></tbody></table></div>
     <div class="pagination-wrapper"><div class="rows-selector"><span class="rowsLabel">पंक्तियाँ:</span><select id="rowsPerPageRep" onchange="changeRowsPerPage('rep')"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div><div class="pagination" id="paginationRep"></div></div>
   </div>
 
-  <!-- टेबल 3: पंच -->
   <div class="table-section">
     <div class="table-header"><h2><i class="fas fa-gavel" style="color:#000080;"></i> <span class="panchayatTitle">ग्राम कचहरी सचिव एवं पंच</span></h2><div class="badge" id="badgePanchayat">0 सदस्य</div></div>
     <div class="table-scroll"><table id="tablePanchayat"><thead><tr id="panchayatTableHeader"></tr></thead><tbody id="tablePanchayatBody"></tbody></table></div>
     <div class="pagination-wrapper"><div class="rows-selector"><span class="rowsLabel">पंक्तियाँ:</span><select id="rowsPerPagePanchayat" onchange="changeRowsPerPage('panchayat')"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div><div class="pagination" id="paginationPanchayat"></div></div>
   </div>
 
-  <!-- टेबल 4: प्रखण्ड अधिकारी -->
   <div class="table-section">
     <div class="table-header"><h2><i class="fas fa-user-tie" style="color:#FF9933;"></i> <span id="officerTitle">प्रखण्ड स्तरीय पदाधिकारी/पर्यवेक्षक</span></h2><div class="badge" id="badgeOfficer">0 पदाधिकारी</div></div>
     <div class="table-scroll"><table id="tableOfficer"><thead><tr id="officerTableHeader"></tr></thead><tbody id="tableOfficerBody"></tbody></table></div>
     <div class="pagination-wrapper"><div class="rows-selector"><span class="rowsLabel">पंक्तियाँ:</span><select id="rowsPerPageOfficer" onchange="changeRowsPerPage('officer')"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div><div class="pagination" id="paginationOfficer"></div></div>
   </div>
 
-  <!-- टेबल 5: 15वीं वित्त -->
   <div class="table-section">
     <div class="table-header"><h2><i class="fas fa-landmark" style="color:#FF9933;"></i> <span id="table15Title">15वीं वित्त आयोग</span></h2><div class="badge" id="badge15">0 कार्य</div></div>
-    <div class="search-export"><div class="search-box"><i class="fas fa-search"></i><input type="text" id="search15" placeholder="खोजें..." onkeyup="filterTable('15')"></div><button class="export-btn" onclick="exportTableToCSV('15')"><i class="fas fa-download"></i> CSV</button></div>
+    <div class="search-export no-print">
+      <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search15" placeholder="खोजें..." onkeyup="filterTableAdvanced('15')"></div>
+      <select id="yearFilter15" class="filter-select" onchange="filterTableAdvanced('15')">
+        <option value="all">सभी वर्ष</option>
+        <option value="2021–22">2021–22</option>
+        <option value="2022–23">2022–23</option>
+        <option value="2023–24">2023–24</option>
+        <option value="2024–25">2024–25</option>
+        <option value="2025–26">2025–26</option>
+      </select>
+      <select id="statusFilter15" class="filter-select" onchange="filterTableAdvanced('15')">
+        <option value="all">सभी स्थिति</option>
+        <option value="पूर्ण">पूर्ण</option>
+        <option value="कार्य प्रगति पर">प्रगति पर</option>
+      </select>
+      <button class="export-btn" onclick="exportTableToCSV('15')"><i class="fas fa-download"></i> CSV</button>
+    </div>
     <div class="table-scroll"><table id="table15"><thead><tr id="table15Header"></tr></thead><tbody id="table15Body"></tbody><tfoot><tr><td colspan="5" class="grand-total-label">कुल</td><td class="rupee-cell grand-total-amt" id="footer15Total">₹0</td></tr></tfoot></table></div>
     <div class="pagination-wrapper"><div class="rows-selector"><span class="rowsLabel">पंक्तियाँ:</span><select id="rowsPerPage15" onchange="changeRowsPerPage('15')"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div><div class="pagination" id="pagination15"></div></div>
   </div>
 
-  <!-- टेबल 6: राज्य वित्त -->
   <div class="table-section">
     <div class="table-header"><h2><i class="fas fa-building" style="color:#138808;"></i> <span id="tableStateTitle">षष्टम राज्य वित्त</span></h2><div class="badge" id="badgeState">0 कार्य</div></div>
-    <div class="search-export"><div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchState" placeholder="खोजें..." onkeyup="filterTable('state')"></div><button class="export-btn" onclick="exportTableToCSV('state')"><i class="fas fa-download"></i> CSV</button></div>
+    <div class="search-export no-print">
+      <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchState" placeholder="खोजें..." onkeyup="filterTableAdvanced('state')"></div>
+      <select id="yearFilterState" class="filter-select" onchange="filterTableAdvanced('state')">
+        <option value="all">सभी वर्ष</option>
+        <option value="2021–22">2021–22</option>
+        <option value="2022–23">2022–23</option>
+        <option value="2023–24">2023–24</option>
+        <option value="2024–25">2024–25</option>
+        <option value="2025–26">2025–26</option>
+      </select>
+      <select id="statusFilterState" class="filter-select" onchange="filterTableAdvanced('state')">
+        <option value="all">सभी स्थिति</option>
+        <option value="पूर्ण">पूर्ण</option>
+        <option value="कार्य प्रगति पर">प्रगति पर</option>
+      </select>
+      <button class="export-btn" onclick="exportTableToCSV('state')"><i class="fas fa-download"></i> CSV</button>
+    </div>
     <div class="table-scroll"><table id="tableState"><thead><tr id="tableStateHeader"></tr></thead><tbody id="tableStateBody"></tbody><tfoot><tr><td colspan="5" class="grand-total-label">कुल</td><td class="rupee-cell grand-total-amt" id="footerStateTotal">₹0</td></tr></tfoot></table></div>
     <div class="pagination-wrapper"><div class="rows-selector"><span class="rowsLabel">पंक्तियाँ:</span><select id="rowsPerPageState" onchange="changeRowsPerPage('state')"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div><div class="pagination" id="paginationState"></div></div>
   </div>
 
-  <!-- टेबल 7: आवेदन -->
   <div class="table-section">
     <div class="table-header"><h2><i class="fas fa-file-alt" style="color:#FF9933;"></i> <span id="grievanceTitle">ग्राम पंचायत सर्वा से प्राप्त आवेदन की विवरणी</span></h2><div class="badge" id="badgeGrievance">0 आवेदन</div></div>
-    <div class="search-export"><div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchGrievance" placeholder="खोजें (नाम, विषय, स्थिति...)" onkeyup="filterGrievanceTable()"></div><button class="export-btn" onclick="exportTableToCSV('grievance')"><i class="fas fa-download"></i> CSV</button></div>
+    <div class="search-export no-print"><div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchGrievance" placeholder="खोजें (नाम, विषय, स्थिति...)" onkeyup="filterGrievanceTable()"></div><button class="export-btn" onclick="exportTableToCSV('grievance')"><i class="fas fa-download"></i> CSV</button></div>
     <div class="table-scroll"><table id="tableGrievance"><thead><tr id="grievanceTableHeader"></tr></thead><tbody id="tableGrievanceBody"></tbody></table></div>
     <div class="pagination-wrapper"><div class="rows-selector"><span class="rowsLabel">पंक्तियाँ:</span><select id="rowsPerPageGrievance" onchange="changeRowsPerPage('grievance')"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div><div class="pagination" id="paginationGrievance"></div></div>
   </div>
 
-  <!-- एक्स्ट्रा सेक्शन -->
-  <div class="extra-grid">
+  <div class="extra-grid no-print">
     <div class="extra-card"><div class="feature-title"><i class="fas fa-cloud-sun"></i> मौसम (शेखपुरा)</div><div class="weather-widget"><div class="weather-icon"><i class="fas fa-sun"></i></div><div><div class="weather-temp">32°C</div><div>धूप, आर्द्रता 45%</div></div></div></div>
-    <div class="extra-card"><div class="feature-title"><i class="fas fa-calendar-alt"></i> आगामी कार्यक्रम</div><ul class="event-list" id="eventList"><li><span class="event-date">14 मार्च </span> माननीय मुख्यमंत्री का समृद्धि यात्रा ग्राम पंचायत सर्वा में।</li></ul></div>
+    
+    <!-- ====== यहाँ नया इवेंट जोड़ा गया है ====== -->
+    <div class="extra-card"><div class="feature-title"><i class="fas fa-calendar-alt"></i> आगामी कार्यक्रम</div><ul class="event-list" id="eventList">
+      <li><span class="event-date">14 मार्च </span> माननीय मुख्यमंत्री का समृद्धि यात्रा ग्राम पंचायत सर्वा में।</li>
+      <li><span class="event-date">प्रत्येक माह</span> हरेक माह के अंतिम रविवार को पंचायत विकास दिवस का आयोजन।</li>
+    </ul></div>
+    
     <div class="extra-card"><div class="feature-title"><i class="fas fa-images"></i> परियोजना फोटो गैलरी</div><div class="gallery-thumbnails"><div class="gallery-thumb" title="बौधी पोखर"><i class="fas fa-water"></i></div><div class="gallery-thumb" title="सामुदायिक भवन"><i class="fas fa-building"></i></div><div class="gallery-thumb" title="स्ट्रीट लाइट"><i class="fas fa-lightbulb"></i></div><div class="gallery-thumb" title="पुलिया निर्माण"><i class="fas fa-road"></i></div></div></div>
   </div>
 
-  <!-- मानचित्र -->
-  <div class="map-section"><div class="table-header"><h2><i class="fas fa-map-marked-alt" style="color:#FF9933;"></i> ग्राम पंचायत सर्वा का मानचित्र</h2></div><div class="map-container"><img src="FINAL SARWA MAP.jpg" alt="सर्वा ग्राम पंचायत मानचित्र" loading="lazy" draggable="false"></div></div>
+  <div class="map-section">
+    <div class="table-header"><h2><i class="fas fa-map-marked-alt" style="color:#FF9933;"></i> ग्राम पंचायत सर्वा का मानचित्र</h2></div>
+    <div class="map-container">
+      <img src="FINAL SARWA MAP.jpg" alt="सर्वा ग्राम पंचायत मानचित्र" loading="lazy" draggable="false" onclick="openMapModal()">
+    </div>
+  </div>
 
-  <!-- कमेंट -->
-  <div class="comment-section">
+  <div class="comment-section no-print">
     <div class="feature-title"><i class="fas fa-comments"></i> टिप्पणी / सुझाव</div>
     <div class="rating-stars" id="ratingStars"><i class="far fa-star" onclick="setRating(1)"></i><i class="far fa-star" onclick="setRating(2)"></i><i class="far fa-star" onclick="setRating(3)"></i><i class="far fa-star" onclick="setRating(4)"></i><i class="far fa-star" onclick="setRating(5)"></i></div>
     <div class="comment-list" id="commentList"></div>
     <div class="comment-input"><input type="text" id="commentName" placeholder="आपका नाम"><textarea id="commentText" placeholder="आपकी टिप्पणी..." rows="2"></textarea><button onclick="addComment()">भेजें</button></div>
   </div>
 
-  <!-- फुटर -->
   <div class="excellence-footer"><div><i class="fas fa-check-double" style="color:#FF9933;"></i> पंचायत सर्वा · <span id="lastUpdated"></span><br><span style="font-size:0.75rem;"> Developed By- Aman Kumar | DEO</span></div></div>
 
-  <!-- टोस्ट -->
   <div id="toast" class="toast-notification"></div>
 
-  <!-- मोडल: एकल योजना -->
   <div id="projectModal" class="modal"><div class="modal-content"><span class="modal-close" onclick="closeModal()" style="float:right;font-size:28px;cursor:pointer;">&times;</span><h3 id="modalTitle">योजना का विवरण</h3><p><strong id="modalFundLabel">मद:</strong> <span id="modalFund"></span></p><p><strong id="modalYearLabel">वित्त वर्ष:</strong> <span id="modalYear"></span></p><p><strong id="modalDescLabel">योजना का नाम:</strong> <span id="modalDesc"></span></p><p><strong id="modalAmountLabel">राशि:</strong> <span id="modalAmount"></span></p><p><strong id="modalStatusLabel">स्थिति:</strong> <span id="modalStatus"></span></p></div></div>
 
-  <!-- मोडल: एकल आवेदन -->
   <div id="grievanceModal" class="modal"><div class="modal-content"><span class="modal-close" onclick="closeGrievanceModal()" style="float:right;font-size:28px;cursor:pointer;">&times;</span><h3 id="grievanceModalTitle">आवेदन का विवरण</h3><p><strong>दिनांक:</strong> <span id="modalGrievanceDate"></span></p><p><strong>आवेदन संख्या:</strong> <span id="modalGrievanceAppNo"></span></p><p><strong>आवेदक का नाम:</strong> <span id="modalGrievanceApplicant"></span></p><p><strong>मोबाइल नं.:</strong> <span id="modalGrievanceMobile"></span></p><p><strong>ब्लॉक:</strong> <span id="modalGrievanceBlock"></span></p><p><strong>कार्यालय:</strong> <span id="modalGrievanceOffice"></span></p><p><strong>विषय:</strong> <span id="modalGrievanceSubject"></span></p><p><strong>स्थिति:</strong> <span id="modalGrievanceStatus"></span></p></div></div>
 
-  <!-- नया मोडल: योजना सूची -->
-  <div id="schemeListModal" class="modal">
-    <div class="modal-content" style="max-width: 95%; max-height: 85vh; overflow-y: auto; width: auto;">
-      <span class="modal-close" onclick="closeSchemeListModal()" style="cursor:pointer;float:right;font-size:28px;">&times;</span>
-      <h3 id="schemeListTitle" style="margin-bottom: 15px;">योजनाओं की सूची</h3>
-      <div id="schemeListBody"></div>
-    </div>
-  </div>
+  <div id="schemeListModal" class="modal"><div class="modal-content" style="max-width: 95%; max-height: 85vh; overflow-y: auto; width: auto;"><span class="modal-close" onclick="closeSchemeListModal()" style="cursor:pointer;float:right;font-size:28px;">&times;</span><h3 id="schemeListTitle" style="margin-bottom: 15px;">योजनाओं की सूची</h3><div id="schemeListBody"></div></div></div>
+
+  <div id="mapModal" class="modal"><div class="modal-content" style="text-align:center;"><span class="modal-close" onclick="closeMapModal()" style="cursor:pointer;float:right;font-size:28px;">&times;</span><img src="FINAL SARWA MAP.jpg" alt="सर्वा ग्राम पंचायत मानचित्र" style="width:100%;height:auto;border-radius:12px;"></div></div>
+
 </div>
 
-<div class="fab" onclick="window.print()" title="प्रिंट (Ctrl+P)"><i class="fas fa-print"></i></div>
-<div class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
-<div class="shortcut-hint" onclick="showShortcuts()"><i class="fas fa-keyboard"></i> ?</div>
+<div class="fab no-print" onclick="window.print()" title="प्रिंट (Ctrl+P)"><i class="fas fa-print"></i></div>
+<div class="back-to-top no-print" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
+<div class="shortcut-hint no-print" onclick="showShortcuts()"><i class="fas fa-keyboard"></i> ?</div>
 
 <script>
-  // ========== डेटा ==========
+  // ========== डेटा (बिल्कुल वैसा ही) ==========
   const schemes = [
     { fund: "15वीं वित्त आयोग", year: "2021–22", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा के वार्ड सं0-07 में बौधी पोखर के चारो तरफ मिट्टी भराई एवं खरंजीकरण कार्य।", amount: 1096700, status: "पूर्ण" },
     { fund: "15वीं वित्त आयोग", year: "2021–22", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा में परमेश्वर साव से सिधेश्वर महतो तक पी0सी0सी0 ढलाई कार्य।", amount: 319100, status: "पूर्ण" },
@@ -543,7 +608,7 @@
   ];
 
   // ========== ग्लोबल वेरिएबल ==========
-  let chartInstance, pieChartInstance;
+  let chartInstance, pieChartInstance, comparisonChartInstance;
   let currentPage15 = 1, currentPageState = 1, currentPagePersonnel = 1, currentPageRep = 1, currentPagePanchayat = 1, currentPageGrievance = 1, currentPageOfficer = 1;
   let rowsPerPage15 = 10, rowsPerPageState = 10, rowsPerPagePersonnel = 10, rowsPerPageRep = 10, rowsPerPagePanchayat = 10, rowsPerPageGrievance = 10, rowsPerPageOfficer = 10;
   let filtered15 = schemes.filter(s => s.fund === '15वीं वित्त आयोग');
@@ -552,6 +617,7 @@
   let filteredOfficers = blockOfficers.slice();
   let currentLanguage = 'hi';
   let currentRating = 0;
+  let lastUpdateTime = new Date();
 
   const translations = {
     hi: {
@@ -590,7 +656,7 @@
       commentPlaceholderName: 'आपका नाम',
       commentPlaceholderText: 'आपकी टिप्पणी...',
       commentSubmit: 'भेजें',
-      notificationText: '📢 आगामी समृद्धि यात्रा माननीय मुख्यमंत्री जी का दिनांक 14 मार्च 2026 को',
+      notificationText: '',
       thSn: 'क्र.', thFund: 'मद', thYear: 'वित्त वर्ष', thDesc: 'योजना का नाम', thAmount: 'राशि', thStatus: 'स्थिति',
       thDate: 'दिनांक', thAppNo: 'आवेदन संख्या', thApplicant: 'आवेदक का नाम', thMobile: 'मोबाइल नं.', thBlock: 'ब्लॉक', thOffice: 'कार्यालय', thSubject: 'विषय',
       thName: 'नाम', thDesignation: 'पदनाम', thProcedure: 'कार्य अवधि', thAttendance: 'उपस्थित',
@@ -608,7 +674,7 @@
       rowsLabel: 'Rows:', totalGrievancesLabel: 'Total Applications', disposedGrievancesLabel: 'Disposed', pendingGrievancesLabel: 'Pending',
       modalTitle: 'Project Details', modalFundLabel: 'Fund:', modalYearLabel: 'Year:', modalDescLabel: 'Description:', modalAmountLabel: 'Amount:', modalStatusLabel: 'Status:',
       commentPlaceholderName: 'Your name', commentPlaceholderText: 'Your comment...', commentSubmit: 'Submit',
-      notificationText: '📢 Upcoming Samriddhi Yatra of CM on 14 Mar 2026',
+      notificationText: '',
       thSn: 'S.No.', thFund: 'Fund', thYear: 'Year', thDesc: 'Scheme Name', thAmount: 'Amount', thStatus: 'Status',
       thDate: 'Date', thAppNo: 'App No.', thApplicant: 'Applicant Name', thMobile: 'Mobile', thBlock: 'Block', thOffice: 'Office', thSubject: 'Subject',
       thName: 'Name', thDesignation: 'Designation', thProcedure: 'Work Days', thAttendance: 'Attendance',
@@ -620,10 +686,38 @@
   function t(key) { return translations[currentLanguage][key] || key; }
   function showToast(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
   function formatMoney(n) { return '₹' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-  function updateClock() { const now = new Date(); document.getElementById('liveClock').innerHTML = `<i class="far fa-clock"></i> ${now.toLocaleTimeString('hi-IN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}`; }
-  function setLastUpdated() { document.getElementById('lastUpdated').innerText = new Date().toLocaleString('hi-IN'); }
+  
+  function animateCounter(elementId, target, suffix = '', isMoney = false) {
+    let current = 0;
+    const steps = 40; 
+    const increment = target / steps;
+    let i = 0;
+    const timer = setInterval(() => {
+      i++;
+      current += increment;
+      if (i >= steps) {
+        current = target;
+        clearInterval(timer);
+      }
+      const displayVal = isMoney ? formatMoney(Math.floor(current)) : Math.floor(current);
+      document.getElementById(elementId).innerText = displayVal + suffix;
+    }, 30);
+  }
 
-  // ========== थीम और भाषा ==========
+  function updateClock() { 
+    const now = new Date(); 
+    document.getElementById('liveClock').innerHTML = `<i class="far fa-clock"></i> ${now.toLocaleTimeString('hi-IN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}`; 
+    const diff = Math.round((now - lastUpdateTime) / 60000);
+    let timeAgo = '';
+    if (diff < 1) timeAgo = 'अभी';
+    else if (diff < 60) timeAgo = diff + ' मिनट पहले';
+    else if (diff < 1440) timeAgo = Math.round(diff/60) + ' घंटे पहले';
+    else timeAgo = Math.round(diff/1440) + ' दिन पहले';
+    document.getElementById('lastUpdated').innerText = currentLanguage === 'hi' ? `अपडेट हुआ: ${timeAgo}` : `Updated: ${timeAgo}`;
+  }
+  
+  function setLastUpdated() { lastUpdateTime = new Date(); updateClock(); }
+
   function setTheme(theme) {
     document.body.className = theme;
     renderCharts();
@@ -669,14 +763,20 @@
     updateMetrics(); renderCharts(); renderAllTables(); showToast(t('languageSwitched'));
   }
 
-  // ========== रेंडर फंक्शन्स ==========
   function updateMetrics() {
     const total = schemes.length, completed = schemes.filter(s => s.status === 'पूर्ण').length, progress = total - completed;
     const totalAmt = schemes.reduce((a,s)=>a+s.amount,0);
-    document.getElementById('totalSchemes').innerText = total;
-    document.getElementById('completedSchemes').innerText = completed;
-    document.getElementById('progressSchemes').innerText = progress;
-    document.getElementById('totalAmount').innerText = formatMoney(totalAmt);
+    
+    document.getElementById('totalSchemes').innerText = 0;
+    document.getElementById('completedSchemes').innerText = 0;
+    document.getElementById('progressSchemes').innerText = 0;
+    document.getElementById('totalAmount').innerText = '₹0';
+    
+    animateCounter('totalSchemes', total, '');
+    animateCounter('completedSchemes', completed, '');
+    animateCounter('progressSchemes', progress, '');
+    animateCounter('totalAmount', totalAmt, '', true);
+
     const perc = ((completed/total)*100).toFixed(1);
     document.getElementById('donutPercent').innerText = perc+'%';
     document.getElementById('donutPercent').style.setProperty('--percent', perc);
@@ -685,10 +785,14 @@
     document.getElementById('legendComplete').innerText = completed;
     document.getElementById('legendProgress').innerText = progress;
     document.getElementById('progressFill').style.width = perc+'%';
+    
     const completedAmt = schemes.filter(s=>s.status==='पूर्ण').reduce((a,s)=>a+s.amount,0);
     document.getElementById('budgetTotal').innerText = formatMoney(totalAmt);
     document.getElementById('budgetUsed').innerText = formatMoney(completedAmt);
     document.getElementById('budgetGaugeFill').style.width = (completedAmt/totalAmt*100)+'%';
+    const remaining = ((totalAmt - completedAmt)/totalAmt)*100;
+    document.getElementById('remainingPercentLabel').innerText = remaining.toFixed(1) + '% शेष';
+
     const top3 = [...schemes].sort((a,b)=>b.amount-a.amount).slice(0,3);
     let topHtml = '';
     top3.forEach(s => { topHtml += `<div class="top-project-item"><span>${s.desc.substring(0,30)}…</span> <strong>${formatMoney(s.amount)}</strong></div>`; });
@@ -705,11 +809,29 @@
     const ctx = document.getElementById('yearChart').getContext('2d');
     if (chartInstance) chartInstance.destroy();
     chartInstance = new Chart(ctx, { type: 'bar', data: { labels: years, datasets: [{ label: currentLanguage === 'hi' ? 'कार्यों की संख्या' : 'Number of Works', data: counts, backgroundColor: '#2563eb', borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } });
+    
     const fund15Total = schemes.filter(s => s.fund === '15वीं वित्त आयोग').reduce((a,s)=>a+s.amount,0);
     const fundStateTotal = schemes.filter(s => s.fund === 'षष्टम राज्य वित्त आयोग').reduce((a,s)=>a+s.amount,0);
     const pieCtx = document.getElementById('pieChart').getContext('2d');
     if (pieChartInstance) pieChartInstance.destroy();
     pieChartInstance = new Chart(pieCtx, { type: 'pie', data: { labels: [currentLanguage === 'hi' ? '15वीं वित्त' : '15th Finance', currentLanguage === 'hi' ? 'राज्य वित्त' : 'State Finance'], datasets: [{ data: [fund15Total, fundStateTotal], backgroundColor: ['#2563eb', '#16a34a'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } } } } });
+
+    const yearsComp = [...new Set(schemes.map(s => s.year))].sort();
+    const data15 = yearsComp.map(y => schemes.filter(s => s.fund === '15वीं वित्त आयोग' && s.year === y).reduce((a,s)=>a+s.amount,0));
+    const dataState = yearsComp.map(y => schemes.filter(s => s.fund === 'षष्टम राज्य वित्त आयोग' && s.year === y).reduce((a,s)=>a+s.amount,0));
+    const compCtx = document.getElementById('fundComparisonChart').getContext('2d');
+    if (comparisonChartInstance) comparisonChartInstance.destroy();
+    comparisonChartInstance = new Chart(compCtx, {
+      type: 'bar',
+      data: {
+        labels: yearsComp,
+        datasets: [
+          { label: '15वीं वित्त', data: data15, backgroundColor: '#2563eb' },
+          { label: 'राज्य वित्त', data: dataState, backgroundColor: '#16a34a' }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true } }, plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 9 } } } } }
+    });
   }
 
   function updateGrievanceStats() {
@@ -725,7 +847,6 @@
     document.getElementById('deptPendingList').innerHTML = html;
   }
 
-  // ========== टेबल्स और पेजिनेशन ==========
   function renderTable(tbodyId, data, page, tableType, rowsPerPage) {
     const tbody = document.getElementById(tbodyId);
     const start = (page - 1) * rowsPerPage, end = start + rowsPerPage;
@@ -834,6 +955,40 @@
     renderPagination(data.length, currentPagePanchayat, 'panchayat', rowsPerPagePanchayat);
   }
 
+  function filterTableAdvanced(type) {
+    const searchVal = document.getElementById(`search${type === '15' ? '15' : 'State'}`).value.toLowerCase();
+    const yearVal = document.getElementById(`yearFilter${type === '15' ? '15' : 'State'}`).value;
+    const statusVal = document.getElementById(`statusFilter${type === '15' ? '15' : 'State'}`).value;
+    
+    const allData = schemes.filter(s => s.fund === (type === '15' ? '15वीं वित्त आयोग' : 'षष्टम राज्य वित्त आयोग'));
+    let filtered = allData.filter(item => {
+      const matchesSearch = item.desc.toLowerCase().includes(searchVal) || item.year.toLowerCase().includes(searchVal) || item.status.toLowerCase().includes(searchVal) || item.amount.toString().includes(searchVal);
+      const matchesYear = yearVal === 'all' || item.year === yearVal;
+      const matchesStatus = statusVal === 'all' || item.status === statusVal;
+      return matchesSearch && matchesYear && matchesStatus;
+    });
+    
+    if (type === '15') { filtered15 = filtered; currentPage15 = 1; renderTable('table15Body', filtered15, currentPage15, '15', rowsPerPage15); document.getElementById('footer15Total').innerText = formatMoney(filtered15.reduce((a,s)=>a+s.amount,0)); }
+    else { filteredState = filtered; currentPageState = 1; renderTable('tableStateBody', filteredState, currentPageState, 'state', rowsPerPageState); document.getElementById('footerStateTotal').innerText = formatMoney(filteredState.reduce((a,s)=>a+s.amount,0)); }
+  }
+
+  function filterTable(type) { filterTableAdvanced(type); } 
+
+  function filterGrievanceTable() {
+    const searchVal = document.getElementById('searchGrievance').value.toLowerCase();
+    filteredGrievances = grievances.filter(g => g.applicant.toLowerCase().includes(searchVal) || g.subject.toLowerCase().includes(searchVal) || g.status.toLowerCase().includes(searchVal) || g.app_no.toLowerCase().includes(searchVal) || g.office.toLowerCase().includes(searchVal));
+    currentPageGrievance = 1; renderGrievanceTable();
+  }
+  function exportTableToCSV(type) {
+    let data, filename, headers;
+    if (type === 'grievance') { data = filteredGrievances; filename = 'grievances.csv'; headers = [t('thSn'), t('thDate'), t('thAppNo'), t('thApplicant'), t('thMobile'), t('thBlock'), t('thOffice'), t('thSubject'), t('thStatus')]; }
+    else if (type === '15') { data = filtered15; filename = '15th_finance.csv'; headers = [t('thSn'), t('thFund'), t('thYear'), t('thDesc'), t('thAmount'), t('thStatus')]; }
+    else if (type === 'state') { data = filteredState; filename = 'state_finance.csv'; headers = [t('thSn'), t('thFund'), t('thYear'), t('thDesc'), t('thAmount'), t('thStatus')]; } else return;
+    let csv = headers.join(',') + '\n';
+    data.forEach((item, index) => { let row = (type === 'grievance') ? [index+1, item.date, item.app_no, item.applicant, item.mobile, item.block, item.office, item.subject, item.status] : [index+1, item.fund, item.year, item.desc, item.amount, item.status]; csv += row.map(cell => `"${cell}"`).join(',') + '\n'; });
+    const blob = new Blob([csv], { type: 'text/csv' }); const url = window.URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); window.URL.revokeObjectURL(url); showToast('CSV डाउनलोड हुआ');
+  }
+
   function renderAllTables() {
     document.getElementById('grievanceTableHeader').innerHTML = `<th>${t('thSn')}</th><th>${t('thDate')}</th><th>${t('thAppNo')}</th><th>${t('thApplicant')}</th><th>${t('thMobile')}</th><th>${t('thBlock')}</th><th>${t('thOffice')}</th><th>${t('thSubject')}</th><th>${t('thStatus')}</th>`;
     document.getElementById('table15Header').innerHTML = `<th>${t('thSn')}</th><th>${t('thFund')}</th><th>${t('thYear')}</th><th>${t('thDesc')}</th><th>${t('thAmount')}</th><th>${t('thStatus')}</th>`;
@@ -843,6 +998,7 @@
     document.getElementById('panchayatTableHeader').innerHTML = `<th>${t('thSn')}</th><th>${t('thName')}</th><th>${t('thDesignation')}</th><th>${t('thMobile')}</th>`;
     document.getElementById('officerTableHeader').innerHTML = `<th>${t('thSn')}</th><th>${t('thName')}</th><th>${t('thDesignation')}</th><th>${t('thMobile')}</th>`;
     document.querySelectorAll('.grand-total-label').forEach(el => el.innerText = t('grandTotalLabel'));
+    
     renderTable('table15Body', filtered15, currentPage15, '15', rowsPerPage15);
     renderTable('tableStateBody', filteredState, currentPageState, 'state', rowsPerPageState);
     document.getElementById('footer15Total').innerText = formatMoney(filtered15.reduce((a,s)=>a+s.amount,0));
@@ -853,7 +1009,6 @@
     updateMetrics(); updateGrievanceStats();
   }
 
-  // ========== मोडल्स ==========
   function showProjectModal(fund, year, desc, amount, status) {
     document.getElementById('modalFund').innerText = fund; document.getElementById('modalYear').innerText = year; document.getElementById('modalDesc').innerHTML = desc; document.getElementById('modalAmount').innerText = formatMoney(amount);
     document.getElementById('modalStatus').innerText = (currentLanguage === 'en' ? (status === 'पूर्ण' ? t('statusComplete') : t('statusProgress')) : status);
@@ -867,10 +1022,7 @@
     document.getElementById('grievanceModal').classList.add('show');
   }
   function closeGrievanceModal() { document.getElementById('grievanceModal').classList.remove('show'); }
-
-  // ========== नया मोडल: योजना सूची (क्लिक करने पर) ==========
   function closeSchemeListModal() { document.getElementById('schemeListModal').classList.remove('show'); }
-
   function showSchemeList(category) {
     let data = []; let title = '';
     if (category === 'all') { data = schemes; title = 'कुल योजनाएँ (' + data.length + ')'; }
@@ -888,23 +1040,19 @@
     document.getElementById('schemeListModal').classList.add('show');
   }
 
-  // ========== क्लिक इवेंट सेट करना (addEventListener) ==========
+  function openMapModal() { document.getElementById('mapModal').classList.add('show'); }
+  function closeMapModal() { document.getElementById('mapModal').classList.remove('show'); }
+
   document.addEventListener('DOMContentLoaded', function() {
-    // स्टैट कार्ड्स पर क्लिक इवेंट जोड़ना
     document.querySelectorAll('#metricCards .stat-card').forEach(card => {
         card.addEventListener('click', function() {
             const category = this.getAttribute('data-category');
-            if (category) {
-                console.log('✅ क्लिक काम कर रहा है! श्रेणी:', category);
-                showSchemeList(category);
-            }
+            if (category) { showSchemeList(category); }
         });
     });
-    // बाकी इनिशियलाइज़ेशन
     setLastUpdated(); updateMetrics(); renderCharts(); renderAllTables(); updateGrievanceStats(); displayComments(); updateClock();
   });
 
-  // ========== कमेंट ==========
   function setRating(star) { currentRating = star; document.querySelectorAll('#ratingStars i').forEach((s, i) => { s.className = i < star ? 'fas fa-star' : 'far fa-star'; }); }
   function addComment() {
     const name = document.getElementById('commentName').value.trim(), text = document.getElementById('commentText').value.trim();
@@ -921,45 +1069,21 @@
     document.getElementById('commentList').innerHTML = comments.map((c, i) => `<div class="comment-item"><div class="comment-text"><span class="comment-name">${c.name}</span> (${c.date})<br>${c.text}</div><button class="delete-comment" onclick="deleteComment(${i})" title="हटाएँ"><i class="fas fa-trash"></i></button></div>`).join('') || (currentLanguage === 'hi' ? 'कोई टिप्पणी नहीं' : 'No comments');
   }
 
-  // ========== कीबोर्ड और सेटिंग्स ==========
   function showShortcuts() { alert('कीबोर्ड शॉर्टकट:\nCtrl+F - खोज (सक्रिय तालिका में)\nEsc - मोडल बंद\nCtrl+P - प्रिंट\n? - यह सहायता'); }
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closeGrievanceModal(); closeSchemeListModal(); } if (e.ctrlKey && e.key === 'f') { e.preventDefault(); const search = document.querySelector('.search-box input:not([disabled])'); if (search) search.focus(); } if (e.key === '?' && !e.ctrlKey) showShortcuts(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closeGrievanceModal(); closeSchemeListModal(); closeMapModal(); } if (e.ctrlKey && e.key === 'f') { e.preventDefault(); const search = document.querySelector('.search-box input:not([disabled])'); if (search) search.focus(); } if (e.key === '?' && !e.ctrlKey) showShortcuts(); });
   function saveSettings() { localStorage.setItem('dashboardSettings', JSON.stringify({ rowsPerPage15, rowsPerPageState, rowsPerPagePersonnel, rowsPerPageRep, rowsPerPagePanchayat, rowsPerPageGrievance, rowsPerPageOfficer, theme: document.body.className, language: currentLanguage })); }
   function loadSettings() {
     const saved = localStorage.getItem('dashboardSettings');
     if (saved) { const s = JSON.parse(saved); rowsPerPage15 = s.rowsPerPage15 || 10; rowsPerPageState = s.rowsPerPageState || 10; rowsPerPagePersonnel = s.rowsPerPagePersonnel || 10; rowsPerPageRep = s.rowsPerPageRep || 10; rowsPerPagePanchayat = s.rowsPerPagePanchayat || 10; rowsPerPageGrievance = s.rowsPerPageGrievance || 10; rowsPerPageOfficer = s.rowsPerPageOfficer || 10; document.getElementById('rowsPerPage15').value = rowsPerPage15; document.getElementById('rowsPerPageState').value = rowsPerPageState; document.getElementById('rowsPerPagePersonnel').value = rowsPerPagePersonnel; document.getElementById('rowsPerPageRep').value = rowsPerPageRep; document.getElementById('rowsPerPagePanchayat').value = rowsPerPagePanchayat; document.getElementById('rowsPerPageGrievance').value = rowsPerPageGrievance; document.getElementById('rowsPerPageOfficer').value = rowsPerPageOfficer; if (s.theme) document.body.className = s.theme; if (s.language && s.language !== currentLanguage) toggleLanguage(); }
   }
 
-  // ========== फिल्टर और एक्सपोर्ट ==========
-  function filterTable(type) {
-    const searchVal = document.getElementById(`search${type === '15' ? '15' : (type === 'state' ? 'State' : '')}`).value.toLowerCase();
-    const allData = schemes.filter(s => s.fund === (type === '15' ? '15वीं वित्त आयोग' : 'षष्टम राज्य वित्त आयोग'));
-    const filtered = allData.filter(item => item.desc.toLowerCase().includes(searchVal) || item.year.toLowerCase().includes(searchVal) || item.status.toLowerCase().includes(searchVal) || item.amount.toString().includes(searchVal));
-    if (type === '15') { filtered15 = filtered; currentPage15 = 1; renderTable('table15Body', filtered15, currentPage15, '15', rowsPerPage15); document.getElementById('footer15Total').innerText = formatMoney(filtered15.reduce((a,s)=>a+s.amount,0)); }
-    else { filteredState = filtered; currentPageState = 1; renderTable('tableStateBody', filteredState, currentPageState, 'state', rowsPerPageState); document.getElementById('footerStateTotal').innerText = formatMoney(filteredState.reduce((a,s)=>a+s.amount,0)); }
-  }
-  function filterGrievanceTable() {
-    const searchVal = document.getElementById('searchGrievance').value.toLowerCase();
-    filteredGrievances = grievances.filter(g => g.applicant.toLowerCase().includes(searchVal) || g.subject.toLowerCase().includes(searchVal) || g.status.toLowerCase().includes(searchVal) || g.app_no.toLowerCase().includes(searchVal) || g.office.toLowerCase().includes(searchVal));
-    currentPageGrievance = 1; renderGrievanceTable();
-  }
-  function exportTableToCSV(type) {
-    let data, filename, headers;
-    if (type === 'grievance') { data = filteredGrievances; filename = 'grievances.csv'; headers = [t('thSn'), t('thDate'), t('thAppNo'), t('thApplicant'), t('thMobile'), t('thBlock'), t('thOffice'), t('thSubject'), t('thStatus')]; }
-    else if (type === '15') { data = filtered15; filename = '15th_finance.csv'; headers = [t('thSn'), t('thFund'), t('thYear'), t('thDesc'), t('thAmount'), t('thStatus')]; }
-    else if (type === 'state') { data = filteredState; filename = 'state_finance.csv'; headers = [t('thSn'), t('thFund'), t('thYear'), t('thDesc'), t('thAmount'), t('thStatus')]; } else return;
-    let csv = headers.join(',') + '\n';
-    data.forEach((item, index) => { let row = (type === 'grievance') ? [index+1, item.date, item.app_no, item.applicant, item.mobile, item.block, item.office, item.subject, item.status] : [index+1, item.fund, item.year, item.desc, item.amount, item.status]; csv += row.map(cell => `"${cell}"`).join(',') + '\n'; });
-    const blob = new Blob([csv], { type: 'text/csv' }); const url = window.URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); window.URL.revokeObjectURL(url); showToast('CSV डाउनलोड हुआ');
-  }
-
-  // ========== वेरिएबल्स को ग्लोबल एक्सपोर्ट ==========
   window.setTheme = setTheme; window.toggleLanguage = toggleLanguage; window.changePage = changePage; window.changeRowsPerPage = changeRowsPerPage;
   window.showProjectModal = showProjectModal; window.closeModal = closeModal; window.showGrievanceModal = showGrievanceModal; window.closeGrievanceModal = closeGrievanceModal;
-  window.addComment = addComment; window.deleteComment = deleteComment; window.filterTable = filterTable; window.filterGrievanceTable = filterGrievanceTable;
-  window.exportTableToCSV = exportTableToCSV; window.setRating = setRating; window.showShortcuts = showShortcuts; window.closeSchemeListModal = closeSchemeListModal; window.showSchemeList = showSchemeList;
+  window.addComment = addComment; window.deleteComment = deleteComment; window.filterTable = filterTable; window.filterTableAdvanced = filterTableAdvanced;
+  window.filterGrievanceTable = filterGrievanceTable; window.exportTableToCSV = exportTableToCSV; window.setRating = setRating; window.showShortcuts = showShortcuts; 
+  window.closeSchemeListModal = closeSchemeListModal; window.showSchemeList = showSchemeList;
+  window.openMapModal = openMapModal; window.closeMapModal = closeMapModal;
 
-  // सेटिंग्स लोड करें
   loadSettings();
 </script>
 </body>
