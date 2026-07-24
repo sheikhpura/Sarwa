@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>Home</title>
+  <title>Home - Gram Panchayat Sarva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -11,15 +11,15 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     /* ============================================
-       पूर्ण रीडिज़ाइन (आधुनिक, मिनिमलिस्ट, प्रीमियम)
+       पूर्ण रीडिज़ाइन + बिहार सरकार की थीम (पॉइंट 2,3,5,6)
        ============================================ */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     :root {
       --saffron: #f59e0b;      /* Amber/Gold */
       --green: #10b981;        /* Emerald */
-      --navy: #0f172a;         /* Slate 900 */
-      --blue: #2563eb;         /* Royal Blue */
+      --navy: #003399;         /* बिहार सरकार का मुख्य रॉयल ब्लू */
+      --blue: #1a5c8b;         /* सेकंडरी ब्लू */
       --bg: #f8fafc;           /* Light Slate */
       --card-bg: #ffffff;
       --text-main: #1e293b;
@@ -28,24 +28,34 @@
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
       --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
       --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.03);
-      --header-bg: linear-gradient(145deg, #0f172a 0%, #1e3a8a 100%);
+      --header-bg: linear-gradient(145deg, #003399 0%, #1a5c8b 100%);
+      --table-header-bg: #003399;
       --radius-card: 16px;
       --radius-pill: 40px;
       --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    /* Theme Variants (Light & Dark) */
-    body.theme-green { --saffron: #d97706; --green: #059669; --navy: #064e3b; --header-bg: linear-gradient(145deg, #064e3b, #059669); }
-    body.theme-blue { --saffron: #d97706; --green: #0284c7; --navy: #0f172a; --header-bg: linear-gradient(145deg, #0f172a, #0284c7); }
+    /* Theme Variants (Light & Dark) - Colors adjusted for Bihar Gov */
+    body.theme-green { --saffron: #d97706; --green: #059669; --navy: #064e3b; --header-bg: linear-gradient(145deg, #064e3b, #059669); --table-header-bg: #064e3b; }
+    body.theme-blue { --saffron: #d97706; --green: #0284c7; --navy: #0f172a; --header-bg: linear-gradient(145deg, #0f172a, #0284c7); --table-header-bg: #0f172a; }
     
     body.dark-mode {
       --bg: #0f172a; --card-bg: #1e293b; --text-main: #f1f5f9; --text-muted: #94a3b8;
       --border-color: #334155; --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
       --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.5); --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.5);
-      --header-bg: linear-gradient(145deg, #020617, #1e293b);
+      --header-bg: linear-gradient(145deg, #020617, #1e293b); --table-header-bg: #020617;
     }
-    body.dark-green { --bg: #022c22; --card-bg: #064e3b; --text-main: #f1f5f9; --header-bg: linear-gradient(145deg, #022c22, #047857); }
-    body.dark-blue { --bg: #020617; --card-bg: #0f172a; --text-main: #f1f5f9; --header-bg: linear-gradient(145deg, #020617, #0369a1); }
+    body.dark-green { --bg: #022c22; --card-bg: #064e3b; --text-main: #f1f5f9; --header-bg: linear-gradient(145deg, #022c22, #047857); --table-header-bg: #022c22; }
+    body.dark-blue { --bg: #020617; --card-bg: #0f172a; --text-main: #f1f5f9; --header-bg: linear-gradient(145deg, #020617, #0369a1); --table-header-bg: #020617; }
+
+    /* ===== वॉटरमार्क (बिहार सरकार) - पॉइंट 6 ===== */
+    body::before {
+      content: '';
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='200'><text x='50%' y='50%' font-size='80' text-anchor='middle' dominant-baseline='middle' fill='%23000' font-weight='bold' transform='rotate(-15 200 100)'>बिहार सरकार</text></svg>");
+      background-repeat: repeat; background-size: 400px 200px;
+      opacity: 0.03; pointer-events: none; z-index: -1;
+    }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -63,10 +73,10 @@
     @media print {
       .fab, .back-to-top, .shortcut-hint, .theme-selector, .language-switch, .search-export, .export-btn, .comment-section,
       .no-print, .rating-stars, .comment-input, .notification-banner, .weather-widget, .gallery-thumbnails, .live-clock, 
-      .modal, #toast { display: none !important; }
+      .modal, #toast, body::before { display: none !important; }
       .table-section { break-inside: avoid; page-break-inside: avoid; }
       body { background: white !important; padding: 0 !important; }
-      .official-masthead { background: #0f172a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .official-masthead { background: #003399 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .stat-card { background: #f8fafc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
 
@@ -224,6 +234,11 @@
     .gallery-thumbnails { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
     .gallery-thumb { width: 70px; height: 70px; background: var(--bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--text-muted); border: 2px solid var(--border-color); transition: var(--transition); }
     .gallery-thumb:hover { border-color: var(--saffron); transform: scale(1.05); }
+    
+    /* ===== बिहार सरकार के लिए लिंक कार्ड (पॉइंट 5) ===== */
+    .link-list { list-style: none; margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .link-list li a { color: var(--text-main); text-decoration: none; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; transition: var(--transition); }
+    .link-list li a:hover { color: var(--saffron); }
 
     /* Map */
     .map-section { background: var(--card-bg); border-radius: var(--radius-card); padding: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); margin-bottom: 24px; }
@@ -268,9 +283,17 @@
     .shortcut-hint { position: fixed; bottom: 96px; left: 30px; background: var(--navy); color: white; padding: 6px 14px; border-radius: var(--radius-pill); font-size: 0.7rem; z-index: 998; opacity: 0.8; cursor: pointer; box-shadow: var(--shadow-sm); transition: var(--transition); }
     .shortcut-hint:hover { opacity: 1; }
 
+    /* ===== बिहार सरकार का फुटर (पॉइंट 3) ===== */
+    .gov-footer { margin-top: 30px; padding: 20px; background: var(--card-bg); border-radius: var(--radius-card); text-align: center; border: 1px solid var(--border-color); }
+    .gov-footer .footer-links { margin-bottom: 12px; font-size: 0.85rem; }
+    .gov-footer .footer-links a { color: var(--saffron); text-decoration: none; font-weight: 500; }
+    .gov-footer .footer-links a:hover { text-decoration: underline; }
+    .gov-footer .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .visitor-counter { font-weight: 600; color: var(--green); }
+
     /* Responsive */
-    @media (max-width: 1024px) { .insight-panel, .feature-grid { grid-template-columns: 1fr; } }
-    @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr 1fr; } .emblem-group { flex-wrap: wrap; } .govt-text { border-left: none; padding-left: 0; width: 100%; } }
+    @media (max-width: 1024px) { .insight-panel, .feature-grid { grid-template-columns: 1fr; } .link-list { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr 1fr; } .emblem-group { flex-wrap: wrap; } .govt-text { border-left: none; padding-left: 0; width: 100%; } .gov-footer .footer-content { flex-direction: column; gap: 6px; } }
     @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } body { padding: 16px; } .official-masthead { padding: 20px; } }
   </style>
 </head>
@@ -284,6 +307,7 @@
   <div class="official-masthead">
     <div class="emblem-row">
       <div class="emblem-group">
+        <!-- PRD.jpg और india.gif यथावत रखे गए हैं (पॉइंट 1 छोड़ दिया) -->
         <img src="PRD.jpg" alt="PRD Logo" class="prd-logo" draggable="false">
         <div class="ashoka-emblem"><i class="fas fa-lion"></i></div>
         <div class="govt-text">
@@ -446,6 +470,26 @@
     <div class="pagination-wrapper"><div class="rows-selector"><span class="rowsLabel">पंक्तियाँ:</span><select id="rowsPerPageGrievance" onchange="changeRowsPerPage('grievance')"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div><div class="pagination" id="paginationGrievance"></div></div>
   </div>
 
+  <!-- ===== नया जोड़ा गया सेक्शन: महत्वपूर्ण लिंक और नागरिक चार्टर (पॉइंट 5) ===== -->
+  <div class="extra-grid no-print" style="margin-top: 10px;">
+    <div class="extra-card">
+      <div class="feature-title"><i class="fas fa-link"></i> बिहार सरकार की योजनाएँ</div>
+      <ul class="link-list">
+        <li><a href="#"><i class="fas fa-check"></i> सात निश्चय (Saat Nischay)</a></li>
+        <li><a href="#"><i class="fas fa-leaf"></i> जीविका (Jeevika)</a></li>
+        <li><a href="#"><i class="fas fa-house"></i> मुख्यमंत्री आवास योजना</a></li>
+        <li><a href="#"><i class="fas fa-landmark"></i> मुख्यमंत्री किसान सहायता</a></li>
+      </ul>
+    </div>
+    <div class="extra-card">
+      <div class="feature-title"><i class="fas fa-gavel"></i> नागरिक चार्टर</div>
+      <div style="font-size:0.85rem; margin-top: 10px;">
+        पंचायत सर्वा में मिलने वाली सेवाएँ (जन्म-मृत्यु प्रमाण पत्र, आवास, आदि) की समय-सीमा।
+        <br><a href="#" style="color:var(--saffron); font-weight:600;">Download PDF</a>
+      </div>
+    </div>
+  </div>
+
   <div class="extra-grid no-print">
     <div class="extra-card"><div class="feature-title"><i class="fas fa-cloud-sun"></i> मौसम (शेखपुरा)</div><div class="weather-widget"><div class="weather-icon"><i class="fas fa-sun"></i></div><div><div class="weather-temp">32°C</div><div>धूप, आर्द्रता 45%</div></div></div></div>
     
@@ -472,7 +516,27 @@
     <div class="comment-input"><input type="text" id="commentName" placeholder="आपका नाम"><textarea id="commentText" placeholder="आपकी टिप्पणी..." rows="2"></textarea><button onclick="addComment()">भेजें</button></div>
   </div>
 
-  <div class="excellence-footer"><div><i class="fas fa-check-double" style="color:#FF9933;"></i> पंचायत सर्वा · <span id="lastUpdated"></span><br><span style="font-size:0.75rem;"> Developed By- Aman Kumar | DEO</span></div></div>
+  <!-- ===== बिहार सरकार के लिए फुटर (पॉइंट 3) ===== -->
+  <footer class="gov-footer">
+    <div class="footer-links">
+      <a href="#">होम</a> | <a href="#">साइट मैप</a> | <a href="#">अस्वीकरण (Disclaimer)</a> | 
+      <a href="#">गोपनीयता नीति</a> | <a href="#">बिहार सरकार</a>
+    </div>
+    <div class="footer-content">
+      <div>
+        <i class="fas fa-check-double" style="color:#FF9933;"></i> 
+        ग्राम पंचायत सर्वा, प्रखंड बरबीघा · <span id="lastUpdated"></span>
+        <br><span style="font-size:0.75rem; opacity:0.8;">Developed By- Aman Kumar | DEO (बिहार सरकार)</span>
+      </div>
+      <div class="visitor-counter">
+        <i class="fas fa-eye"></i> विज़िटर: <span id="visitorCount">1,234</span>
+        <br><small style="font-size:0.7rem;">Best Viewed in 1366x768</small>
+      </div>
+    </div>
+    <div style="margin-top:12px; font-size:0.7rem; border-top:1px solid var(--border-color); padding-top:10px; opacity:0.7;">
+      © 2026 पंचायत राज विभाग, बिहार सरकार। सर्वाधिकार सुरक्षित।
+    </div>
+  </footer>
 
   <div id="toast" class="toast-notification"></div>
 
