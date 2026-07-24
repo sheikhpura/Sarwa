@@ -331,18 +331,65 @@
     .gov-footer .social-links a:hover { color: var(--saffron); transform: scale(1.1); }
     .visitor-counter { font-weight: 600; color: var(--green); }
 
-    /* Responsive */
-    @media (max-width: 1024px) { .insight-panel, .feature-grid { grid-template-columns: 1fr; } .link-list { grid-template-columns: 1fr; } }
-    @media (max-width: 768px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; } .emblem-group { flex-wrap: wrap; }
-      .govt-text { border-left: none; padding-left: 0; width: 100%; }
-      .gov-footer .footer-content { flex-direction: column; gap: 6px; }
-      .extra-grid { grid-template-columns: 1fr 1fr; }
-      .emergency-grid { grid-template-columns: 1fr 1fr; }
+    /* ===== मोबाइल फिक्स (Responsive) ===== */
+    @media (max-width: 1024px) { 
+      .insight-panel, .feature-grid { grid-template-columns: 1fr; } 
+      .link-list { grid-template-columns: 1fr; }
     }
+
+    @media (max-width: 768px) {
+      /* हेडर में लोगो और टेक्स्ट को सही करना */
+      .emblem-group { flex-wrap: wrap; gap: 8px; justify-content: flex-start; }
+      .prd-logo, .india-logo { height: 3.2rem !important; } /* लोगो साइज़ छोटा */
+      .govt-text { 
+        border-left: none !important; 
+        padding-left: 0 !important; 
+        width: 100%; 
+        margin-top: 6px;
+      }
+      .govt-text h1 { font-size: 1.4rem; }
+      .govt-text .sub { font-size: 0.75rem; gap: 6px; }
+
+      /* स्टैट कार्ड्स (4 को 2 कॉलम में बदलें और साइज़ कम करें) */
+      .stats-grid { 
+        grid-template-columns: 1fr 1fr !important; 
+        gap: 10px; 
+        margin-top: -10px;
+      }
+      .stat-card { 
+        padding: 12px 10px !important; 
+        gap: 10px; 
+      }
+      .stat-icon { 
+        width: 36px; 
+        height: 36px; 
+        font-size: 1.2rem; 
+      }
+      .stat-content h2 { font-size: 1.4rem !important; }
+      .stat-content p { font-size: 0.6rem; }
+
+      /* मैसेज बॉक्स और नोटिफिकेशन */
+      .message-card { padding: 12px 16px; }
+      .message-card .msg-quote { font-size: 1.8rem; }
+      .message-card .msg-text { font-size: 0.85rem; }
+      .notification-banner { font-size: 0.8rem; padding: 6px 16px; }
+
+      /* ग्लोबल सर्च और अन्य ग्रिड */
+      .global-search-wrap { margin-bottom: 12px; }
+      .extra-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .emergency-grid { grid-template-columns: 1fr 1fr; }
+      
+      /* फुटर */
+      .gov-footer .footer-content { flex-direction: column; gap: 6px; }
+      .gov-footer .social-links { gap: 12px; }
+    }
+
     @media (max-width: 480px) {
-      .stats-grid { grid-template-columns: 1fr; } body { padding: 16px; } .official-masthead { padding: 20px; }
-      .extra-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr !important; } /* मोबाइल पर सभी कार्ड एक लाइन में */
+      .stat-content h2 { font-size: 1.6rem !important; }
+      .extra-grid { grid-template-columns: 1fr; } /* बाकी कार्ड भी सिंगल कॉलम */
+      body { padding: 12px; }
+      .official-masthead { padding: 16px; }
     }
   </style>
 </head>
@@ -374,7 +421,6 @@
   <div class="official-masthead">
     <div class="emblem-row">
       <div class="emblem-group">
-        <!-- PRD Logo के ठीक बगल में India Flag -->
         <img src="PRD.jpg" alt="PRD Logo" class="prd-logo" draggable="false">
         <img src="india.gif" alt="India Flag" class="india-logo" draggable="false">
         
@@ -613,7 +659,7 @@
     <div class="comment-input"><input type="text" id="commentName" placeholder="आपका नाम"><textarea id="commentText" placeholder="आपकी टिप्पणी..." rows="2"></textarea><button onclick="addComment()">भेजें</button></div>
   </div>
 
-  <!-- बिहार सरकार का फुटर (अपडेटेड डेवलपर क्रेडिट और Instagram लिंक) -->
+  <!-- बिहार सरकार का फुटर -->
   <footer class="gov-footer">
     <div class="social-links">
       <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
@@ -945,7 +991,6 @@
   function updateClock() { 
     const now = new Date(); 
     document.getElementById('liveClock').innerHTML = `<i class="far fa-clock"></i> ${now.toLocaleTimeString('hi-IN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}`; 
-    
     // Last Update को स्थिर (Static) 25.07.2026 कर दिया गया है
     document.getElementById('lastUpdated').innerText = '25.07.2026';
   }
