@@ -412,7 +412,7 @@
     <!-- ===== सबसे ऊपर का नया टाइटल (Page Header) ===== -->
     <div class="page-header-title no-print">
       <h1 id="mainHeading">ग्राम पंचायत सर्वा, बरबीघा</h1>
-      <h2>15वीं वित्त + षष्टम राज्य वित्त</h2>
+      <h2 id="mainSubHeading">15वीं वित्त + षष्टम राज्य वित्त</h2>
     </div>
   </div>
 
@@ -439,6 +439,7 @@
   <div class="official-masthead">
     <div class="emblem-row">
       <div class="emblem-group">
+        <!-- अब onerror हटा दिया गया है, फाइल होने पर दिखेगा -->
         <img src="PRD.jpg" alt="PRD Logo" class="prd-logo" draggable="false">
         <img src="india.gif" alt="India Flag" class="india-logo" draggable="false">
         
@@ -457,12 +458,12 @@
         </button>
         <span class="live-clock" id="liveClock"><i class="far fa-clock"></i> </span>
         <div class="theme-selector">
-          <div class="theme-btn light-default" onclick="setTheme('light-default')"></div>
-          <div class="theme-btn dark-default" onclick="setTheme('dark-default')"></div>
-          <div class="theme-btn light-green" onclick="setTheme('light-green')"></div>
-          <div class="theme-btn dark-green" onclick="setTheme('dark-green')"></div>
-          <div class="theme-btn light-blue" onclick="setTheme('light-blue')"></div>
-          <div class="theme-btn dark-blue" onclick="setTheme('dark-blue')"></div>
+          <div class="theme-btn light-default" onclick="setTheme('light-default')" title="लाइट (डिफॉल्ट)"></div>
+          <div class="theme-btn dark-default" onclick="setTheme('dark-default')" title="डार्क (डिफॉल्ट)"></div>
+          <div class="theme-btn light-green" onclick="setTheme('light-green')" title="लाइट ग्रीन"></div>
+          <div class="theme-btn dark-green" onclick="setTheme('dark-green')" title="डार्क ग्रीन"></div>
+          <div class="theme-btn light-blue" onclick="setTheme('light-blue')" title="लाइट ब्लू"></div>
+          <div class="theme-btn dark-blue" onclick="setTheme('dark-blue')" title="डार्क ब्लू"></div>
         </div>
         <button class="language-switch" onclick="toggleLanguage()"><i class="fas fa-language"></i> <span id="langText">English</span></button>
       </div>
@@ -669,6 +670,7 @@
   <div class="map-section">
     <div class="table-header"><h2><i class="fas fa-map-marked-alt" style="color:#FF9933;"></i> ग्राम पंचायत सर्वा का मानचित्र</h2></div>
     <div class="map-container" oncontextmenu="return false;">
+      <!-- अब onerror हटा दिया गया है -->
       <img src="FINAL SARWA MAP.jpg" alt="सर्वा ग्राम पंचायत मानचित्र" loading="lazy" draggable="false" onclick="openMapModal()" ondragstart="return false;">
     </div>
   </div>
@@ -723,12 +725,12 @@
 </div>
 
 <!-- Floating Buttons -->
-<div class="fab no-print" onclick="window.print()" title="प्रिंट (Ctrl+P)"><i class="fas fa-print"></i></div>
-<div class="back-to-top no-print" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
+<div class="fab no-print" onclick="window.print()" title="प्रिंट करें (Ctrl+P)"><i class="fas fa-print"></i></div>
+<div class="back-to-top no-print" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="ऊपर जाएँ"><i class="fas fa-arrow-up"></i></div>
 <div class="shortcut-hint no-print" onclick="showShortcuts()"><i class="fas fa-keyboard"></i> ?</div>
 
 <script>
-  // ========== डेटा (बिल्कुल वैसा ही) ==========
+  // ========== डेटा ==========
   const schemes = [
     { fund: "15वीं वित्त आयोग", year: "2021–22", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा के वार्ड सं0-07 में बौधी पोखर के चारो तरफ मिट्टी भराई एवं खरंजीकरण कार्य।", amount: 1096700, status: "पूर्ण" },
     { fund: "15वीं वित्त आयोग", year: "2021–22", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा में परमेश्वर साव से सिधेश्वर महतो तक पी0सी0सी0 ढलाई कार्य।", amount: 319100, status: "पूर्ण" },
@@ -961,7 +963,7 @@
       commentPlaceholderName: 'आपका नाम',
       commentPlaceholderText: 'आपकी टिप्पणी...',
       commentSubmit: 'भेजें',
-      notificationText: '',
+      notificationText: 'ग्राम पंचायत सर्वा का डैशबोर्ड नवीनतम डेटा के साथ अपडेट किया गया है।',
       thSn: 'क्र.', thFund: 'मद', thYear: 'वित्त वर्ष', thDesc: 'योजना का नाम', thAmount: 'राशि', thStatus: 'स्थिति',
       thDate: 'दिनांक', thAppNo: 'आवेदन संख्या', thApplicant: 'आवेदक का नाम', thMobile: 'मोबाइल नं.', thBlock: 'ब्लॉक', thOffice: 'कार्यालय', thSubject: 'विषय',
       thName: 'नाम', thDesignation: 'पदनाम', thProcedure: 'कार्य अवधि', thAttendance: 'उपस्थित',
@@ -979,7 +981,7 @@
       rowsLabel: 'Rows:', totalGrievancesLabel: 'Total Applications', disposedGrievancesLabel: 'Disposed', pendingGrievancesLabel: 'Pending',
       modalTitle: 'Project Details', modalFundLabel: 'Fund:', modalYearLabel: 'Year:', modalDescLabel: 'Description:', modalAmountLabel: 'Amount:', modalStatusLabel: 'Status:',
       commentPlaceholderName: 'Your name', commentPlaceholderText: 'Your comment...', commentSubmit: 'Submit',
-      notificationText: '',
+      notificationText: 'Gram Panchayat Sarva dashboard is updated with the latest data.',
       thSn: 'S.No.', thFund: 'Fund', thYear: 'Year', thDesc: 'Scheme Name', thAmount: 'Amount', thStatus: 'Status',
       thDate: 'Date', thAppNo: 'App No.', thApplicant: 'Applicant Name', thMobile: 'Mobile', thBlock: 'Block', thOffice: 'Office', thSubject: 'Subject',
       thName: 'Name', thDesignation: 'Designation', thProcedure: 'Work Days', thAttendance: 'Attendance',
@@ -1015,7 +1017,6 @@
   }
   
   function setLastUpdated() { 
-    // Last Update को स्थिर (Static) 25.07.2026 कर दिया गया है (एक बार सेट करें)
     document.getElementById('lastUpdated').innerText = '25.07.2026';
   }
 
@@ -1028,6 +1029,7 @@
     currentLanguage = currentLanguage === 'hi' ? 'en' : 'hi';
     document.getElementById('langText').innerText = currentLanguage === 'hi' ? 'English' : 'हिंदी';
     document.getElementById('mainHeading').innerText = t('mainHeading');
+    document.getElementById('mainSubHeading').innerText = currentLanguage === 'hi' ? '15वीं वित्त + षष्टम राज्य वित्त' : '15th Finance + 6th State Finance';
     document.getElementById('totalSchemesLabel').innerText = t('totalSchemesLabel');
     document.getElementById('completedSchemesLabel').innerText = t('completedSchemesLabel');
     document.getElementById('progressSchemesLabel').innerText = t('progressSchemesLabel');
@@ -1092,7 +1094,7 @@
     document.getElementById('budgetUsed').innerText = formatMoney(completedAmt);
     document.getElementById('budgetGaugeFill').style.width = (completedAmt/totalAmt*100)+'%';
     const remaining = ((totalAmt - completedAmt)/totalAmt)*100;
-    document.getElementById('remainingPercentLabel').innerText = remaining.toFixed(1) + '% शेष';
+    document.getElementById('remainingPercentLabel').innerText = remaining.toFixed(1) + '% ' + (currentLanguage === 'hi' ? 'शेष' : 'remaining');
 
     const top3 = [...schemes].sort((a,b)=>b.amount-a.amount).slice(0,3);
     let topHtml = '';
@@ -1152,6 +1154,13 @@
     const tbody = document.getElementById(tbodyId);
     const start = (page - 1) * rowsPerPage, end = start + rowsPerPage;
     const pageData = data.slice(start, end);
+
+    if (data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;">${currentLanguage === 'hi' ? 'कोई रिकॉर्ड नहीं मिला' : 'No records found'}</td></tr>`;
+      renderPagination(0, page, tableType, rowsPerPage);
+      return;
+    }
+
     tbody.innerHTML = '';
     pageData.forEach((s, i) => {
       let cls = s.status === 'पूर्ण' ? 'complete' : 'progress';
@@ -1170,6 +1179,13 @@
     const tbody = document.getElementById('tableGrievanceBody');
     const start = (currentPageGrievance - 1) * rowsPerPageGrievance, end = start + rowsPerPageGrievance;
     const pageData = filteredGrievances.slice(start, end);
+
+    if (filteredGrievances.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:20px;">${currentLanguage === 'hi' ? 'कोई रिकॉर्ड नहीं मिला' : 'No records found'}</td></tr>`;
+      renderPagination(0, currentPageGrievance, 'grievance', rowsPerPageGrievance);
+      return;
+    }
+
     tbody.innerHTML = '';
     pageData.forEach((g, i) => {
       let cls = g.status === 'Disposed' ? 'disposed' : 'pending';
@@ -1281,11 +1297,9 @@
     currentPageGrievance = 1; renderGrievanceTable();
   }
 
-  // ===== ग्लोबल सर्च =====
   function globalSearch() {
     const query = document.getElementById('globalSearch').value.trim().toLowerCase();
     if(query.length === 0) {
-      // Reset all tables
       filtered15 = schemes.filter(s => s.fund === '15वीं वित्त आयोग');
       filteredState = schemes.filter(s => s.fund === 'षष्टम राज्य वित्त आयोग');
       filteredGrievances = grievances.slice();
@@ -1294,62 +1308,18 @@
       return;
     }
 
-    // 1. Schemes (15th & State)
-    const matchedSchemes = schemes.filter(s => 
-      s.desc.toLowerCase().includes(query) || 
-      s.fund.toLowerCase().includes(query) || 
-      s.year.toLowerCase().includes(query) ||
-      s.status.toLowerCase().includes(query)
-    );
+    const matchedSchemes = schemes.filter(s => s.desc.toLowerCase().includes(query) || s.fund.toLowerCase().includes(query) || s.year.toLowerCase().includes(query) || s.status.toLowerCase().includes(query));
     filtered15 = matchedSchemes.filter(s => s.fund === '15वीं वित्त आयोग');
     filteredState = matchedSchemes.filter(s => s.fund === 'षष्टम राज्य वित्त आयोग');
 
-    // 2. Personnel
-    const matchedPersonnel = personnel.filter(p => 
-      p.name.toLowerCase().includes(query) || 
-      p.designation.toLowerCase().includes(query) || 
-      p.mobile.includes(query)
-    );
+    const matchedPersonnel = personnel.filter(p => p.name.toLowerCase().includes(query) || p.designation.toLowerCase().includes(query) || p.mobile.includes(query));
+    const matchedReps = representatives.filter(r => r.name.toLowerCase().includes(query) || r.designation.toLowerCase().includes(query) || r.mobile.includes(query));
+    const matchedPanchayat = panchayatMembers.filter(m => m.name.toLowerCase().includes(query) || m.designation.toLowerCase().includes(query) || m.mobile.includes(query));
+    filteredOfficers = blockOfficers.filter(o => o.name.toLowerCase().includes(query) || o.designation.toLowerCase().includes(query) || o.mobile.includes(query));
+    filteredGrievances = grievances.filter(g => g.applicant.toLowerCase().includes(query) || g.subject.toLowerCase().includes(query) || g.status.toLowerCase().includes(query) || g.app_no.toLowerCase().includes(query) || g.office.toLowerCase().includes(query) || g.mobile.includes(query));
 
-    // 3. Representatives
-    const matchedReps = representatives.filter(r => 
-      r.name.toLowerCase().includes(query) || 
-      r.designation.toLowerCase().includes(query) || 
-      r.mobile.includes(query)
-    );
-
-    // 4. Panchayat Members
-    const matchedPanchayat = panchayatMembers.filter(m => 
-      m.name.toLowerCase().includes(query) || 
-      m.designation.toLowerCase().includes(query) || 
-      m.mobile.includes(query)
-    );
-
-    // 5. Officers
-    filteredOfficers = blockOfficers.filter(o => 
-      o.name.toLowerCase().includes(query) || 
-      o.designation.toLowerCase().includes(query) || 
-      o.mobile.includes(query)
-    );
-
-    // 6. Grievances
-    filteredGrievances = grievances.filter(g => 
-      g.applicant.toLowerCase().includes(query) || 
-      g.subject.toLowerCase().includes(query) || 
-      g.status.toLowerCase().includes(query) || 
-      g.app_no.toLowerCase().includes(query) || 
-      g.office.toLowerCase().includes(query) ||
-      g.mobile.includes(query)
-    );
-
-    // Reset pages and render
-    currentPage15 = 1; currentPageState = 1; currentPagePersonnel = 1; 
-    currentPageRep = 1; currentPagePanchayat = 1; currentPageOfficer = 1; currentPageGrievance = 1;
-    
-    // Re-render all tables with filtered data
+    currentPage15 = 1; currentPageState = 1; currentPagePersonnel = 1; currentPageRep = 1; currentPagePanchayat = 1; currentPageOfficer = 1; currentPageGrievance = 1;
     renderAllTables();
-    
-    // Show summary
     const totalFound = filtered15.length + filteredState.length + matchedPersonnel.length + matchedReps.length + matchedPanchayat.length + filteredOfficers.length + filteredGrievances.length;
     showToast(totalFound + ' परिणाम मिले!');
   }
@@ -1426,12 +1396,19 @@
         });
     });
     
-    // ===== विज़िटर काउंटर ऑटोमेटिक धीरे-धीरे बढ़ने के लिए (हर 1 सेकंड में 1 बढ़े) =====
+    document.addEventListener('click', function(e) {
+      const header = document.getElementById('headerActions');
+      const hamburger = document.querySelector('.hamburger');
+      if (header && header.classList.contains('open') && !header.contains(e.target) && !hamburger.contains(e.target)) {
+        header.classList.remove('open');
+      }
+    });
+
     let visitorCount = 1234;
     setInterval(() => {
       visitorCount += 1;
       document.getElementById('visitorCount').innerText = visitorCount;
-    }, 1000); // 1000ms = 1 second
+    }, 1000);
 
     setLastUpdated(); 
     updateMetrics(); 
@@ -1441,9 +1418,50 @@
     displayComments(); 
     updateClock();
     
-    // घड़ी को हर 1 सेकंड अपडेट करें
     setInterval(updateClock, 1000);
   });
+
+  function displayComments() {
+    const comments = JSON.parse(localStorage.getItem('comments') || '[]');
+    const list = document.getElementById('commentList');
+    list.innerHTML = '';
+    
+    if (comments.length === 0) {
+      list.innerHTML = currentLanguage === 'hi' ? 'कोई टिप्पणी नहीं' : 'No comments';
+      return;
+    }
+
+    comments.forEach((c, i) => {
+      const div = document.createElement('div');
+      div.className = 'comment-item';
+      
+      const textDiv = document.createElement('div');
+      textDiv.className = 'comment-text';
+      
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'comment-name';
+      nameSpan.textContent = c.name;
+      
+      const dateText = document.createTextNode(` (${c.date})`);
+      const br = document.createElement('br');
+      const contentText = document.createTextNode(c.text);
+      
+      textDiv.appendChild(nameSpan);
+      textDiv.appendChild(dateText);
+      textDiv.appendChild(br);
+      textDiv.appendChild(contentText);
+      
+      const btn = document.createElement('button');
+      btn.className = 'delete-comment';
+      btn.innerHTML = '<i class="fas fa-trash"></i>';
+      btn.onclick = () => deleteComment(i);
+      btn.title = 'हटाएँ';
+      
+      div.appendChild(textDiv);
+      div.appendChild(btn);
+      list.appendChild(div);
+    });
+  }
 
   function setRating(star) { currentRating = star; document.querySelectorAll('#ratingStars i').forEach((s, i) => { s.className = i < star ? 'fas fa-star' : 'far fa-star'; }); }
   function addComment() {
@@ -1456,10 +1474,6 @@
     displayComments(); document.getElementById('commentName').value = ''; document.getElementById('commentText').value = ''; setRating(0); showToast(t('commentAdded'));
   }
   function deleteComment(index) { const comments = JSON.parse(localStorage.getItem('comments') || '[]'); comments.splice(index, 1); localStorage.setItem('comments', JSON.stringify(comments)); displayComments(); showToast(t('commentDeleted')); }
-  function displayComments() {
-    const comments = JSON.parse(localStorage.getItem('comments') || '[]');
-    document.getElementById('commentList').innerHTML = comments.map((c, i) => `<div class="comment-item"><div class="comment-text"><span class="comment-name">${c.name}</span> (${c.date})<br>${c.text}</div><button class="delete-comment" onclick="deleteComment(${i})" title="हटाएँ"><i class="fas fa-trash"></i></button></div>`).join('') || (currentLanguage === 'hi' ? 'कोई टिप्पणी नहीं' : 'No comments');
-  }
 
   function showShortcuts() { alert('कीबोर्ड शॉर्टकट:\nCtrl+F - खोज (सक्रिय तालिका में)\nEsc - मोडल बंद\nCtrl+P - प्रिंट\n? - यह सहायता'); }
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closeGrievanceModal(); closeSchemeListModal(); closeMapModal(); } if (e.ctrlKey && e.key === 'f') { e.preventDefault(); const search = document.querySelector('.search-box input:not([disabled])'); if (search) search.focus(); } if (e.key === '?' && !e.ctrlKey) showShortcuts(); });
