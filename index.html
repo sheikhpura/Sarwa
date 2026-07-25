@@ -48,26 +48,6 @@
     body.dark-green { --bg: #022c22; --card-bg: #064e3b; --text-main: #f1f5f9; --header-bg: linear-gradient(145deg, #022c22, #047857); --table-header-bg: #022c22; }
     body.dark-blue { --bg: #020617; --card-bg: #0f172a; --text-main: #f1f5f9; --header-bg: linear-gradient(145deg, #020617, #0369a1); --table-header-bg: #020617; }
 
-    /* ===== नया: हाई-कंट्रास्ट थीम (High Contrast) ===== */
-    body.high-contrast {
-      --bg: #000000 !important;
-      --card-bg: #000000 !important;
-      --text-main: #FFFF00 !important;
-      --text-muted: #FFFFFF !important;
-      --border-color: #FFFFFF !important;
-      --saffron: #FFFF00 !important;
-      --navy: #000000 !important;
-      --header-bg: #000000 !important;
-      --table-header-bg: #000000 !important;
-      --shadow-sm: none !important;
-      --shadow-md: none !important;
-      --shadow-lg: none !important;
-    }
-    body.high-contrast .page-header-title h2 { color: #FFFF00 !important; }
-    body.high-contrast .stat-icon { background: #FFFF00 !important; color: #000000 !important; }
-    body.high-contrast .badge { background: #FFFF00 !important; color: #000000 !important; }
-    body.high-contrast .page-btn.active { background: #FFFF00 !important; color: #000000 !important; border-color: #FFFF00 !important; }
-
     /* Watermark */
     body::before {
       content: '';
@@ -76,7 +56,6 @@
       background-repeat: repeat; background-size: 400px 200px;
       opacity: 0.03; pointer-events: none; z-index: -1;
     }
-    body.high-contrast::before { display: none; }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -123,11 +102,13 @@
       margin-bottom: 16px;
       color: var(--text-main);
     }
+    /* ===== आकर्षक टाइटल कलर कॉम्बिनेशन (H1 & H2) ===== */
     .page-header-title h1 {
       font-weight: 900;
       font-size: 3rem;
       letter-spacing: -0.02em;
       margin-bottom: 2px;
+      /* केसरिया से हरा ग्रेडिएंट (बहुत आकर्षक) */
       background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -137,7 +118,7 @@
     .page-header-title h2 {
       font-weight: 700;
       font-size: 1.3rem;
-      color: #003399;
+      color: #003399; /* नेवी ब्लू (बिहार सरकार का रंग) */
       opacity: 1;
       text-shadow: 0px 2px 6px rgba(0, 51, 153, 0.15);
       letter-spacing: 0.5px;
@@ -199,9 +180,6 @@
     .theme-selector { display: flex; gap: 4px; background: rgba(255,255,255,0.08); border-radius: var(--radius-pill); padding: 4px 8px; }
     .theme-btn { width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); cursor: pointer; transition: var(--transition); }
     .theme-btn:hover { transform: scale(1.15); border-color: white; }
-    /* हाई-कंट्रास्ट बटन */
-    .theme-btn.high-contrast-btn { border-color: #FFFF00; background: #000000; border: 3px solid #FFFF00; }
-    .theme-btn.high-contrast-btn:hover { transform: scale(1.15); border-color: #FF0000; }
     .language-switch { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 6px 16px; border-radius: var(--radius-pill); font-weight: 600; cursor: pointer; transition: var(--transition); backdrop-filter: blur(4px); }
     .language-switch:hover { background: rgba(255,255,255,0.25); }
 
@@ -355,12 +333,11 @@
     .link-list li a { color: var(--text-main); text-decoration: none; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; transition: var(--transition); }
     .link-list li a:hover { color: var(--saffron); }
 
-    /* ===== Map Section ===== */
+    /* Map */
     .map-section { background: var(--card-bg); border-radius: var(--radius-card); padding: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); margin-bottom: 24px; }
     .dark-mode .map-section { background: #1e293b; }
     .map-container img { max-width: 100%; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: var(--transition); -webkit-user-drag: none; user-drag: none; }
     .map-container img:hover { opacity: 0.95; transform: scale(1.005); box-shadow: var(--shadow-md); }
-    .map-container iframe { border-radius: 12px; border: 1px solid var(--border-color); width: 100%; height: 400px; margin-top: 15px; }
 
     /* Comments */
     .comment-section { background: var(--card-bg); border-radius: var(--radius-card); padding: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); margin-bottom: 24px; }
@@ -410,7 +387,7 @@
     .gov-footer .social-links a:hover { color: var(--saffron); transform: scale(1.1); }
     .visitor-counter { font-weight: 600; color: var(--green); }
 
-    /* ===== मोबाइल रिस्पॉन्सिव ===== */
+    /* ===== मोबाइल रिस्पॉन्सिव (ओवरलैप फिक्स + ब्यूटीफिकेशन) ===== */
     @media (max-width: 1024px) { 
       .insight-panel, .feature-grid { grid-template-columns: 1fr; } 
       .link-list { grid-template-columns: 1fr; }
@@ -423,17 +400,40 @@
       .govt-text .sub { font-size: 0.7rem !important; }
       .header-actions { align-items: flex-start !important; }
       
-      .stats-grid { grid-template-columns: 1fr !important; gap: 14px !important; margin-top: -12px !important; }
+      .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        margin-top: -12px !important;
+      }
       
-      .stat-card { padding: 16px 20px !important; border-radius: 18px !important; gap: 16px !important; }
-      .stat-icon { width: 44px !important; height: 44px !important; font-size: 1.4rem !important; }
-      .stat-content h2 { font-size: 1.6rem !important; }
-      .stat-content p { font-size: 0.65rem !important; }
+      .stat-card {
+        padding: 16px 20px !important;
+        border-radius: 18px !important;
+        gap: 16px !important;
+      }
+      .stat-icon {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 1.4rem !important;
+      }
+      .stat-content h2 {
+        font-size: 1.6rem !important;
+      }
+      .stat-content p {
+        font-size: 0.65rem !important;
+      }
 
-      body { padding-bottom: 120px !important; }
+      body {
+        padding-bottom: 120px !important;
+      }
       
-      .fab, .back-to-top, .shortcut-hint { bottom: 25px; z-index: 999; }
-      .shortcut-hint { bottom: 90px !important; }
+      .fab, .back-to-top, .shortcut-hint {
+        bottom: 25px;
+        z-index: 999;
+      }
+      .shortcut-hint {
+        bottom: 90px !important;
+      }
 
       .message-card { padding: 12px 16px; }
       .message-card .msg-quote { font-size: 1.8rem; }
@@ -454,18 +454,17 @@
       .official-masthead { padding: 16px; }
       .fab, .back-to-top { bottom: 25px; width: 44px; height: 44px; }
       .shortcut-hint { bottom: 85px !important; }
-      .map-container iframe { height: 250px; }
     }
   </style>
 </head>
 <body>
 <div class="flagship-dashboard" id="app">
 
-  <!-- ===== स्टिकी हेडर ===== -->
+  <!-- ===== स्टिकी हेडर (टॉप पर लॉक) ===== -->
   <div class="sticky-header">
     <div class="tricolor-strip"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
 
-    <!-- ===== अपडेटेड टाइटल ===== -->
+    <!-- ===== सबसे ऊपर का नया टाइटल (अपडेटेड टेक्स्ट + अट्रैक्टिव कलर) ===== -->
     <div class="page-header-title no-print">
       <h1 id="mainHeading">ग्राम पंचायत राज, सर्वा</h1>
       <h2 id="mainSubHeading">प्रखंड - बरबीघा, जिला- शेखपूरा</h2>
@@ -486,10 +485,8 @@
     <div class="search-box">
       <i class="fas fa-search"></i>
       <input type="text" id="globalSearch" placeholder="पूरे पोर्टल में खोजें (योजना, आवेदन, कर्मी, पद)..." onkeyup="globalSearch()">
-      <!-- वॉयस सर्च बटन -->
-      <i class="fas fa-microphone" onclick="startVoiceSearch()" style="cursor:pointer; margin-left:8px; color:var(--navy); font-size:1.2rem;" title="वॉयस सर्च (बोलकर खोजें)"></i>
     </div>
-    <span class="search-hint"><i class="fas fa-info-circle"></i> सभी तालिकाओं में एक साथ खोज | माइक्रोफोन पर क्लिक कर बोलें</span>
+    <span class="search-hint"><i class="fas fa-info-circle"></i> सभी तालिकाओं में एक साथ खोज</span>
   </div>
 
   <div class="notification-banner no-print"><i class="fas fa-bullhorn"></i> <span id="notificationText"></span></div>
@@ -521,8 +518,6 @@
           <div class="theme-btn dark-green" onclick="setTheme('dark-green')" title="डार्क ग्रीन"></div>
           <div class="theme-btn light-blue" onclick="setTheme('light-blue')" title="लाइट ब्लू"></div>
           <div class="theme-btn dark-blue" onclick="setTheme('dark-blue')" title="डार्क ब्लू"></div>
-          <!-- हाई-कंट्रास्ट थीम बटन -->
-          <div class="theme-btn high-contrast-btn" onclick="setTheme('high-contrast')" title="हाई-कंट्रास्ट (बुजुर्गों के लिए)"></div>
         </div>
         <button class="language-switch" onclick="toggleLanguage()"><i class="fas fa-language"></i> <span id="langText">English</span></button>
       </div>
@@ -619,10 +614,6 @@
     <div class="table-header"><h2><i class="fas fa-landmark" style="color:#FF9933;"></i> <span id="table15Title">15वीं वित्त आयोग</span></h2><div class="badge" id="badge15">0 कार्य</div></div>
     <div class="search-export no-print">
       <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search15" placeholder="खोजें..." onkeyup="filterTableAdvanced('15')"></div>
-      <!-- वार्ड फ़िल्टर (नया) -->
-      <select id="wardFilter15" class="filter-select" onchange="filterTableAdvanced('15')">
-        <option value="all">सभी वार्ड</option>
-      </select>
       <select id="yearFilter15" class="filter-select" onchange="filterTableAdvanced('15')">
         <option value="all">सभी वर्ष</option>
         <option value="2021–22">2021–22</option>
@@ -646,10 +637,6 @@
     <div class="table-header"><h2><i class="fas fa-building" style="color:#138808;"></i> <span id="tableStateTitle">षष्टम राज्य वित्त</span></h2><div class="badge" id="badgeState">0 कार्य</div></div>
     <div class="search-export no-print">
       <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchState" placeholder="खोजें..." onkeyup="filterTableAdvanced('state')"></div>
-      <!-- वार्ड फ़िल्टर (नया) -->
-      <select id="wardFilterState" class="filter-select" onchange="filterTableAdvanced('state')">
-        <option value="all">सभी वार्ड</option>
-      </select>
       <select id="yearFilterState" class="filter-select" onchange="filterTableAdvanced('state')">
         <option value="all">सभी वर्ष</option>
         <option value="2021–22">2021–22</option>
@@ -737,14 +724,7 @@
   <div class="map-section">
     <div class="table-header"><h2><i class="fas fa-map-marked-alt" style="color:#FF9933;"></i> ग्राम पंचायत सर्वा का मानचित्र</h2></div>
     <div class="map-container" oncontextmenu="return false;">
-      <!-- पुराना JPG मैप (रखा गया है) -->
       <img src="FINAL SARWA MAP.jpg" alt="सर्वा ग्राम पंचायत मानचित्र" loading="lazy" draggable="false" onclick="openMapModal()" ondragstart="return false;">
-      
-      <!-- नया लाइव इंटरैक्टिव Google Map (JPG के नीचे) -->
-      <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d144551.2961848976!2d85.82344608894012!3d25.37473293927918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f11b94b37d5a57%3A0x7bfe4d92f1d20002!2sSarwa%2C%20Bihar!5e0!3m2!1sen!2sin!4v1710740000000" 
-        style="border:0;" allowfullscreen="" loading="lazy" title="सर्वा ग्राम पंचायत Google Map">
-      </iframe>
     </div>
   </div>
 
@@ -1092,9 +1072,7 @@
   }
   
   function setLastUpdated() { 
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('hi-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    document.getElementById('lastUpdated').innerText = dateStr;
+    document.getElementById('lastUpdated').innerText = '25.07.2026';
   }
 
   function setTheme(theme) {
@@ -1227,45 +1205,154 @@
     document.getElementById('deptPendingList').innerHTML = html;
   }
 
-  function extractWardNumber(desc) {
-    const match = desc.match(/वार्ड सं0*(\d+)/);
-    return match ? match[1] : null;
+  function renderTable(tbodyId, data, page, tableType, rowsPerPage) {
+    const tbody = document.getElementById(tbodyId);
+    const start = (page - 1) * rowsPerPage, end = start + rowsPerPage;
+    const pageData = data.slice(start, end);
+
+    if (data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;">${currentLanguage === 'hi' ? 'कोई रिकॉर्ड नहीं मिला' : 'No records found'}</td></tr>`;
+      renderPagination(0, page, tableType, rowsPerPage);
+      return;
+    }
+
+    tbody.innerHTML = '';
+    pageData.forEach((s, i) => {
+      let cls = s.status === 'पूर्ण' ? 'complete' : 'progress';
+      let ico = s.status === 'पूर्ण' ? 'fa-check' : 'fa-clock';
+      let statusText = s.status;
+      if (currentLanguage === 'en') statusText = s.status === 'पूर्ण' ? t('statusComplete') : t('statusProgress');
+      let descEscaped = s.desc.replace(/'/g, "&apos;").replace(/"/g, "&quot;");
+      tbody.innerHTML += `<tr onclick="showProjectModal('${s.fund.replace(/'/g, "&apos;")}', '${s.year}', '${descEscaped}', ${s.amount}, '${s.status}')">
+        <td>${start + i + 1}</td><td>${s.fund}</td><td>${s.year}</td><td title="${s.desc}">${s.desc.substring(0,50)}${s.desc.length>50?'…':''}</td><td class="rupee-cell">${formatMoney(s.amount)}</td><td><span class="status-super ${cls}"><i class="fas ${ico}"></i> ${statusText}</span></td>
+      </tr>`;
+    });
+    renderPagination(data.length, page, tableType, rowsPerPage);
   }
 
-  function populateWardDropdowns() {
-    const allWards = new Set();
-    schemes.forEach(s => {
-      const ward = extractWardNumber(s.desc);
-      if (ward) allWards.add(ward);
+  function renderGrievanceTable() {
+    const tbody = document.getElementById('tableGrievanceBody');
+    const start = (currentPageGrievance - 1) * rowsPerPageGrievance, end = start + rowsPerPageGrievance;
+    const pageData = filteredGrievances.slice(start, end);
+
+    if (filteredGrievances.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:20px;">${currentLanguage === 'hi' ? 'कोई रिकॉर्ड नहीं मिला' : 'No records found'}</td></tr>`;
+      renderPagination(0, currentPageGrievance, 'grievance', rowsPerPageGrievance);
+      return;
+    }
+
+    tbody.innerHTML = '';
+    pageData.forEach((g, i) => {
+      let cls = g.status === 'Disposed' ? 'disposed' : 'pending';
+      let ico = g.status === 'Disposed' ? 'fa-check' : 'fa-clock';
+      let statusText = g.status;
+      if (currentLanguage === 'hi') statusText = g.status === 'Disposed' ? t('statusDisposed') : t('statusPending');
+      
+      let mobileHtml = g.mobile ? `<a href="tel:${g.mobile}" class="tel-link">${g.mobile}</a>` : '';
+      
+      tbody.innerHTML += `<tr onclick="showGrievanceModal(${start + i})">
+        <td>${start + i + 1}</td><td>${g.date}</td><td>${g.app_no}</td><td>${g.applicant}</td><td>${mobileHtml}</td><td>${g.block}</td><td>${g.office}</td><td title="${g.subject}">${g.subject.substring(0,40)}${g.subject.length>40?'…':''}</td><td><span class="status-super ${cls}"><i class="fas ${ico}"></i> ${statusText}</span></td>
+      </tr>`;
     });
-    const sortedWards = Array.from(allWards).sort((a,b) => parseInt(a) - parseInt(b));
-    
-    const dropdowns = ['wardFilter15', 'wardFilterState'];
-    dropdowns.forEach(id => {
-      const select = document.getElementById(id);
-      if (!select) return;
-      const currentVal = select.value;
-      select.innerHTML = `<option value="all">सभी वार्ड</option>`;
-      sortedWards.forEach(w => {
-        select.innerHTML += `<option value="${w}">वार्ड ${w}</option>`;
-      });
-      select.value = currentVal;
+    document.getElementById('badgeGrievance').innerText = filteredGrievances.length + (currentLanguage === 'hi' ? ' आवेदन' : ' applications');
+    renderPagination(filteredGrievances.length, currentPageGrievance, 'grievance', rowsPerPageGrievance);
+  }
+
+  function renderOfficerTable() {
+    const tbody = document.getElementById('tableOfficerBody');
+    const start = (currentPageOfficer - 1) * rowsPerPageOfficer, end = start + rowsPerPageOfficer;
+    const pageData = filteredOfficers.slice(start, end);
+    tbody.innerHTML = '';
+    pageData.forEach((o, i) => {
+      let mobileHtml = o.mobile ? `<a href="tel:${o.mobile}" class="tel-link">${o.mobile}</a>` : '';
+      tbody.innerHTML += `<tr><td>${start + i + 1}</td><td>${o.name}</td><td>${o.designation}</td><td>${mobileHtml}</td></tr>`;
     });
+    document.getElementById('badgeOfficer').innerText = filteredOfficers.length + (currentLanguage === 'hi' ? ' पदाधिकारी' : ' officers');
+    renderPagination(filteredOfficers.length, currentPageOfficer, 'officer', rowsPerPageOfficer);
+  }
+
+  function renderPagination(totalRows, currentPage, tableType, rowsPerPage) {
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+    const paginationDiv = document.getElementById(tableType === '15' ? 'pagination15' : tableType === 'state' ? 'paginationState' : tableType === 'personnel' ? 'paginationPersonnel' : tableType === 'rep' ? 'paginationRep' : tableType === 'panchayat' ? 'paginationPanchayat' : tableType === 'grievance' ? 'paginationGrievance' : 'paginationOfficer');
+    if (!paginationDiv || totalPages <= 1) { if(paginationDiv) paginationDiv.innerHTML = ''; return; }
+    let html = `<button class="page-btn" onclick="changePage('${tableType}', ${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+        html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage('${tableType}', ${i})">${i}</button>`;
+      } else if (i === currentPage - 3 || i === currentPage + 3) {
+        html += `<button class="page-btn" disabled>...</button>`;
+      }
+    }
+    html += `<button class="page-btn" onclick="changePage('${tableType}', ${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+    paginationDiv.innerHTML = html;
+  }
+
+  function changePage(tableType, newPage) {
+    if (tableType === '15') currentPage15 = newPage; else if (tableType === 'state') currentPageState = newPage; else if (tableType === 'personnel') currentPagePersonnel = newPage; else if (tableType === 'rep') currentPageRep = newPage; else if (tableType === 'panchayat') currentPagePanchayat = newPage; else if (tableType === 'grievance') currentPageGrievance = newPage; else if (tableType === 'officer') currentPageOfficer = newPage;
+    renderAllTables();
+  }
+
+  function changeRowsPerPage(tableType) {
+    if (tableType === '15') { rowsPerPage15 = parseInt(document.getElementById('rowsPerPage15').value); currentPage15 = 1; }
+    else if (tableType === 'state') { rowsPerPageState = parseInt(document.getElementById('rowsPerPageState').value); currentPageState = 1; }
+    else if (tableType === 'personnel') { rowsPerPagePersonnel = parseInt(document.getElementById('rowsPerPagePersonnel').value); currentPagePersonnel = 1; }
+    else if (tableType === 'rep') { rowsPerPageRep = parseInt(document.getElementById('rowsPerPageRep').value); currentPageRep = 1; }
+    else if (tableType === 'panchayat') { rowsPerPagePanchayat = parseInt(document.getElementById('rowsPerPagePanchayat').value); currentPagePanchayat = 1; }
+    else if (tableType === 'grievance') { rowsPerPageGrievance = parseInt(document.getElementById('rowsPerPageGrievance').value); currentPageGrievance = 1; }
+    else if (tableType === 'officer') { rowsPerPageOfficer = parseInt(document.getElementById('rowsPerPageOfficer').value); currentPageOfficer = 1; }
+    renderAllTables(); saveSettings();
+  }
+
+  function renderPersonnelTable(data = personnel) {
+    const tbody = document.getElementById('tablePersonnelBody');
+    const start = (currentPagePersonnel - 1) * rowsPerPagePersonnel, end = start + rowsPerPagePersonnel;
+    const pageData = data.slice(start, end);
+    tbody.innerHTML = '';
+    pageData.forEach((p, i) => {
+      let mobileHtml = p.mobile ? `<a href="tel:${p.mobile}" class="tel-link">${p.mobile}</a>` : '';
+      tbody.innerHTML += `<tr><td>${start + i + 1}</td><td>${p.name}</td><td>${p.designation}</td><td>${mobileHtml}</td><td>${p.procedure}</td><td>${p.attendance}</td></tr>`;
+    });
+    document.getElementById('badgePersonnel').innerText = data.length + (currentLanguage === 'hi' ? ' कर्मी' : ' staff');
+    renderPagination(data.length, currentPagePersonnel, 'personnel', rowsPerPagePersonnel);
+  }
+
+  function renderRepTable(data = representatives) {
+    const tbody = document.getElementById('tableRepBody');
+    const start = (currentPageRep - 1) * rowsPerPageRep, end = start + rowsPerPageRep;
+    const pageData = data.slice(start, end);
+    tbody.innerHTML = '';
+    pageData.forEach((r, i) => {
+      let mobileHtml = r.mobile ? `<a href="tel:${r.mobile}" class="tel-link">${r.mobile}</a>` : '';
+      tbody.innerHTML += `<tr><td>${start + i + 1}</td><td>${r.name}</td><td>${r.designation}</td><td>${mobileHtml}</td></tr>`;
+    });
+    document.getElementById('badgeRep').innerText = data.length + (currentLanguage === 'hi' ? ' प्रतिनिधि' : ' reps');
+    renderPagination(data.length, currentPageRep, 'rep', rowsPerPageRep);
+  }
+
+  function renderPanchayatTable(data = panchayatMembers) {
+    const tbody = document.getElementById('tablePanchayatBody');
+    const start = (currentPagePanchayat - 1) * rowsPerPagePanchayat, end = start + rowsPerPagePanchayat;
+    const pageData = data.slice(start, end);
+    tbody.innerHTML = '';
+    pageData.forEach((m, i) => {
+      let mobileHtml = m.mobile ? `<a href="tel:${m.mobile}" class="tel-link">${m.mobile}</a>` : '';
+      tbody.innerHTML += `<tr><td>${start + i + 1}</td><td>${m.name}</td><td>${m.designation}</td><td>${mobileHtml}</td></tr>`;
+    });
+    document.getElementById('badgePanchayat').innerText = data.length + (currentLanguage === 'hi' ? ' सदस्य' : ' members');
+    renderPagination(data.length, currentPagePanchayat, 'panchayat', rowsPerPagePanchayat);
   }
 
   function filterTableAdvanced(type) {
     const searchVal = document.getElementById(`search${type === '15' ? '15' : 'State'}`).value.toLowerCase();
     const yearVal = document.getElementById(`yearFilter${type === '15' ? '15' : 'State'}`).value;
     const statusVal = document.getElementById(`statusFilter${type === '15' ? '15' : 'State'}`).value;
-    const wardVal = document.getElementById(`wardFilter${type === '15' ? '15' : 'State'}`).value;
     
     const allData = schemes.filter(s => s.fund === (type === '15' ? '15वीं वित्त आयोग' : 'षष्टम राज्य वित्त आयोग'));
     let filtered = allData.filter(item => {
       const matchesSearch = item.desc.toLowerCase().includes(searchVal) || item.year.toLowerCase().includes(searchVal) || item.status.toLowerCase().includes(searchVal) || item.amount.toString().includes(searchVal);
       const matchesYear = yearVal === 'all' || item.year === yearVal;
       const matchesStatus = statusVal === 'all' || item.status === statusVal;
-      const matchesWard = wardVal === 'all' || extractWardNumber(item.desc) === wardVal;
-      return matchesSearch && matchesYear && matchesStatus && matchesWard;
+      return matchesSearch && matchesYear && matchesStatus;
     });
     
     if (type === '15') { filtered15 = filtered; currentPage15 = 1; renderTable('table15Body', filtered15, currentPage15, '15', rowsPerPage15); document.getElementById('footer15Total').innerText = formatMoney(filtered15.reduce((a,s)=>a+s.amount,0)); }
@@ -1278,30 +1365,6 @@
     const searchVal = document.getElementById('searchGrievance').value.toLowerCase();
     filteredGrievances = grievances.filter(g => g.applicant.toLowerCase().includes(searchVal) || g.subject.toLowerCase().includes(searchVal) || g.status.toLowerCase().includes(searchVal) || g.app_no.toLowerCase().includes(searchVal) || g.office.toLowerCase().includes(searchVal));
     currentPageGrievance = 1; renderGrievanceTable();
-  }
-
-  function startVoiceSearch() {
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      showToast('आपका ब्राउज़र वॉयस सर्च को सपोर्ट नहीं करता।');
-      return;
-    }
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = 'hi-IN';
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    
-    recognition.onstart = function() {
-      showToast('सुन रहा हूँ, कृपया बोलें...');
-    };
-    recognition.onerror = function(event) {
-      showToast('वॉयस रिकग्निशन में त्रुटि, फिर से प्रयास करें।');
-    };
-    recognition.onresult = function(event) {
-      const transcript = event.results[0][0].transcript;
-      document.getElementById('globalSearch').value = transcript;
-      globalSearch();
-    };
-    recognition.start();
   }
 
   function globalSearch() {
@@ -1423,7 +1486,6 @@
     setLastUpdated(); 
     updateMetrics(); 
     renderCharts(); 
-    populateWardDropdowns(); // वार्ड ड्रॉपडाउन भरें
     renderAllTables(); 
     updateGrievanceStats(); 
     displayComments(); 
@@ -1501,7 +1563,6 @@
   window.closeSchemeListModal = closeSchemeListModal; window.showSchemeList = showSchemeList;
   window.openMapModal = openMapModal; window.closeMapModal = closeMapModal;
   window.globalSearch = globalSearch; 
-  window.startVoiceSearch = startVoiceSearch; 
 
   loadSettings();
 </script>
