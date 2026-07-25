@@ -6,7 +6,7 @@
   <title>Home - Gram Panchayat Sarva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
@@ -102,21 +102,31 @@
       margin-bottom: 16px;
       color: var(--text-main);
     }
+    /* ===== आकर्षक टाइटल कलर कॉम्बिनेशन (H1 & H2) ===== */
     .page-header-title h1 {
-      font-weight: 800;
-      font-size: 2rem;
+      font-weight: 900;
+      font-size: 3rem;
       letter-spacing: -0.02em;
       margin-bottom: 2px;
+      /* केसरिया से हरा ग्रेडिएंट (बहुत आकर्षक) */
+      background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
     }
     .page-header-title h2 {
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      opacity: 0.9;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #003399; /* नेवी ब्लू (बिहार सरकार का रंग) */
+      opacity: 1;
+      text-shadow: 0px 2px 6px rgba(0, 51, 153, 0.15);
+      letter-spacing: 0.5px;
     }
+    
     @media (max-width: 768px) {
-      .page-header-title h1 { font-size: 1.6rem; }
-      .page-header-title h2 { font-size: 0.95rem; }
+      .page-header-title h1 { font-size: 2.2rem; }
+      .page-header-title h2 { font-size: 1.1rem; }
     }
 
     /* ===== अधिकारी संदेश ===== */
@@ -390,14 +400,12 @@
       .govt-text .sub { font-size: 0.7rem !important; }
       .header-actions { align-items: flex-start !important; }
       
-      /* मोबाइल पर स्टैट्स कार्ड को 1 कॉलम में फोर्स करें (ओवरलैप फिक्स) */
       .stats-grid {
         grid-template-columns: 1fr !important;
         gap: 14px !important;
         margin-top: -12px !important;
       }
       
-      /* मोबाइल पर कार्ड को बड़ा और आरामदायक बनाएं */
       .stat-card {
         padding: 16px 20px !important;
         border-radius: 18px !important;
@@ -415,12 +423,10 @@
         font-size: 0.65rem !important;
       }
 
-      /* बॉटम फ्लोटिंग बटन्स से ओवरलैप रोकने के लिए पैडिंग */
       body {
         padding-bottom: 120px !important;
       }
       
-      /* फ्लोटिंग बटन्स को सुरक्षित जोन में ले जाएं */
       .fab, .back-to-top, .shortcut-hint {
         bottom: 25px;
         z-index: 999;
@@ -429,7 +435,6 @@
         bottom: 90px !important;
       }
 
-      /* अन्य कॉम्पोनेंट का साइज़ फिक्स */
       .message-card { padding: 12px 16px; }
       .message-card .msg-quote { font-size: 1.8rem; }
       .message-card .msg-text { font-size: 0.85rem; }
@@ -459,10 +464,10 @@
   <div class="sticky-header">
     <div class="tricolor-strip"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
 
-    <!-- ===== सबसे ऊपर का नया टाइटल (Page Header) ===== -->
+    <!-- ===== सबसे ऊपर का नया टाइटल (अपडेटेड टेक्स्ट + अट्रैक्टिव कलर) ===== -->
     <div class="page-header-title no-print">
-      <h1 id="mainHeading">ग्राम पंचायत सर्वा, बरबीघा</h1>
-      <h2 id="mainSubHeading">15वीं वित्त + षष्टम राज्य वित्त</h2>
+      <h1 id="mainHeading">ग्राम पंचायत राज, सर्वा</h1>
+      <h2 id="mainSubHeading">प्रखंड - बरबीघा, जिला- शेखपूरा</h2>
     </div>
   </div>
 
@@ -976,7 +981,8 @@
 
   const translations = {
     hi: {
-      mainHeading: '15वीं वित्त + षष्टम राज्य वित्त',
+      mainHeading: 'ग्राम पंचायत राज, सर्वा',
+      mainSubHeading: 'प्रखंड - बरबीघा, जिला- शेखपूरा',
       totalSchemesLabel: 'कुल योजनाएँ',
       completedSchemesLabel: 'पूर्ण कार्य',
       progressSchemesLabel: 'प्रगति पर',
@@ -1019,7 +1025,8 @@
       grandTotalLabel: 'कुल', commentDeleted: 'टिप्पणी हटा दी गई', commentAdded: 'टिप्पणी जोड़ दी गई', languageSwitched: 'भाषा बदल दी गई'
     },
     en: {
-      mainHeading: '15th Finance + 6th State Finance',
+      mainHeading: 'Gram Panchayat Raj, Sarva',
+      mainSubHeading: 'Block - Barbigha, District - Sheikhpura',
       totalSchemesLabel: 'Total Schemes', completedSchemesLabel: 'Completed', progressSchemesLabel: 'In Progress', totalAmountLabel: 'Total Expenditure',
       budgetTitle: 'Budget Usage', usedLabel: 'Used:', totalLabel: 'Total:', pieTitle: 'Fund-wise Distribution',
       topProjectsTitle: 'Top 3 Schemes', yearlySuccessTitle: 'Yearly Success', barTitle: 'Works by Year', summaryTitle: 'Performance',
@@ -1077,7 +1084,7 @@
     currentLanguage = currentLanguage === 'hi' ? 'en' : 'hi';
     document.getElementById('langText').innerText = currentLanguage === 'hi' ? 'English' : 'हिंदी';
     document.getElementById('mainHeading').innerText = t('mainHeading');
-    document.getElementById('mainSubHeading').innerText = currentLanguage === 'hi' ? '15वीं वित्त + षष्टम राज्य वित्त' : '15th Finance + 6th State Finance';
+    document.getElementById('mainSubHeading').innerText = t('mainSubHeading');
     document.getElementById('totalSchemesLabel').innerText = t('totalSchemesLabel');
     document.getElementById('completedSchemesLabel').innerText = t('completedSchemesLabel');
     document.getElementById('progressSchemesLabel').innerText = t('progressSchemesLabel');
