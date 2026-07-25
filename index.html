@@ -73,7 +73,7 @@
     @media print {
       .fab, .back-to-top, .shortcut-hint, .theme-selector, .language-switch, .search-export, .export-btn, .comment-section,
       .no-print, .rating-stars, .comment-input, .notification-banner, .weather-widget, .gallery-thumbnails, .live-clock, 
-      .modal, #toast, body::before, .global-search-wrap, .message-card, .emergency-card, .notice-card, .hamburger, .page-header-title { display: none !important; }
+      .modal, #toast, body::before, .global-search-wrap, .message-card, .emergency-card, .notice-card, .hamburger, .page-header-title, .sticky-header { display: none !important; }
       .table-section { break-inside: avoid; page-break-inside: avoid; }
       body { background: white !important; padding: 0 !important; }
       .official-masthead { background: #003399 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -86,7 +86,17 @@
     .tricolor-strip .white { flex: 1; background: #FFFFFF; }
     .tricolor-strip .green { flex: 1; background: #138808; }
 
-    /* ===== नया: सबसे ऊपर का टाइटल ===== */
+    /* ===== नया: सबसे ऊपर का टाइटल (स्टिकी) ===== */
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg);
+      padding-bottom: 10px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    @media print { .sticky-header { position: static; box-shadow: none; } }
+
     .page-header-title {
       text-align: center;
       margin-bottom: 16px;
@@ -395,12 +405,15 @@
 <body>
 <div class="flagship-dashboard" id="app">
 
-  <div class="tricolor-strip"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
+  <!-- ===== स्टिकी हेडर (टॉप पर लॉक) ===== -->
+  <div class="sticky-header">
+    <div class="tricolor-strip"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
 
-  <!-- ===== सबसे ऊपर का नया टाइटल (Page Header) ===== -->
-  <div class="page-header-title no-print">
-    <h1>ग्राम पंचायत सर्वा, बरबीघा</h1>
-    <h2>15वीं वित्त + षष्टम राज्य वित्त</h2>
+    <!-- ===== सबसे ऊपर का नया टाइटल (Page Header) ===== -->
+    <div class="page-header-title no-print">
+      <h1 id="mainHeading">ग्राम पंचायत सर्वा, बरबीघा</h1>
+      <h2>15वीं वित्त + षष्टम राज्य वित्त</h2>
+    </div>
   </div>
 
   <div class="message-card no-print">
@@ -999,11 +1012,12 @@
   function updateClock() { 
     const now = new Date(); 
     document.getElementById('liveClock').innerHTML = `<i class="far fa-clock"></i> ${now.toLocaleTimeString('hi-IN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}`; 
-    // Last Update को स्थिर (Static) 25.07.2026 कर दिया गया है
-    document.getElementById('lastUpdated').innerText = '25.07.2026';
   }
   
-  function setLastUpdated() { updateClock(); }
+  function setLastUpdated() { 
+    // Last Update को स्थिर (Static) 25.07.2026 कर दिया गया है (एक बार सेट करें)
+    document.getElementById('lastUpdated').innerText = '25.07.2026';
+  }
 
   function setTheme(theme) {
     document.body.className = theme;
@@ -1371,7 +1385,7 @@
   }
 
   function showProjectModal(fund, year, desc, amount, status) {
-    document.getElementById('modalFund').innerText = fund; document.getElementById('modalYear').innerText = year; document.getElementById('modalDesc').innerHTML = desc; document.getElementById('modalAmount').innerText = formatMoney(amount);
+    document.getElementById('modalFund').innerText = fund; document.getElementById('modalYear').innerText = year; document.getElementById('modalDesc').innerText = desc; document.getElementById('modalAmount').innerText = formatMoney(amount);
     document.getElementById('modalStatus').innerText = (currentLanguage === 'en' ? (status === 'पूर्ण' ? t('statusComplete') : t('statusProgress')) : status);
     document.getElementById('projectModal').classList.add('show');
   }
@@ -1412,14 +1426,23 @@
         });
     });
     
-    // ===== विज़िटर काउंटर ऑटोमेटिक धीरे-धीरे बढ़ने के लिए =====
+    // ===== विज़िटर काउंटर ऑटोमेटिक धीरे-धीरे बढ़ने के लिए (हर 1 सेकंड में 1 बढ़े) =====
     let visitorCount = 1234;
     setInterval(() => {
-      visitorCount += 1; // हर बार 1 से बढ़ेगा (धीमा और स्मूथ)
+      visitorCount += 1;
       document.getElementById('visitorCount').innerText = visitorCount;
-    }, 5000); // हर 5 सेकंड में 1 बढ़ेगा
+    }, 1000); // 1000ms = 1 second
 
-    setLastUpdated(); updateMetrics(); renderCharts(); renderAllTables(); updateGrievanceStats(); displayComments(); updateClock();
+    setLastUpdated(); 
+    updateMetrics(); 
+    renderCharts(); 
+    renderAllTables(); 
+    updateGrievanceStats(); 
+    displayComments(); 
+    updateClock();
+    
+    // घड़ी को हर 1 सेकंड अपडेट करें
+    setInterval(updateClock, 1000);
   });
 
   function setRating(star) { currentRating = star; document.querySelectorAll('#ratingStars i').forEach((s, i) => { s.className = i < star ? 'fas fa-star' : 'far fa-star'; }); }
