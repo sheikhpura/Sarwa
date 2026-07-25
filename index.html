@@ -377,7 +377,7 @@
     .gov-footer .social-links a:hover { color: var(--saffron); transform: scale(1.1); }
     .visitor-counter { font-weight: 600; color: var(--green); }
 
-    /* ===== मोबाइल रिस्पॉन्सिव (ओवरलैप फिक्स) ===== */
+    /* ===== मोबाइल रिस्पॉन्सिव (ओवरलैप फिक्स + ब्यूटीफिकेशन) ===== */
     @media (max-width: 1024px) { 
       .insight-panel, .feature-grid { grid-template-columns: 1fr; } 
       .link-list { grid-template-columns: 1fr; }
@@ -389,11 +389,47 @@
       .govt-text { border-left: none !important; padding-left: 0 !important; width: 100%; margin-top: 0; }
       .govt-text .sub { font-size: 0.7rem !important; }
       .header-actions { align-items: flex-start !important; }
-      .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 10px; margin-top: -10px; }
-      .stat-card { padding: 12px 10px !important; gap: 10px; }
-      .stat-icon { width: 36px; height: 36px; font-size: 1.2rem; }
-      .stat-content h2 { font-size: 1.4rem !important; }
-      .stat-content p { font-size: 0.6rem; }
+      
+      /* मोबाइल पर स्टैट्स कार्ड को 1 कॉलम में फोर्स करें (ओवरलैप फिक्स) */
+      .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        margin-top: -12px !important;
+      }
+      
+      /* मोबाइल पर कार्ड को बड़ा और आरामदायक बनाएं */
+      .stat-card {
+        padding: 16px 20px !important;
+        border-radius: 18px !important;
+        gap: 16px !important;
+      }
+      .stat-icon {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 1.4rem !important;
+      }
+      .stat-content h2 {
+        font-size: 1.6rem !important;
+      }
+      .stat-content p {
+        font-size: 0.65rem !important;
+      }
+
+      /* बॉटम फ्लोटिंग बटन्स से ओवरलैप रोकने के लिए पैडिंग */
+      body {
+        padding-bottom: 120px !important;
+      }
+      
+      /* फ्लोटिंग बटन्स को सुरक्षित जोन में ले जाएं */
+      .fab, .back-to-top, .shortcut-hint {
+        bottom: 25px;
+        z-index: 999;
+      }
+      .shortcut-hint {
+        bottom: 90px !important;
+      }
+
+      /* अन्य कॉम्पोनेंट का साइज़ फिक्स */
       .message-card { padding: 12px 16px; }
       .message-card .msg-quote { font-size: 1.8rem; }
       .message-card .msg-text { font-size: 0.85rem; }
@@ -406,11 +442,13 @@
     }
 
     @media (max-width: 480px) {
-      .stats-grid { grid-template-columns: 1fr !important; } 
+      .stats-grid { grid-template-columns: 1fr !important; gap: 12px !important; } 
       .stat-content h2 { font-size: 1.6rem !important; }
       .extra-grid { grid-template-columns: 1fr; } 
-      body { padding: 12px; }
+      body { padding: 16px !important; padding-bottom: 120px !important; }
       .official-masthead { padding: 16px; }
+      .fab, .back-to-top { bottom: 25px; width: 44px; height: 44px; }
+      .shortcut-hint { bottom: 85px !important; }
     }
   </style>
 </head>
@@ -1203,7 +1241,6 @@
       let statusText = g.status;
       if (currentLanguage === 'hi') statusText = g.status === 'Disposed' ? t('statusDisposed') : t('statusPending');
       
-      // मोबाइल नंबर को लिंक बनाना
       let mobileHtml = g.mobile ? `<a href="tel:${g.mobile}" class="tel-link">${g.mobile}</a>` : '';
       
       tbody.innerHTML += `<tr onclick="showGrievanceModal(${start + i})">
@@ -1389,7 +1426,6 @@
   function showGrievanceModal(index) {
     const g = filteredGrievances[index]; if (!g) return;
     document.getElementById('modalGrievanceDate').innerText = g.date; document.getElementById('modalGrievanceAppNo').innerText = g.app_no; document.getElementById('modalGrievanceApplicant').innerText = g.applicant;
-    // मोडल में भी मोबाइल नंबर क्लिक करने योग्य बनाया
     let mobileHtml = g.mobile ? `<a href="tel:${g.mobile}" class="tel-link">${g.mobile}</a>` : '';
     document.getElementById('modalGrievanceMobile').innerHTML = mobileHtml;
     document.getElementById('modalGrievanceBlock').innerText = g.block; document.getElementById('modalGrievanceOffice').innerText = g.office; document.getElementById('modalGrievanceSubject').innerText = g.subject;
