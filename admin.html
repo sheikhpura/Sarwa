@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Gram Panchayat Sarva</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+    body { background: #f1f5f9; padding: 20px; }
+    .login-box { max-width: 400px; margin: 100px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; }
+    .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+    .login-box button { width: 100%; padding: 12px; background: #003399; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    .admin-dashboard { display: none; }
+    .header { background: #003399; color: #fff; padding: 15px 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .tabs button { padding: 10px 20px; border: none; border-radius: 8px; background: #e2e8f0; cursor: pointer; font-weight: 600; }
+    .tabs button.active { background: #003399; color: #fff; }
+    .tab-content { display: none; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .tab-content.active { display: block; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+    th { background: #f8fafc; }
+    .btn { padding: 5px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .btn-edit { background: #f59e0b; color: #fff; }
+    .btn-del { background: #ef4444; color: #fff; }
+    .btn-add { background: #10b981; color: #fff; padding: 8px 16px; margin-bottom: 10px; }
+    .btn-reset { background: #64748b; color: #fff; padding: 8px 16px; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+    .modal.show { display: flex; }
+    .modal-box { background: #fff; padding: 25px; border-radius: 12px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; }
+    .modal-box input, .modal-box select, .modal-box textarea { width: 100%; padding: 8px; margin: 5px 0 10px; border: 1px solid #ddd; border-radius: 6px; }
+    .modal-box label { font-weight: 600; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; }
+  </style>
+</head>
+<body>
+
+  <!-- Login -->
+  <div class="login-box" id="loginBox">
+    <h2>🔐 Admin Login</h2>
+    <input type="password" id="adminPass" placeholder="Enter Password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div class="admin-dashboard" id="adminPanel">
+    <div class="header">
+      <h3><i class="fas fa-cog"></i> Panchayat Data Admin</h3>
+      <div>
+        <button class="btn btn-reset" onclick="resetData()"><i class="fas fa-undo"></i> Reset to Default</button>
+        <button onclick="logout()" style="background:transparent;color:#fff;border:1px solid #fff;padding:5px 15px;border-radius:6px;cursor:pointer;">Logout</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="active" onclick="switchTab('schemes', this)">योजनाएँ</button>
+      <button onclick="switchTab('personnel', this)">कर्मी</button>
+      <button onclick="switchTab('reps', this)">प्रतिनिधि</button>
+      <button onclick="switchTab('panchayat', this)">पंच</button>
+      <button onclick="switchTab('officers', this)">पदाधिकारी</button>
+      <button onclick="switchTab('grievances', this)">आवेदन</button>
+    </div>
+
+    <div id="tab-schemes" class="tab-content active">
+      <button class="btn btn-add" onclick="openModal('schemes')"><i class="fas fa-plus"></i> Add Scheme</button>
+      <div class="table-wrap"><table id="tbl-schemes"><thead><tr><th>S.No</th><th>Fund</th><th>Year</th><th>Desc</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody></tbody></table></div>
+    </div>
+
+    <div id="tab-personnel" class="tab-content">
+      <button class="btn btn-add" onclick="openModal('personnel')"><i class="fas fa-plus"></i> Add Personnel</button>
+      <div class="table-wrap"><table id="tbl-personnel"><thead><tr><th>S.No</th><th>Name</th><th>Designation</th><th>Mobile</th><th>Procedure</th><th>Action</th></tr></thead><tbody></tbody></table></div>
+    </div>
+
+    <div id="tab-reps" class="tab-content">
+      <button class="btn btn-add" onclick="openModal('reps')"><i class="fas fa-plus"></i> Add Representative</button>
+      <div class="table-wrap"><table id="tbl-reps"><thead><tr><th>S.No</th><th>Name</th><th>Designation</th><th>Mobile</th><th>Action</th></tr></thead><tbody></tbody></table></div>
+    </div>
+
+    <div id="tab-panchayat" class="tab-content">
+      <button class="btn btn-add" onclick="openModal('panchayat')"><i class="fas fa-plus"></i> Add Panchayat Member</button>
+      <div class="table-wrap"><table id="tbl-panchayat"><thead><tr><th>S.No</th><th>Name</th><th>Designation</th><th>Mobile</th><th>Action</th></tr></thead><tbody></tbody></table></div>
+    </div>
+
+    <div id="tab-officers" class="tab-content">
+      <button class="btn btn-add" onclick="openModal('officers')"><i class="fas fa-plus"></i> Add Officer</button>
+      <div class="table-wrap"><table id="tbl-officers"><thead><tr><th>S.No</th><th>Name</th><th>Designation</th><th>Mobile</th><th>Action</th></tr></thead><tbody></tbody></table></div>
+    </div>
+
+    <div id="tab-grievances" class="tab-content">
+      <button class="btn btn-add" onclick="openModal('grievances')"><i class="fas fa-plus"></i> Add Grievance</button>
+      <div class="table-wrap"><table id="tbl-grievances"><thead><tr><th>S.No</th><th>Date</th><th>App No</th><th>Applicant</th><th>Mobile</th><th>Block</th><th>Office</th><th>Subject</th><th>Status</th><th>Action</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- Modal for Add/Edit -->
+  <div class="modal" id="editModal">
+    <div class="modal-box">
+      <h3 id="modalTitle">Add New Record</h3>
+      <div id="modalFields"></div>
+      <div class="modal-actions">
+        <button class="btn btn-reset" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-add" onclick="saveData()">Save</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ==================== Admin Logic ====================
+  let currentTab = 'schemes';
+  let editIndex = -1;
+  let dataStore = { schemes:[], personnel:[], reps:[], panchayat:[], officers:[], grievances:[] };
+
+  // Original Hardcoded Data (Backup)
+  const originalData = {
+    schemes: [ { fund: "15वीं वित्त आयोग", year: "2021–22", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा के वार्ड सं0-07 में बौधी पोखर के चारो तरफ मिट्टी भराई एवं खरंजीकरण कार्य।", amount: 1096700, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2021–22", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा में परमेश्वर साव से सिधेश्वर महतो तक पी0सी0सी0 ढलाई कार्य।", amount: 319100, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2022–23", desc: "ग्राम सर्वा में गेहुँमी पैन पुल से चांदीपुर तक पैन सफाई का निर्माण कार्य।", amount: 1156700, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2022–23", desc: "ग्राम पंचायत सर्वा के ग्राम जमालपुर के वार्ड सं0 -12 में अर्जून पंडित के घर से विन्देश्वर मांझी के घर तक नाली ढक्कन सहित निर्माण कार्य।", amount: 831000, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2022–23", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा बौधी पोखर पर खुला जिम का निर्माण कार्य।", amount: 500000, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2022–23", desc: "ग्राम पंचायत सर्वा के वार्ड सं0-06 एवं 07 में महेन्द्र सिंह के घर से ओमन सिंह के घर तक नाली एवं पी0सी0सी0 ढलाई कार्य।", amount: 585800, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2022–23", desc: "ग्राम पंचायत सर्वा में डस्टवीन 2684 घर के लिए 180 रूपये प्रति जोड़ा।", amount: 500000, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2023–24", desc: "ग्राम पंचायत सर्वा के वार्ड सं0-09 में हरगोबिंद यादव के निकट सार्वजनिक कुआँ का जीर्णोद्धार का कार्य।", amount: 74300, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2023–24", desc: "ग्राम पंचायत सर्वा के वार्ड सं0-11 में अजीत पासवान के घर के निकट कुआँ का जीर्णोद्धार का कार्य।", amount: 74300, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2023–24", desc: "ग्राम पंचायत सर्वा में किसान भवन पर वर्षा जल संचयन का कार्य।", amount: 110000, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2023–24", desc: "ग्राम पंचायत सर्वा के ग्राम मिर्जापुर के वार्ड सं0–05 में अशोक सिह के घर से जनहित पुस्तकालय तक ढक्कन सहित नाली एवं पीठसी0सी0 ढलाई कार्य।", amount: 705000, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2023–24", desc: "ग्राम पंचायत सर्वा के ग्राम राजौरा के वार्ड सं0-01 में चमरू पासवान के घर से नगीना पासवान के घर तक ढक्कन सहित नाली एवं पी0सी0सी0 सड़क का निर्माण कार्य।", amount: 545300, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2023–24", desc: "ग्राम राजौरा के वार्ड सं0-04 के अनुसूचित टोला में सामुदायिक भवन का निर्माण कार्य।", amount: 800000, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2023–24", desc: "ग्राम राजौरा के वार्ड सं0- 02 में बजरंगवली मंदिर से मरारी तक ईट सेालिंग एवं पी0सी0सी0 ढलाई का कार्य।", amount: 714400, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2024–25", desc: "ग्राम पंचायत सर्वा के वार्ड सं0-01 से 04 तक स्ट्रीट लाईट का अद्यिष्ठापन का कार्य।", amount: 552044, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2024–25", desc: "ग्राम पंचायत सर्वा के वार्ड सं0-08 में पुस्तकालय के लिए पुस्तक एवं फर्नीचर का क्रय का कार्य।", amount: 450000, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2024–25", desc: "ग्राम पंचायत सर्वा के उच्च माध्यमिक विद्यालय सर्वा के आगे गाइट वॉल के साथ पेयर ब्लॉक निर्माण कार्य।", amount: 987100, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2024–25", desc: "ग्राम पंचायत सर्वा के लालूनगर में सार्वजनिक कुआँ का जिर्णोद्धार का कार्य।", amount: 74300, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2024–25", desc: "ग्राम पंचायत सर्वा के लालूनगर में सामुदायिक शौचालय का मरम्म्ती कार्य।", amount: 98900, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2025–26", desc: "ग्राम मिर्जापुर में संजीत ढाढ़ी के घर से भीम मांझी के घर तक पी0सी0सी0 ढलाई का कार्य।", amount: 532900, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2025–26", desc: "ग्राम मिर्जापुर के कोढ़िया आहर में छठ घाट का निर्माण कार्य।", amount: 550600, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2025–26", desc: "ग्राम पंचायत सर्वा में WPU का मरम्मती का कार्य।", amount: 129800, status: "पूर्ण" }, { fund: "15वीं वित्त आयोग", year: "2025–26", desc: "ग्राम सर्वा में खिनु सिंह के खेत से बिनोद सिंह के खेत होते हुए देवन महतो के खेत तक ईट सोलिंग एवं पी0सी0सी0 ढलाई का कार्य।", amount: 598400, status: "कार्य प्रगति पर" }, { fund: "15वीं वित्त आयोग", year: "2025–26", desc: "ग्राम सर्वा में राजीव सिंह के घर से संतोष सिंह के घर तक ढक्कन सहित नाली एवं पीठसी0सी0 ढलाई का कार्य।", amount: 479200, status: "कार्य प्रगति पर" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2022–23", desc: "ग्राम सर्वा में रामेश्वर सिंह के खेत से आलोक सिंह के घर तक एवं शंकर सिंह के घर से रामेश्वर सिंह के घर तक मिट्टी भराई खंड़ीजकरण एवं पी0सी0सी0 ढलाई कार्य।", amount: 527400, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2022–23", desc: "ग्राम पंचायत सर्वा में किसान भवन का जीर्णोद्धार का कार्य।", amount: 216500, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2022–23", desc: "ग्राम पंचायत सर्वा के ग्राम मिर्जापुर के वार्ड सं0-03 में मनोज सिंह के घर से सिपाही जी के घर होते हुए अरूण महतो के घर तक पेवर ब्लाॅक सोलिंग एवं नाली निर्माण कार्य।", amount: 676500, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2022–23", desc: "ग्राम पंचायत सर्वा के वार्ड सं0-11 में हरिजन सामुदायिक भवन का मरम्म्ती कार्य।", amount: 284200, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2022–23", desc: "ग्राम सर्वा में सीतालाल महतो के खेत के नजदीक पैन में पुलिया का निर्माण कार्य।", amount: 289000, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2022–23", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा में राजो वावा के पास पुलिया का निर्माण कार्य।", amount: 284100, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2022–23", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा के वार्ड सं0-10 में रामदेव रविदास के घर से ब्रहमदेव रविदास के घर तक एवं श्यामली दास के घर से सुर्यदेव दास के घर तक ढक्कन सहित नाली निर्माण कार्य।", amount: 271300, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2022–23", desc: "ग्राम सर्वा में भैरो स्थान के पास पैन में पुलिया का निर्माण कार्य ।", amount: 289000, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2023–24", desc: "ग्राम पंचायत सर्वा के ग्राम जमालपुर के वार्ड सं0–12 में अपशिष्ट प्रसंस्करण इकाई WPU का निर्माण कार्य ।", amount: 817700, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2024–25", desc: "ग्राम सर्वा के वार्ड सं0–06 में नरेश महतो के दलान के नजदीक नाला का निर्माण कार्य ।", amount: 615500, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2024–25", desc: "ग्राम सर्वा के वार्ड सं0–06 में अनिल सिंह के निकट पैन में पुल का निर्माण कार्य ।", amount: 409100, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2024–25", desc: "ग्राम सर्वा के वार्ड सं0–09 में पोसन यादव के घर से काकू यादव के घर तक नाली एवं पी0सी0घी0 ढलाई का निर्माण कार्य ।", amount: 656100, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2024–25", desc: "ग्राम पंचायत सर्वा के लालूनगर में छत्तेदार चबुतरा का जीर्णोद्धार का कार्य ।", amount: 197100, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2024–25", desc: "ग्राम सर्वा के वार्ड सं0–06 में सुरेन्द्र पासवान के घर से प्रवीण पासवान के घर तक चंदन पासवान के घर से अनिल पासवान के घर तक पी0सी0सी0 ढलाई एवं नाली निर्माण कार्य ।", amount: 198200, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2024–25", desc: "ग्राम मिजापुर में नंदु मांडी के घर से प्रकाश चौधरी के घर तक ढक्कन सहित नाली मर्मती एवं पी0सी0घी0 ढलाई कार्य ।", amount: 387100, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2024–25", desc: "ग्राम सर्वा में विष्टरी स्थान से अनुसूचित टोला जाने वाली सड़क तक पी0सी0सी0 ढलाई कार्य ।", amount: 429700, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2024–25", desc: "ग्राम जमालपुर में भूषण पंडित के घर से रामजी यादव के घर तक एवं अरूण श्रा के घर से वकील साहब के घर तक ढक्कन सहित नाली एवं परमेश्वर पंडित के घर से विजय कुमार के घर तक पी0सी0सी0 ढलाई कार्य ।", amount: 399700, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2025–26", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा में मेन रोड पर मुख्य द्वार का निर्माण कार्य ।", amount: 507400, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2025–26", desc: "ग्राम पंचायत सर्वा के वार्ड सं0–08 में सामुदायिक भवन का मर्मती कार्य ।", amount: 440100, status: "पूर्ण" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2025–26", desc: "ग्राम सर्वा में लुटन सिंह के घर से अनिल सिंह के घर होते हुए राजेन्द्र सिंह के घर तक पी0सी0घी0 ढलाई कार्य ।", amount: 209700, status: "कार्य प्रगति पर" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2025–26", desc: "ग्राम सर्वा में युजनंदन ठाकुर के घर से अनिल शर्मा के घर तक एवं सत्यनारायण कुमार के घर से रामबृक्ष ठाकुर के घर तक ढक्कन सहित नाली एवं पी0सी0घी0 ढलाई कार्य ।", amount: 109900, status: "कार्य प्रगति पर" }, { fund: "षष्टम राज्य वित्त आयोग", year: "2025–26", desc: "ग्राम सर्वा में लुटन सिंह के घर से अनिल सिंह के घर होते हुए राजेन्द्र सिंह के घर तक नाली निर्माण कार्य ।", amount: 195600, status: "कार्य प्रगति पर" } ],
+    personnel: [ { name: "श्री केदार प्रसाद", designation: "पंचायत सचिव", mobile: "7488482095", procedure: "सोम/ बुध/शुक्र", attendance: "" }, { name: "श्री चन्दन कुमार", designation: "तकनीकी सहायक", mobile: "9113423537", procedure: "सोमवार", attendance: "" }, { name: "श्री हरिशंकर प्रसाद", designation: "लेखापाल-सह-आई.टी.सहायक", mobile: "8294106690", procedure: "सोमवार", attendance: "" }, { name: "शिरिन तरन्नुम", designation: "कार्यपालक सहायक", mobile: "7061204566", procedure: "प्रतिदिन", attendance: "" }, { name: "श्री आलोक कुमार", designation: "राजस्व कर्मचारी", mobile: "7903351748", procedure: "सोम/ बुध/शुक्र", attendance: "" }, { name: "श्रीमति अक्षय नीवी ", designation: "आवास सहायक", mobile: "8521052259", procedure: "प्रतिदिन", attendance: "" }, { name: "श्री शिवकुमार पासवान", designation: "पंचायत रोजगार सेवक", mobile: "7870615155", procedure: "मंगल/गुरु/शनि", attendance: "" }, { name: "श्री कुंदन मांझी", designation: "विकास मित्र", mobile: "8789066819", procedure: "शनिवार", attendance: "" }, { name: "श्रीमती सरिता कुमारी", designation: "ग्राम कचहरी सचिव", mobile: "8873321123", procedure: "प्रतिदिन", attendance: "" }, { name: "श्री सुनील कुमार", designation: "किसान सलाहकार", mobile: "6206523196", procedure: "प्रतिदिन", attendance: "" }, { name: "अविनाश कुमार", designation: "कृषि समन्वयक", mobile: "8168077489", procedure: "शुक्र/शनि", attendance: "" } ],
+    reps: [ { name: "श्रीमती मुन्नी कुमारी", designation: "मुखिया", mobile: "9608620128" }, { name: "श्रीमती नीरू देवी", designation: "उपमुखिया", mobile: "9931823491" }, { name: "श्रीमती रेणु देवी", designation: "वार्ड सदस्य - 01", mobile: "8757580031" }, { name: "श्रीमती लक्ष्मी देवी", designation: "वार्ड सदस्य - 02", mobile: "8521338866" }, { name: "श्रीमती रेखा देवी", designation: "वार्ड सदस्य-03", mobile: "8521698755" }, { name: "श्री धर्मेन्द्र मांझी", designation: "वार्ड सदस्य-04", mobile: "7295846647" }, { name: "श्री पंकज कुमार सिंह", designation: "वार्ड सदस्य-05", mobile: "9534975630" }, { name: "श्रीमती माधुरी देवी", designation: "वार्ड सदस्य-06", mobile: "9546809542" }, { name: "श्रीमती सुनिता देवी", designation: "वार्ड सदस्य-07", mobile: "9065311755" }, { name: "श्रीमती संजु देवी", designation: "वार्ड सदस्य-08", mobile: "8969049335" }, { name: "श्री राम ईश्वर यादव", designation: "वार्ड सदस्य-09", mobile: "7033934959" }, { name: "श्रीमती अनीता देवी", designation: "वार्ड सदस्य-10", mobile: "8581950878" }, { name: "श्री पिंटू कुमार", designation: "वार्ड सदस्य-12", mobile: "9771178213" } ],
+    panchayat: [ { name: "श्री गोपाल जी", designation: "सरपंच", mobile: "9117974245" }, { name: "श्री रघुवीर दासवान", designation: "उप सरपंच", mobile: "8340570815" }, { name: "श्रीमती नीलम देवी", designation: "ग्राम कचहरी पंच - 01", mobile: "9508464175" }, { name: "श्री रामजनम पासवान", designation: "ग्राम कचहरी पंच - 02", mobile: "8292806232" }, { name: "श्री राजीव रंजन सिंह", designation: "ग्राम कचहरी पंच - 03", mobile: "7739080638" }, { name: "श्रीमती माधुरी देवी", designation: "ग्राम कचहरी पंच - 04", mobile: "7257048538" }, { name: "श्रीमती गीता देवी", designation: "ग्राम कचहरी पंच - 05", mobile: "6207720221" }, { name: "श्रीमती सर्विला देवी", designation: "ग्राम कचहरी पंच - 06", mobile: "7980365539" }, { name: "श्रीमती रीना देवी", designation: "ग्राम कचहरी पंच - 07", mobile: "8538988868" }, { name: "श्री शामली दास", designation: "ग्राम कचहरी पंच - 08", mobile: "8581950878" }, { name: "श्रीमती क्रांति देवी ", designation: "ग्राम कचहरी पंच - 09", mobile: "8102272567" }, { name: "श्रीमती नीतू देवी", designation: "ग्राम कचहरी पंच - 10", mobile: "9122589634" }, { name: "श्री विनोद पासवान", designation: "ग्राम कचहरी पंच - 12", mobile: "7763094648" } ],
+    officers: [ { name: "श्री अमित कुमार", designation: "प्रखण्ड विकास पदाधिकारी", mobile: "9990336939" }, { name: "श्री गोरव कुमार", designation: "अंचलाधिकारी", mobile: "9031671239" }, { name: "डॉ० दर्शना कुमारी", designation: "बाल विकास परियोजना पदाधिकारी", mobile: "9572375462" }, { name: "श्री राजीव रौशन", designation: "प्रखंड पंचायत राज पदाधिकारी", mobile: "8340723154" }, { name: "श्री मणिभूषण", designation: "प्रखंड सांख्यिकी पदाधिकारी", mobile: "7903471271" }, { name: "श्री बिनोद कुमार", designation: "प्रखंड कृषि पदाधिकारी", mobile: "7488305768" }, { name: "रेणु रिंह", designation: "प्रखंड शिक्षा पदाधिकारी", mobile: "9801750391" }, { name: "श्री अरुण कुमार", designation: "प्रखंड श्रम प्रवर्तन पदाधिकारी", mobile: "7870519124" }, { name: "श्री अभिजीत पटेल", designation: "प्रखंड सहकारिता प्रसार पदाधिकारी", mobile: "7903057025" }, { name: "श्री प्रदीप कुमार", designation: "प्रखंड आपुर्ति पदाधिकारी", mobile: "6287891849" }, { name: "श्री बादल कुमार", designation: "प्रखंड कल्याण पदाधिकारी", mobile: "9650624816" }, { name: "श्री दीपक कुमार", designation: "कार्यक्रम पदाधिकारी (मनरेगा)", mobile: "9771021717" }, { name: "श्री वरुण कुमार", designation: "प्रखंड परियोजना प्रबंधक (जीविका)", mobile: "8757470081" }, { name: "श्री निरंजन प्रकाश सत्यार्थी", designation: "प्रखंड समन्वयक", mobile: "9113313874" }, { name: "मो० तौकीर इमाम", designation: "आवास पर्यवेक्षक", mobile: "9931973910" }, { name: "डॉ० रंजीत रंजन रिंह", designation: "भ्रमणशील पशु चिकित्सा पदाधिकारी, बरबीया", mobile: "9122582049" }, { name: "डॉ० फैजल अरसद", designation: "प्रभारी चिकित्सा पदाधिकारी रेफरल अस्पताल, बरबीया", mobile: "9102597050" }, { name: "श्री रवि रंजन", designation: "कनीय अभियंता विधुत विभाग, बरबीया", mobile: "7763814495" }, { name: "श्री राहुल कुमार", designation: "सहायक अभियंता विधुत विभाग, बरबीया", mobile: "7763814494" }, { name: "श्री नवेद अख्तर (ग्रामीण)", designation: "लोक स्वास्थ्य अभियंत्रण विभाग, कनीय अभियंता बरबीया", mobile: "9102308711" }, { name: "श्री राहूल कुमार (शहरी)", designation: "लोक स्वास्थ्य अभियंत्रण विभाग, कनीय अभियंता बरबीया", mobile: "7292922485" }, { name: "डॉ० रमण कुमार", designation: "कार्यपालक पदा०, नगर परिषद्, बरबीया", mobile: "9868797517" }, { name: "श्री राजीव आनन्द", designation: "नगर प्रबंधक, नगर परिषद्, बरबीया", mobile: "7488101765" }, { name: "श्री राजवर्द्धन", designation: "सहायक लोक स्वच्छता एवं अपशिष्ट प्रबंधन पदा०, नगर परिषद् बरबीया", mobile: "8292312292" }, { name: "अंजली कुमारी ठाकुल", designation: "कनीय अभियंता नगर, परिषद् बरबीया", mobile: "8317834663" } ],
+    grievances: [ { slno:1, date:"03-10-2026", app_no:"720956981881", applicant:"SHOBHA DEVI", mobile:"6206973041", block:"Barbigha", office:"Block Development Officer Shekhpura", subject:"प्रमाण पत्र निर्गत करने के संबंध में", status:"Disposed" }, { slno:2, date:"28-02-2026", app_no:"176756571781", applicant:"Suraj Choddhary", mobile:"9162851618", block:"Barbigha", office:"Circle Office Barbigha", subject:"भूमि विवाद", status:"Disposed" }, { slno:3, date:"24-02-2026", app_no:"972144201733", applicant:"RANJIT MANJHI", mobile:"7294116315", block:"Barbigha", office:"Circle Office Barbigha", subject:"Regarding obtaining residential land by capable category houseless families. संक्षम कोटि के गृह विहीन परिवारों के द्वारा वास भूमि प्राप्त करने के संबंध में", status:"Disposed" }, { slno:4, date:"02-03-2026", app_no:"129930331407", applicant:"SATYENDRA PASWAN", mobile:"6204950736", block:"Barbigha", office:"District Industry Officer, Shekhpura", subject:"बिहार लघु उद्यमी योजना अन्तर्गत प्रशिक्षण करने के उपरांत राशि के संबंध में।", status:"Disposed" }, { slno:5, date:"31-01-2026", app_no:"243487391369", applicant:"ASHA DEVI", mobile:"7033443151", block:"Barbigha", office:"District Public Grievance Office", subject:"रास्ता और पानी का कोई निकासी नहीं है।", status:"Disposed" }, { slno:6, date:"21-01-2026", app_no:"16595641", applicant:"SHANTI DEVI", mobile:"8092605477", block:"Barbigha", office:"Circle Office Barbigha", subject:"Encroachment अतिक्रमण", status:"Disposed" }, { slno:7, date:"13-01-2026", app_no:"984404701207", applicant:"SUSHILA DEVI", mobile:"7482019204", block:"Barbigha", office:"Sub-Divisional Officer Shekhpura", subject:"परिवारिक विवाद एवं भरण पोषण के संबंध में", status:"Disposed" }, { slno:8, date:"23-12-2025", app_no:"699219991025", applicant:"RAJESHWAR RAUT URF BAUDHU RAUT", mobile:"9523854888", block:"Barbigha", office:"Circle Office Barbigha", subject:"भूमि विवाद", status:"Disposed" }, { slno:9, date:"13-12-2025", app_no:"40534635942", applicant:"LEELA DEVI", mobile:"7033150368", block:"Barbigha", office:"Circle Office Barbigha", subject:"भूमि विवाद", status:"Disposed" }, { slno:10, date:"12-06-2025", app_no:"54693135915", applicant:"SONMANTI DEVI", mobile:"7048699768", block:"Barbigha", office:"District Education Officer, Shekhpura 0", subject:"वेतन नहीं मिलने के संबंध में।", status:"Disposed" }, { slno:11, date:"10-03-2025", app_no:"78041576868", applicant:"Vijay Kumar Singh", mobile:"9431671844", block:"Barbigha", office:"District Horticulture Department, Sheikhpura", subject:"मुख्यमंत्री बागवानी मिशन योजना के अन्तर्गत शेखपुरा जिला उद्यान विभाग से लगाये गये केले के खेती में लाखों रूपये का हुए भारी नुकसान के कारण सपरिवार आत्महत्या के संबंध में।", status:"Disposed" }, { slno:12, date:"29-07-2025", app_no:"65675995620", applicant:"BINDA DEVI", mobile:"7870545354", block:"Barbigha", office:"District Land Acquisition Officer Shekhpura -", subject:"Regarding compensation/delay/irregularities in land acquisition. भूमि अधिग्रहण में मुआवजा/विलंब/अनियमितता के संबंध में।", status:"Disposed" }, { slno:13, date:"29-07-2025", app_no:"62819424603", applicant:"CHANDESHWAR MANJHI", mobile:"7294116315", block:"Barbigha", office:"Block Development Officer Barbigha", subject:"लालुनगर दलित टोला में आवास योजना से निर्मित मकान में नाली का पानी जाने से मकान का स्थिति जर्र होने के संबंध में।", status:"Disposed" }, { slno:14, date:"28-07-2025", app_no:"89141483586", applicant:"Kaushlya Devi", mobile:"", block:"Barbigha", office:"Circle Office Barbigha", subject:"भूमि विवाद", status:"Disposed" }, { slno:15, date:"25-07-2025", app_no:"21327662535", applicant:"sunil tanti", mobile:"", block:"Barbigha", office:"Civil Surgeon, Sheikhpura", subject:"दुर्घटना हिंसीटल में हो जाने के वालजूद राशि भुगतान नहीं होने के संबंध में।", status:"Disposed" }, { slno:16, date:"31-05-2025", app_no:"95877320338", applicant:"CHANDRAKALI DEVI", mobile:"7294116315", block:"Barbigha", office:"District Social Security Cell, Sheikhpura", subject:"वृद्धा पेशन संबंधी", status:"Disposed" }, { slno:17, date:"24-05-2025", app_no:"27032436316", applicant:"RANJIT KUMAR", mobile:"7739597873", block:"Barbigha", office:"Block Development Officer Barbigha", subject:"Complaint related to District Rural Development Agency जिला ग्रामीण विकास अभिकरण से संबंधित परिवाद", status:"Disposed" }, { slno:18, date:"24-05-2025", app_no:"53592447315", applicant:"RANJIT KUMAR", mobile:"7739597873", block:"Barbigha", office:"Circle Office Barbigha", subject:"पाईन एवं नहर में मुहल्लेवासियों के घर का पानी नहीं गिरने देने के संबंध में", status:"Disposed" }, { slno:19, date:"26-04-2025", app_no:"12213997174", applicant:"SABITA DEVI", mobile:"9835568062", block:"Barbigha", office:"District Settlement Office", subject:"रकवा एवं भूमि के प्रकार के सुधार के संबंध में", status:"Disposed" }, { slno:20, date:"04-04-2025", app_no:"88291285129", applicant:"ranjit kumar", mobile:"", block:"Barbigha", office:"Circle Office Barbigha", subject:"Encroachment अतिक्रमण", status:"Disposed" }, { slno:21, date:"03-11-2026", app_no:"793295011908", applicant:"AVDHESH YADAV", mobile:"", block:"Barbigha", office:"Deputy Development Commissioner", subject:"Complaint related to MNREGA schemeगा योजना से संबंधित परिवाद", status:"Pending" }, { slno:22, date:"03-11-2026", app_no:"578458421907", applicant:"SUNITA DEVI", mobile:"", block:"Barbigha", office:"Deputy Development Commissioner", subject:"Complaint related to MNREGA schemeगा योजना से संबंधित परिवाद", status:"Pending" }, { slno:23, date:"03-11-2026", app_no:"904998291906", applicant:"SHOBHA DEVI", mobile:"6206973041", block:"Barbigha", office:"Block Development Officer", subject:"प्रमाण पत्र निर्गत करने के संबंध में", status:"Pending" }, { slno:24, date:"03-10-2026", app_no:"804433801896", applicant:"KUNTI DEVI", mobile:"", block:"Barbigha", office:"Sub-Divisional Officer", subject:"राशन कार्ड संबंधी", status:"Pending" }, { slno:25, date:"03-10-2026", app_no:"175570651895", applicant:"BABITA DEVI", mobile:"", block:"Barbigha", office:"Sub-Divisional Officer", subject:"राशन कार्ड संबंधी", status:"Pending" }, { slno:26, date:"03-10-2026", app_no:"430561661894", applicant:"PYARI DEVI", mobile:"7634036487", block:"Barbigha", office:"Sub-Divisional Officer", subject:"राशन कार्ड संबंधी", status:"Pending" }, { slno:27, date:"03-10-2026", app_no:"933009051893", applicant:"RANJIT RAUT", mobile:"", block:"Barbigha", office:"Circle Office Barbigha", subject:"भूमि विवाद", status:"Pending" }, { slno:28, date:"03-10-2026", app_no:"713153961889", applicant:"GRAMIN JANTA", mobile:"6201715149", block:"Barbigha", office:"District Labour", subject:"तेबर कार्ड के संबंध में।", status:"Pending" }, { slno:29, date:"03-10-2026", app_no:"760283801888", applicant:"SIMA DEVI", mobile:"6291305689", block:"Barbigha", office:"Block Development Officer Housing Scheme", subject:"प्रधानमंत्री आवास योजना से संबंधित परिवाद", status:"Pending" }, { slno:30, date:"03-10-2026", app_no:"396750371887", applicant:"SHANTI DEVI", mobile:"", block:"Barbigha", office:"District Panchayat Raj Officer", subject:"पंचायत सरकार भवन के संबंध में।", status:"Pending" }, { slno:31, date:"03-10-2026", app_no:"805262161886", applicant:"SHAMALI DAS", mobile:"", block:"Barbigha", office:"District Panchayat Raj Officer", subject:"नली-गली योजना के संबंध में।", status:"Pending" }, { slno:32, date:"03-10-2026", app_no:"424921751884", applicant:"MANJAY RAUT", mobile:"6200906900", block:"Barbigha", office:"District Labour", subject:"तेबर कार्ड के संबंध में।", status:"Pending" }, { slno:33, date:"03-10-2026", app_no:"115758241883", applicant:"SHOBHA DEVI", mobile:"6200906900", block:"Barbigha", office:"Block Development Officer Housing Scheme", subject:"प्रधानमंत्री आवास योजना से संबंधित परिवाद", status:"Pending" }, { slno:34, date:"03-10-2026", app_no:"215675531880", applicant:"SHANTI DEVI", mobile:"7091075224", block:"Barbigha", office:"District Social Security Cell,", subject:"वृद्धा पेशन संबंधी", status:"Pending" }, { slno:35, date:"03-10-2026", app_no:"184638931879", applicant:"JAGAT NARAYAN", mobile:"8603055105", block:"Barbigha", office:"Circle Office Barbigha", subject:"जमीन बंटवारा के संबंध में।", status:"Pending" }, { slno:36, date:"03-10-2026", app_no:"596596771877", applicant:"BHOLA PRASAD", mobile:"", block:"Barbigha", office:"", subject:"बगीबदी कायम करने के संबंध में।", status:"Pending" }, { slno:37, date:"03-10-2026", app_no:"445164801876", applicant:"BYASH PRASAD", mobile:"7654072565", block:"Barbigha", office:"Circle Office Barbigha", subject:"जमाबदी कायम करने के संबंध में।", status:"Pending" }, { slno:38, date:"25-02-2026", app_no:"218116821735", applicant:"SUSHILA DEVI", mobile:"7482019204", block:"Barbigha", office:"Sub-Divisional Officer", subject:"परिवारिक विवाद एवं भरण पोषण के संबंध में", status:"Pending" }, { slno:39, date:"24-02-2026", app_no:"972144201733", applicant:"RANJIT MANJHI", mobile:"7294116315", block:"Barbigha", office:"Circle Office Barbigha", subject:"Regarding obtaining residential land by capable category houseless families. संक्षम कोटि के गृह विहीन परिवारों के द्वारा वास भूमि प्राप्त करने के संबंध में", status:"Disposed" }, { slno:40, date:"02-03-2026", app_no:"129930331407", applicant:"SATYENDRA PASWAN", mobile:"6204950736", block:"Barbigha", office:"District Industry Officer, Sheikhpura", subject:"बिहार लघु उद्यमी योजना अन्तर्गत प्रशिक्षण करने के उपरांत राशि के संबंध में।", status:"Disposed" }, { slno:41, date:"31-01-2026", app_no:"243487391369", applicant:"ASHA DEVI", mobile:"7033443151", block:"Barbigha", office:"District Public Grievance Office", subject:"रास्ता और पानी का कोई निकासी नहीं है।", status:"Disposed" }, { slno:42, date:"13-01-2026", app_no:"984404701207", applicant:"SUSHILA DEVI", mobile:"7482019204", block:"Barbigha", office:"Sub-Divisional Officer Sheikhpura", subject:"परिवारिक विवाद एवं भरण पोषण के संबंध में", status:"Disposed" }, { slno:43, date:"23-12-2025", app_no:"699219991025", applicant:"RAJESHWAR RAUT URF BAUDHU RAUT", mobile:"9523854888", block:"Barbigha", office:"Circle Office Barbigha", subject:"भूमि विवाद", status:"Disposed" }, { slno:44, date:"13-12-2025", app_no:"40534635942", applicant:"LEELA DEVI", mobile:"7033150368", block:"Barbigha", office:"Circle Office Barbigha", subject:"भूमि विवाद", status:"Disposed" }, { slno:45, date:"12-06-2025", app_no:"54693135915", applicant:"SONMANTI DEVI", mobile:"7048699768", block:"Barbigha", office:"District Education Officer, Sheikhpura 0", subject:"वेतन नहीं मिलने के संबंध में।", status:"Disposed" }, { slno:46, date:"10-03-2025", app_no:"78041576868", applicant:"Vijay Kumar Singh", mobile:"9431671844", block:"Barbigha", office:"District Horticulture Department, Sheikhpura", subject:"मुख्यमंत्री बागवानी मिशन योजना के अन्तर्गत शेखपुरा जिला उद्यान विभाग से लगाये गये केले के खेती में लाखों रूपये का हुए भारी नुकसान के कारण सपरिवार आत्महत्या के संबंध में।", status:"Disposed" }, { slno:47, date:"29-07-2025", app_no:"65675995620", applicant:"BINDA DEVI", mobile:"7870545354", block:"Barbigha", office:"District Land Acquisition Officer Sheikhpura -", subject:"Regarding compensation/delay/irregularities in land acquisition. भूमि अधिक्षण में मुआवजा/विलंब/अनियमितता के संबंध में।", status:"Disposed" }, { slno:48, date:"29-07-2025", app_no:"62819424603", applicant:"CHANDESHWAR MANJHI", mobile:"7294116315", block:"Barbigha", office:"Block Development Officer Barbigha", subject:"लालुनगर दलित टोला में आवास योजना से निमित्त मकान में नाली का पानी जाने से मकान का स्थिति जर्र होने के संबंध में।", status:"Disposed" }, { slno:49, date:"28-07-2025", app_no:"89141483586", applicant:"Kaushlya Devi", mobile:"", block:"Barbigha", office:"Circle Office Barbigha", subject:"भूमि विवाद", status:"Disposed" }, { slno:50, date:"25-07-2025", app_no:"21327662535", applicant:"sunil tanti", mobile:"", block:"Barbigha", office:"Civil Surgeon, Sheikhpura", subject:"दुर्घटना हॉस्पीटल में हो जाने के वाजबूद राशि भुगतान नहीं होने के संबंध में।", status:"Disposed" }, { slno:51, date:"31-05-2025", app_no:"95877320338", applicant:"CHANDRAKALI DEVI", mobile:"7294116315", block:"Barbigha", office:"District Social Security Cell, Sheikhpura", subject:"वृद्धा पेशन संबंधी", status:"Disposed" }, { slno:52, date:"24-05-2025", app_no:"27032436316", applicant:"RANJIT KUMAR", mobile:"7739597873", block:"Barbigha", office:"Block Development Officer Barbigha", subject:"Complaint related to District Rural Development Agency जिला ग्रामीण विकास अभिकरण से संबंधित परिवाद", status:"Disposed" }, { slno:53, date:"24-05-2025", app_no:"53592447315", applicant:"RANJIT KUMAR", mobile:"7739597873", block:"Barbigha", office:"Circle Office Barbigha", subject:"पाईन एवं नहर में मुहल्लेवासियों के घर का पानी नहीं गिरने देने के संबंध में", status:"Disposed" }, { slno:54, date:"26-04-2025", app_no:"12213997174", applicant:"SABITA DEVI", mobile:"9835568062", block:"Barbigha", office:"District Settlement Office Sheikhpura", subject:"रकवा एवं भूमि के प्रकार के सुधार के संबंध में", status:"Disposed" }, { slno:55, date:"04-04-2025", app_no:"88291285129", applicant:"ranjit kumar", mobile:"", block:"Barbigha", office:"Circle Office Barbigha", subject:"Enroachment अतिक्रमण", status:"Disposed" }, { slno:56, date:"21-01-2026", app_no:"16595641", applicant:"SHANTI DEVI", mobile:"8092605477", block:"Barbigha", office:"Circle Office Barbigha", subject:"Enroachment अतिक्रमण", status:"Disposed" }, { slno:57, date:"25-02-2026", app_no:"218116821735", applicant:"SUSHILA DEVI", mobile:"7482019204", block:"Barbigha", office:"Sub-Divisional Officer Sheikhpura", subject:"परिवारिक विवाद एवं भरण पोषण के संबंध में", status:"Pending" } ]
+  };
+
+  function login() {
+    if(document.getElementById('adminPass').value === 'admin123') {
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'block';
+      loadData();
+    } else alert('Incorrect Password!');
+  }
+  function logout() { document.getElementById('loginBox').style.display = 'block'; document.getElementById('adminPanel').style.display = 'none'; }
+
+  function loadData() {
+    const stored = localStorage.getItem('sarva_dashboard_data');
+    if (stored) {
+      dataStore = JSON.parse(stored);
+    } else {
+      dataStore = JSON.parse(JSON.stringify(originalData)); // deep copy
+      localStorage.setItem('sarva_dashboard_data', JSON.stringify(dataStore));
+    }
+    renderAllTables();
+  }
+
+  function resetData() {
+    if(confirm('All data will be reset to default. Continue?')) {
+      localStorage.removeItem('sarva_dashboard_data');
+      dataStore = JSON.parse(JSON.stringify(originalData));
+      localStorage.setItem('sarva_dashboard_data', JSON.stringify(dataStore));
+      renderAllTables();
+      alert('Data reset successfully! Refresh main dashboard to see changes.');
+    }
+  }
+
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tabs button').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    btn.classList.add('active');
+    currentTab = tabId;
+  }
+
+  // ============ CRUD Functions ============
+  function openModal(type, index = -1) {
+    editIndex = index;
+    const modal = document.getElementById('editModal');
+    const title = document.getElementById('modalTitle');
+    const fields = document.getElementById('modalFields');
+    
+    let html = '';
+    if (type === 'schemes') {
+      title.innerText = index === -1 ? 'Add Scheme' : 'Edit Scheme';
+      const d = index === -1 ? {fund:'', year:'', desc:'', amount:'', status:'पूर्ण'} : dataStore.schemes[index];
+      html = `<label>Fund</label><input id="mf_fund" value="${d.fund}"><label>Year</label><input id="mf_year" value="${d.year}"><label>Description</label><textarea id="mf_desc">${d.desc}</textarea><label>Amount</label><input id="mf_amount" type="number" value="${d.amount}"><label>Status</label><select id="mf_status"><option value="पूर्ण" ${d.status==='पूर्ण'?'selected':''}>पूर्ण</option><option value="कार्य प्रगति पर" ${d.status==='कार्य प्रगति पर'?'selected':''}>कार्य प्रगति पर</option></select>`;
+    } else if (type === 'personnel') {
+      title.innerText = index === -1 ? 'Add Personnel' : 'Edit Personnel';
+      const d = index === -1 ? {name:'', designation:'', mobile:'', procedure:'', attendance:''} : dataStore.personnel[index];
+      html = `<label>Name</label><input id="mf_name" value="${d.name}"><label>Designation</label><input id="mf_designation" value="${d.designation}"><label>Mobile</label><input id="mf_mobile" value="${d.mobile}"><label>Procedure</label><input id="mf_procedure" value="${d.procedure}"><label>Attendance</label><input id="mf_attendance" value="${d.attendance}">`;
+    } else if (type === 'reps') {
+      title.innerText = index === -1 ? 'Add Representative' : 'Edit Representative';
+      const d = index === -1 ? {name:'', designation:'', mobile:''} : dataStore.reps[index];
+      html = `<label>Name</label><input id="mf_name" value="${d.name}"><label>Designation</label><input id="mf_designation" value="${d.designation}"><label>Mobile</label><input id="mf_mobile" value="${d.mobile}">`;
+    } else if (type === 'panchayat') {
+      title.innerText = index === -1 ? 'Add Panchayat Member' : 'Edit Panchayat Member';
+      const d = index === -1 ? {name:'', designation:'', mobile:''} : dataStore.panchayat[index];
+      html = `<label>Name</label><input id="mf_name" value="${d.name}"><label>Designation</label><input id="mf_designation" value="${d.designation}"><label>Mobile</label><input id="mf_mobile" value="${d.mobile}">`;
+    } else if (type === 'officers') {
+      title.innerText = index === -1 ? 'Add Officer' : 'Edit Officer';
+      const d = index === -1 ? {name:'', designation:'', mobile:''} : dataStore.officers[index];
+      html = `<label>Name</label><input id="mf_name" value="${d.name}"><label>Designation</label><input id="mf_designation" value="${d.designation}"><label>Mobile</label><input id="mf_mobile" value="${d.mobile}">`;
+    } else if (type === 'grievances') {
+      title.innerText = index === -1 ? 'Add Grievance' : 'Edit Grievance';
+      const d = index === -1 ? {date:'', app_no:'', applicant:'', mobile:'', block:'', office:'', subject:'', status:'Pending'} : dataStore.grievances[index];
+      html = `<label>Date</label><input id="mf_date" value="${d.date}"><label>App No</label><input id="mf_appno" value="${d.app_no}"><label>Applicant</label><input id="mf_applicant" value="${d.applicant}"><label>Mobile</label><input id="mf_mobile" value="${d.mobile}"><label>Block</label><input id="mf_block" value="${d.block}"><label>Office</label><input id="mf_office" value="${d.office}"><label>Subject</label><textarea id="mf_subject">${d.subject}</textarea><label>Status</label><select id="mf_status"><option value="Disposed" ${d.status==='Disposed'?'selected':''}>Disposed</option><option value="Pending" ${d.status==='Pending'?'selected':''}>Pending</option></select>`;
+    }
+    fields.innerHTML = html;
+    modal.classList.add('show');
+    modal.setAttribute('data-type', type);
+  }
+
+  function closeModal() { document.getElementById('editModal').classList.remove('show'); }
+
+  function saveData() {
+    const type = document.getElementById('editModal').getAttribute('data-type');
+    if (type === 'schemes') {
+      const obj = { fund: document.getElementById('mf_fund').value, year: document.getElementById('mf_year').value, desc: document.getElementById('mf_desc').value, amount: parseFloat(document.getElementById('mf_amount').value), status: document.getElementById('mf_status').value };
+      if (editIndex === -1) dataStore.schemes.push(obj); else dataStore.schemes[editIndex] = obj;
+    } else if (type === 'personnel') {
+      const obj = { name: document.getElementById('mf_name').value, designation: document.getElementById('mf_designation').value, mobile: document.getElementById('mf_mobile').value, procedure: document.getElementById('mf_procedure').value, attendance: document.getElementById('mf_attendance').value };
+      if (editIndex === -1) dataStore.personnel.push(obj); else dataStore.personnel[editIndex] = obj;
+    } else if (type === 'reps') {
+      const obj = { name: document.getElementById('mf_name').value, designation: document.getElementById('mf_designation').value, mobile: document.getElementById('mf_mobile').value };
+      if (editIndex === -1) dataStore.reps.push(obj); else dataStore.reps[editIndex] = obj;
+    } else if (type === 'panchayat') {
+      const obj = { name: document.getElementById('mf_name').value, designation: document.getElementById('mf_designation').value, mobile: document.getElementById('mf_mobile').value };
+      if (editIndex === -1) dataStore.panchayat.push(obj); else dataStore.panchayat[editIndex] = obj;
+    } else if (type === 'officers') {
+      const obj = { name: document.getElementById('mf_name').value, designation: document.getElementById('mf_designation').value, mobile: document.getElementById('mf_mobile').value };
+      if (editIndex === -1) dataStore.officers.push(obj); else dataStore.officers[editIndex] = obj;
+    } else if (type === 'grievances') {
+      const obj = { date: document.getElementById('mf_date').value, app_no: document.getElementById('mf_appno').value, applicant: document.getElementById('mf_applicant').value, mobile: document.getElementById('mf_mobile').value, block: document.getElementById('mf_block').value, office: document.getElementById('mf_office').value, subject: document.getElementById('mf_subject').value, status: document.getElementById('mf_status').value };
+      if (editIndex === -1) dataStore.grievances.push(obj); else dataStore.grievances[editIndex] = obj;
+    }
+    localStorage.setItem('sarva_dashboard_data', JSON.stringify(dataStore));
+    closeModal();
+    renderAllTables();
+    alert('Data Saved! Refresh main dashboard to see changes.');
+  }
+
+  function deleteRecord(type, index) {
+    if(confirm('Delete this record?')) {
+      dataStore[type].splice(index, 1);
+      localStorage.setItem('sarva_dashboard_data', JSON.stringify(dataStore));
+      renderAllTables();
+      alert('Deleted! Refresh main dashboard to see changes.');
+    }
+  }
+
+  function renderAllTables() {
+    // Schemes
+    let tbl = document.getElementById('tbl-schemes').querySelector('tbody');
+    tbl.innerHTML = '';
+    dataStore.schemes.forEach((s, i) => {
+      tbl.innerHTML += `<tr><td>${i+1}</td><td>${s.fund}</td><td>${s.year}</td><td>${s.desc}</td><td>${s.amount}</td><td>${s.status}</td><td><button class="btn btn-edit" onclick="openModal('schemes',${i})"><i class="fas fa-edit"></i></button> <button class="btn btn-del" onclick="deleteRecord('schemes',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+    });
+
+    // Personnel
+    tbl = document.getElementById('tbl-personnel').querySelector('tbody');
+    tbl.innerHTML = '';
+    dataStore.personnel.forEach((p, i) => {
+      tbl.innerHTML += `<tr><td>${i+1}</td><td>${p.name}</td><td>${p.designation}</td><td>${p.mobile}</td><td>${p.procedure}</td><td><button class="btn btn-edit" onclick="openModal('personnel',${i})"><i class="fas fa-edit"></i></button> <button class="btn btn-del" onclick="deleteRecord('personnel',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+    });
+
+    // Reps
+    tbl = document.getElementById('tbl-reps').querySelector('tbody');
+    tbl.innerHTML = '';
+    dataStore.reps.forEach((r, i) => {
+      tbl.innerHTML += `<tr><td>${i+1}</td><td>${r.name}</td><td>${r.designation}</td><td>${r.mobile}</td><td><button class="btn btn-edit" onclick="openModal('reps',${i})"><i class="fas fa-edit"></i></button> <button class="btn btn-del" onclick="deleteRecord('reps',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+    });
+
+    // Panchayat
+    tbl = document.getElementById('tbl-panchayat').querySelector('tbody');
+    tbl.innerHTML = '';
+    dataStore.panchayat.forEach((m, i) => {
+      tbl.innerHTML += `<tr><td>${i+1}</td><td>${m.name}</td><td>${m.designation}</td><td>${m.mobile}</td><td><button class="btn btn-edit" onclick="openModal('panchayat',${i})"><i class="fas fa-edit"></i></button> <button class="btn btn-del" onclick="deleteRecord('panchayat',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+    });
+
+    // Officers
+    tbl = document.getElementById('tbl-officers').querySelector('tbody');
+    tbl.innerHTML = '';
+    dataStore.officers.forEach((o, i) => {
+      tbl.innerHTML += `<tr><td>${i+1}</td><td>${o.name}</td><td>${o.designation}</td><td>${o.mobile}</td><td><button class="btn btn-edit" onclick="openModal('officers',${i})"><i class="fas fa-edit"></i></button> <button class="btn btn-del" onclick="deleteRecord('officers',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+    });
+
+    // Grievances
+    tbl = document.getElementById('tbl-grievances').querySelector('tbody');
+    tbl.innerHTML = '';
+    dataStore.grievances.forEach((g, i) => {
+      tbl.innerHTML += `<tr><td>${i+1}</td><td>${g.date}</td><td>${g.app_no}</td><td>${g.applicant}</td><td>${g.mobile}</td><td>${g.block}</td><td>${g.office}</td><td>${g.subject}</td><td>${g.status}</td><td><button class="btn btn-edit" onclick="openModal('grievances',${i})"><i class="fas fa-edit"></i></button> <button class="btn btn-del" onclick="deleteRecord('grievances',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+    });
+  }
+
+  // Close modal on outside click
+  document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+</script>
+</body>
+</html>
