@@ -994,10 +994,13 @@
   let chartInstance, pieChartInstance, comparisonChartInstance;
   let currentPage15 = 1, currentPageState = 1, currentPagePersonnel = 1, currentPageRep = 1, currentPagePanchayat = 1, currentPageGrievance = 1, currentPageOfficer = 1;
   let rowsPerPage15 = 10, rowsPerPageState = 10, rowsPerPagePersonnel = 10, rowsPerPageRep = 10, rowsPerPagePanchayat = 10, rowsPerPageGrievance = 10, rowsPerPageOfficer = 10;
-  let filtered15 = schemes.filter(s => s.fund === '15वीं वित्त आयोग');
-  let filteredState = schemes.filter(s => s.fund === 'षष्टम राज्य वित्त आयोग');
-  let filteredGrievances = grievances.slice();
-  let filteredOfficers = blockOfficers.slice();
+  
+  // अब ये ग्लोबल वैरिएबल renderAllTables के अंदर फिर से बनेंगे, इसलिए इन्हें यहाँ खाली रख सकते हैं
+  let filtered15 = [];
+  let filteredState = [];
+  let filteredGrievances = [];
+  let filteredOfficers = [];
+
   let currentLanguage = 'hi';
   let currentRating = 0;
   let lastUpdateTime = new Date();
@@ -1393,10 +1396,7 @@
   function globalSearch() {
     const query = document.getElementById('globalSearch').value.trim().toLowerCase();
     if(query.length === 0) {
-      filtered15 = schemes.filter(s => s.fund === '15वीं वित्त आयोग');
-      filteredState = schemes.filter(s => s.fund === 'षष्टम राज्य वित्त आयोग');
-      filteredGrievances = grievances.slice();
-      filteredOfficers = blockOfficers.slice();
+      // यहाँ कुछ नहीं करना, renderAllTables अपने आप फ्रेश करेगा
       renderAllTables();
       return;
     }
@@ -1428,6 +1428,13 @@
   }
 
   function renderAllTables() {
+    // ★★★ सबसे महत्वपूर्ण फिक्स: हर बार render होने पर नए डेटा से फ़िल्टर बनाएँ ★★★
+    filtered15 = schemes.filter(s => s.fund === '15वीं वित्त आयोग');
+    filteredState = schemes.filter(s => s.fund === 'षष्टम राज्य वित्त आयोग');
+    filteredGrievances = grievances.slice();
+    filteredOfficers = blockOfficers.slice();
+
+    // अब बाकी टेबल हेडर और रेंडरिंग
     document.getElementById('grievanceTableHeader').innerHTML = `<th>${t('thSn')}</th><th>${t('thDate')}</th><th>${t('thAppNo')}</th><th>${t('thApplicant')}</th><th>${t('thMobile')}</th><th>${t('thBlock')}</th><th>${t('thOffice')}</th><th>${t('thSubject')}</th><th>${t('thStatus')}</th>`;
     document.getElementById('table15Header').innerHTML = `<th>${t('thSn')}</th><th>${t('thFund')}</th><th>${t('thYear')}</th><th>${t('thDesc')}</th><th>${t('thAmount')}</th><th>${t('thStatus')}</th>`;
     document.getElementById('tableStateHeader').innerHTML = `<th>${t('thSn')}</th><th>${t('thFund')}</th><th>${t('thYear')}</th><th>${t('thDesc')}</th><th>${t('thAmount')}</th><th>${t('thStatus')}</th>`;
@@ -1590,4 +1597,4 @@
   loadSettings();
 </script>
 </body>
-</html> 
+</html>
