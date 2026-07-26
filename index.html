@@ -102,13 +102,11 @@
       margin-bottom: 16px;
       color: var(--text-main);
     }
-    /* ===== आकर्षक टाइटल कलर कॉम्बिनेशन (H1 & H2) ===== */
     .page-header-title h1 {
       font-weight: 900;
       font-size: 3rem;
       letter-spacing: -0.02em;
       margin-bottom: 2px;
-      /* केसरिया से हरा ग्रेडिएंट (बहुत आकर्षक) */
       background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -118,7 +116,7 @@
     .page-header-title h2 {
       font-weight: 700;
       font-size: 1.3rem;
-      color: #003399; /* नेवी ब्लू (बिहार सरकार का रंग) */
+      color: #003399; 
       opacity: 1;
       text-shadow: 0px 2px 6px rgba(0, 51, 153, 0.15);
       letter-spacing: 0.5px;
@@ -783,8 +781,24 @@
 <div class="shortcut-hint no-print" onclick="showShortcuts()"><i class="fas fa-keyboard"></i> ?</div>
 
 <script>
-  // ========== डेटा ==========
-  const schemes = [
+  // ========== एडमिन से डेटा लोड करने का स्निपेट (बिना मुख्य कोड बदले) ==========
+  function loadAdminData() {
+    const stored = localStorage.getItem('sarva_dashboard_data');
+    if (stored) {
+      const data = JSON.parse(stored);
+      if (data.schemes && data.schemes.length > 0) schemes = data.schemes;
+      if (data.personnel && data.personnel.length > 0) personnel = data.personnel;
+      if (data.reps && data.reps.length > 0) representatives = data.reps;
+      if (data.panchayat && data.panchayat.length > 0) panchayatMembers = data.panchayat;
+      if (data.officers && data.officers.length > 0) blockOfficers = data.officers;
+      if (data.grievances && data.grievances.length > 0) grievances = data.grievances;
+    }
+  }
+  loadAdminData(); // यह लाइन बहुत जरूरी है
+  // ===================================================================================
+
+  // ========== डेटा (सभी 'const' को 'let' में बदल दिया गया है) ==========
+  let schemes = [
     { fund: "15वीं वित्त आयोग", year: "2021–22", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा के वार्ड सं0-07 में बौधी पोखर के चारो तरफ मिट्टी भराई एवं खरंजीकरण कार्य।", amount: 1096700, status: "पूर्ण" },
     { fund: "15वीं वित्त आयोग", year: "2021–22", desc: "ग्राम पंचायत सर्वा के ग्राम सर्वा में परमेश्वर साव से सिधेश्वर महतो तक पी0सी0सी0 ढलाई कार्य।", amount: 319100, status: "पूर्ण" },
     { fund: "15वीं वित्त आयोग", year: "2022–23", desc: "ग्राम सर्वा में गेहुँमी पैन पुल से चांदीपुर तक पैन सफाई का निर्माण कार्य।", amount: 1156700, status: "पूर्ण" },
@@ -833,7 +847,7 @@
     { fund: "षष्टम राज्य वित्त आयोग", year: "2025–26", desc: "ग्राम सर्वा में लुटन सिंह के घर से अनिल सिंह के घर होते हुए राजेन्द्र सिंह के घर तक नाली निर्माण कार्य ।", amount: 195600, status: "कार्य प्रगति पर" }
   ];
 
-  const personnel = [
+  let personnel = [
     { name: "श्री केदार प्रसाद", designation: "पंचायत सचिव", mobile: "7488482095", procedure: "सोम/ बुध/शुक्र", attendance: "" },
     { name: "श्री चन्दन कुमार", designation: "तकनीकी सहायक", mobile: "9113423537", procedure: "सोमवार", attendance: "" },
     { name: "श्री हरिशंकर प्रसाद", designation: "लेखापाल-सह-आई.टी.सहायक", mobile: "8294106690", procedure: "सोमवार", attendance: "" },
@@ -847,7 +861,7 @@
     { name: "अविनाश कुमार", designation: "कृषि समन्वयक", mobile: "8168077489", procedure: "शुक्र/शनि", attendance: "" }
   ];
 
-  const representatives = [
+  let representatives = [
     { name: "श्रीमती मुन्नी कुमारी", designation: "मुखिया", mobile: "9608620128" },
     { name: "श्रीमती नीरू देवी", designation: "उपमुखिया", mobile: "9931823491" },
     { name: "श्रीमती रेणु देवी", designation: "वार्ड सदस्य - 01", mobile: "8757580031" },
@@ -863,7 +877,7 @@
     { name: "श्री पिंटू कुमार", designation: "वार्ड सदस्य-12", mobile: "9771178213" }
   ];
 
-  const panchayatMembers = [
+  let panchayatMembers = [
     { name: "श्री गोपाल जी", designation: "सरपंच", mobile: "9117974245" },
     { name: "श्री रघुवीर दासवान", designation: "उप सरपंच", mobile: "8340570815" },
     { name: "श्रीमती नीलम देवी", designation: "ग्राम कचहरी पंच - 01", mobile: "9508464175" },
@@ -879,7 +893,7 @@
     { name: "श्री विनोद पासवान", designation: "ग्राम कचहरी पंच - 12", mobile: "7763094648" }
   ];
 
-  const blockOfficers = [
+  let blockOfficers = [
     { name: "श्री अमित कुमार", designation: "प्रखण्ड विकास पदाधिकारी", mobile: "9990336939" },
     { name: "श्री गोरव कुमार", designation: "अंचलाधिकारी", mobile: "9031671239" },
     { name: "डॉ० दर्शना कुमारी", designation: "बाल विकास परियोजना पदाधिकारी", mobile: "9572375462" },
@@ -907,7 +921,7 @@
     { name: "अंजली कुमारी ठाकुल", designation: "कनीय अभियंता नगर, परिषद् बरबीया", mobile: "8317834663" }
   ];
 
-  const grievances = [
+  let grievances = [
     { slno:1, date:"03-10-2026", app_no:"720956981881", applicant:"SHOBHA DEVI", mobile:"6206973041", block:"Barbigha", office:"Block Development Officer Shekhpura", subject:"प्रमाण पत्र निर्गत करने के संबंध में", status:"Disposed" },
     { slno:2, date:"28-02-2026", app_no:"176756571781", applicant:"Suraj Choddhary", mobile:"9162851618", block:"Barbigha", office:"Circle Office Barbigha", subject:"भूमि विवाद", status:"Disposed" },
     { slno:3, date:"24-02-2026", app_no:"972144201733", applicant:"RANJIT MANJHI", mobile:"7294116315", block:"Barbigha", office:"Circle Office Barbigha", subject:"Regarding obtaining residential land by capable category houseless families. संक्षम कोटि के गृह विहीन परिवारों के द्वारा वास भूमि प्राप्त करने के संबंध में", status:"Disposed" },
